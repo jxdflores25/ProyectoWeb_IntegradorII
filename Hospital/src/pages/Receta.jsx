@@ -3,6 +3,8 @@ import {
   GuardarRecetaMedica,
   GuardarRecetaMedicina,
 } from "../API/API_Hospital";
+import Eliminar from "../Icons/Eliminar.jsx";
+import Editar from "../Icons/Editar.jsx";
 import dayjs from "dayjs";
 
 export default function Receta() {
@@ -22,6 +24,14 @@ export default function Receta() {
 
   // Generar fecha del dia
   const day = dayjs().format("DD-MM-YYYY");
+
+  //Eliminar Medicamento de la lista
+  const handleDelete = (index) => {
+    setMedicamentos([
+      ...Medicamentos.slice(0, index),
+      ...Medicamentos.slice(index + 1),
+    ]);
+  };
 
   //Agregar Medicamentos a la lista
   const medicamento = {};
@@ -81,12 +91,21 @@ export default function Receta() {
             </thead>
             <tbody>
               {Medicamentos &&
-                Medicamentos.map((Medicamento) => (
+                Medicamentos.map((Medicamento, index) => (
                   <tr key={Medicamento.medicamento}>
                     <td>{Medicamento.medicamento}</td>
                     <td>{Medicamento.descripcion}</td>
                     <td>{Medicamento.cantidad}</td>
-                    <td>eliminar-editar</td>
+                    <td className="flex justify-between">
+                      <button
+                        className=" bg-orange-400 "
+                        onClick={handleDelete(index)}>
+                        <Eliminar />
+                      </button>
+                      <button className=" bg-orange-400 ">
+                        <Editar />
+                      </button>
+                    </td>
                   </tr>
                 ))}
             </tbody>
