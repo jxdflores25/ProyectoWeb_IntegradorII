@@ -3,6 +3,8 @@ import {
   GuardarRecetaMedica,
   GuardarRecetaMedicina,
 } from "../API/API_Hospital";
+import Eliminar from "../Icons/Eliminar.jsx";
+import Editar from "../Icons/Editar.jsx";
 import dayjs from "dayjs";
 
 export default function Receta() {
@@ -23,13 +25,34 @@ export default function Receta() {
   // Generar fecha del dia
   const day = dayjs().format("DD-MM-YYYY");
 
+  //Eliminar Medicamento de la lista
+  const handleDelete = (index) => {
+    const newList = [...Medicamentos];
+    newList.splice(index, 1);
+    setMedicamentos(newList);
+  };
+
+  //Editar Medicamento de la lista
+  const handleEdit = (index) => {
+    document.querySelector("#medicamento").value =
+      Medicamentos[index].medicamento;
+    document.querySelector("#descripcion").value =
+      Medicamentos[index].descripcion;
+    document.querySelector("#cantidad").value = Medicamentos[index].cantidad;
+    handleDelete(index);
+  };
+
   //Agregar Medicamentos a la lista
   const medicamento = {};
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    medicamento[name] = value;
+  const handleAdd = () => {
+    const value = document.querySelector("#medicamento").value;
+    medicamento["medicamento"] = value;
+    const value2 = document.querySelector("#descripcion").value;
+    medicamento["descripcion"] = value2;
+    const value3 = document.querySelector("#cantidad").value;
+    medicamento["cantidad"] = value3;
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     setMedicamentos([...Medicamentos, medicamento]);
@@ -55,7 +78,7 @@ export default function Receta() {
         <section className=" flex flex-col gap-4">
           <form onSubmit={handleSubmit} className=" flex justify-between">
             <label htmlFor="">Medicamento:</label>
-            <select name="medicamento" id="" onChange={handleChange}>
+            <select name="medicamento" id="medicamento">
               <option value="" selected disabled hidden>
                 Elige Medicamento
               </option>
@@ -65,10 +88,10 @@ export default function Receta() {
               <option value="Cetanicol">Cetanicol</option>
             </select>
             <label htmlFor="">Descripcion:</label>{" "}
-            <input type="text" name="descripcion" onChange={handleChange} />
+            <input type="text" id="descripcion" name="descripcion" />
             <label htmlFor="">Cantidad:</label>{" "}
-            <input type="number" name="cantidad" onChange={handleChange} />
-            <input type="submit" value="Agregar" />
+            <input type="number" id="cantidad" name="cantidad" />
+            <input type="submit" value="Agregar" onClick={handleAdd} />
           </form>
           <table>
             <thead>
@@ -81,12 +104,23 @@ export default function Receta() {
             </thead>
             <tbody>
               {Medicamentos &&
-                Medicamentos.map((Medicamento) => (
+                Medicamentos.map((Medicamento, index) => (
                   <tr key={Medicamento.medicamento}>
                     <td>{Medicamento.medicamento}</td>
                     <td>{Medicamento.descripcion}</td>
                     <td>{Medicamento.cantidad}</td>
-                    <td>eliminar-editar</td>
+                    <td className="flex justify-between">
+                      <button
+                        className=" bg-orange-400 "
+                        onClick={() => handleDelete(index)}>
+                        <Eliminar />
+                      </button>
+                      <button
+                        className=" bg-orange-400 "
+                        onClick={() => handleEdit(index)}>
+                        <Editar />
+                      </button>
+                    </td>
                   </tr>
                 ))}
             </tbody>
