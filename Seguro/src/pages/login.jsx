@@ -4,18 +4,24 @@ import {
   GetAsegurado,
   GetConductor,
 } from "../API/API_Seguro";
+import { ToastContainer, Slide, toast } from "react-toastify";
 
 export default function Login() {
   const [dni, setDni] = useState("");
 
-  const Login = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     let res = await GetAsegurado(dni);
+    let tipo = "Asegurado";
     if (res === null) {
       res = await GetConductor(dni);
+      tipo = "Conductor";
       if (res === null) {
         res = await GetAdministrador(dni);
+        tipo = "Administrador";
         if (res === null) {
-          alert("Usuario no encontrado");
+          toast.error("Usuario no encontrado");
+          tipo = "";
         }
       }
     }
@@ -23,9 +29,10 @@ export default function Login() {
     if (res !== null) {
       const contra = document.getElementById("password").value;
       if (res.data.contraseña === contra) {
-        alert("ingreso correctamente");
+        alert("ingreso correctamente " + tipo);
+        window.location.href = "/";
       } else {
-        alert("Contraseña incorrecta");
+        toast.error("Contraseña incorrecta");
       }
     }
   };
@@ -49,33 +56,37 @@ export default function Login() {
             Por favor Ingrese sus Datos{" "}
           </p>
           <div className="mt-8">
-            <div>
-              <label className="text-lg font-medium">DNI</label>
-              <input
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                placeholder="Introduce tu DNI"
-                type="text"
-                pattern="[0-9]{0,8}"
-                value={dni}
-                onChange={handleDniChange}
-              />
-            </div>
-            <div>
-              <label className="text-lg font-medium">Password</label>
-              <input
-                id="password"
-                className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                placeholder="Introduce tu Contraseña"
-                type="password"
-              />
-            </div>
-            <div className="mt-8 flex flex-col gap-y-4">
-              <button
-                className=" active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-out transition-all py-3 rounded-xl bg-orange-500 text-white text-lg fond bold"
-                onClick={Login}>
-                Ingresar
-              </button>
-            </div>
+            <form onSubmit={handleSubmit}>
+              <div>
+                <label className="text-lg font-medium">DNI</label>
+                <input
+                  className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                  placeholder="Introduce tu DNI"
+                  type="text"
+                  pattern="[0-9]{0,8}"
+                  value={dni}
+                  required
+                  onChange={handleDniChange}
+                />
+              </div>
+              <div>
+                <label className="text-lg font-medium">Password</label>
+                <input
+                  id="password"
+                  className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                  placeholder="Introduce tu Contraseña"
+                  type="password"
+                  required
+                />
+              </div>
+              <div className="mt-8 flex flex-col gap-y-4">
+                <input
+                  type="submit"
+                  value="Ingresar"
+                  className=" active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-out transition-all py-3 rounded-xl bg-orange-500 text-white text-lg fond bold"
+                />
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -83,6 +94,19 @@ export default function Login() {
         <div className="w-60 h-60 bg-gradient-to-tr bg-orange-500 to-pink-500 rounded-full animate-bounce" />
         <div className="w-full h-1/2 absolute bottom-0 bg-white/10 backdrop-blur-lg" />
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Slide}
+      />
     </div>
   );
 }
