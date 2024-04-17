@@ -16,6 +16,15 @@ export const GetAsegurado = async (DNI) => {
   }
 };
 
+export const PutAsegurado = async (DNI, data) => {
+  try {
+    console.log(data);
+    return await axios.put(URLAsegurado + DNI + "/", data);
+  } catch (error) {
+    return null;
+  }
+};
+
 export const GetAdministrador = async (DNI) => {
   try {
     return await axios.get(URLAdministrador + DNI);
