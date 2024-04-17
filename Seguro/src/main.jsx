@@ -4,6 +4,7 @@ import LandingPage from './pages/LandingPage.jsx'
 import './index.css'
 import { BrowserRouter, Routes,Route } from "react-router-dom";
 import Login from './pages/login.jsx';
+import Register from './pages/Register.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -11,6 +12,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
     </Routes>
   </React.StrictMode>
   </BrowserRouter>
