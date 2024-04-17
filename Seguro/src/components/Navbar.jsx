@@ -29,12 +29,12 @@ const Navbar = () => {
             <Link to="/login" className="py-2 px-3 border-4 border-black rounded-md">
               Iniciar sesión
             </Link>
-            <a
-              href="#"
-              className="bg-gradient-to-r from-orange-500 to-orange-800 text-white py-2 px-3 rounded-md"
+            <Link
+              to="/register"
+              className="bg-gradient-to-r from-orange-400 to-orange-800 text-white py-2 px-3 rounded-md"
             >
               Crear cuenta
-            </a>
+            </Link>
           </div>
           <div className="lg:hidden md:flex flex-col justify-end">
             <button onClick={toggleNavbar}>
@@ -43,7 +43,7 @@ const Navbar = () => {
           </div>
         </div>
         {mobileDrawerOpen && (
-          <div className="fixed right-0  bg-lime-500 w-full p-12 flex flex-col justify-center items-center lg:hidden ">
+          <div className="fixed right-0  bg-amber-300 w-full p-12 flex flex-col justify-center items-center lg:hidden ">
             <ul>
               {navItems.map((item, index) => (
                 <li key={index} className="py-4">
@@ -53,7 +53,7 @@ const Navbar = () => {
             </ul>
             <div className="flex space-x-6">
               <a href="/login" className="py-2 px-3 border-4 border-black rounded-md"> Iniciar sesión</a>
-              <a href="#" className="py-2 px-3 rounded-md bg-gradient-to-r from-orange-500 to-orange-800 text-white" >Crear cuenta</a>
+              <a href="/register" className="py-2 px-3 rounded-md bg-gradient-to-r from-orange-500 to-orange-800 text-white" >Crear cuenta</a>
             </div>
           </div>
         )}
