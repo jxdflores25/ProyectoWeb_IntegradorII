@@ -6,6 +6,9 @@ import {
 import Eliminar from "../Icons/Eliminar.jsx";
 import Editar from "../Icons/Editar.jsx";
 import dayjs from "dayjs";
+import { Slide, ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Receta() {
   //Guardar Medicamentos
@@ -18,7 +21,6 @@ export default function Receta() {
     const res = await GuardarRecetaMedica(DNI, NombreMedico);
     GuardarRecetaMedicina(res.data.id, Medicamentos);
     setMedicamentos([]);
-    alert("Receta Guardada");
     document.querySelector("#DNI").value = "";
   }
 
@@ -140,7 +142,30 @@ export default function Receta() {
           </div>
         </section>
       </div>
-      <button onClick={loadTasks} className="active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-out transition-all py-3 rounded-xl bg-orange-500 text-white text-lg fond bold px-5">Guardar</button>
+      <button
+ className="active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-out transition-all py-3 rounded-xl bg-orange-500 text-white text-lg fond bold px-5"
+        onClick={() => {
+          toast.promise(loadTasks, {
+            pending: "Guardando la receta",
+            success: "Receta Guardada",
+            error: "Ocurrio un error",
+          });
+        }}>
+        Guardar
+      </button>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Slide}
+      />
     </section>
     </div>
   );
