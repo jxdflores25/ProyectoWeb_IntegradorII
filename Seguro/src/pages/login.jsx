@@ -29,7 +29,8 @@ export default function Login() {
     if (res !== null) {
       const contra = document.getElementById("password").value;
       if (res.data.contraseña === contra) {
-        alert("ingreso correctamente " + tipo);
+        localStorage.setItem("usuario", res.data.dni);
+        localStorage.setItem("tipo", tipo);
         window.location.href = "/";
       } else {
         toast.error("Contraseña incorrecta");
