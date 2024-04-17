@@ -141,6 +141,8 @@ export default function Receta() {
         </section>
       </div>
       <button onClick={loadTasks} className="active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-out transition-all py-3 rounded-xl bg-orange-500 text-white text-lg fond bold px-5">Guardar</button>
+      
+
     </section>
     </div>
   );
