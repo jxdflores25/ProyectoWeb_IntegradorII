@@ -1,3 +1,4 @@
+
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import LandingPage from './pages/LandingPage.jsx'
@@ -6,7 +7,10 @@ import { BrowserRouter, Routes,Route } from "react-router-dom";
 import Login from './pages/login.jsx';
 import Register from './pages/Register.jsx';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+
+import "react-toastify/dist/ReactToastify.css";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
   <React.StrictMode>
     <Routes>
@@ -16,4 +20,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </Routes>
   </React.StrictMode>
   </BrowserRouter>
-)
+);
