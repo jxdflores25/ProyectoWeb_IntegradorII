@@ -142,6 +142,7 @@ export default function Receta() {
           </div>
         </section>
       </div>
+
       <button
  className="active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-out transition-all py-3 rounded-xl bg-orange-500 text-white text-lg fond bold px-5"
         onClick={() => {
@@ -166,6 +167,7 @@ export default function Receta() {
         theme="colored"
         transition={Slide}
       />
+
     </section>
     </div>
   );
