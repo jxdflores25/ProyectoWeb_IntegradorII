@@ -9,6 +9,8 @@ function Register() {
   const [buttonVisible, setButtonVisible] = useState(true);
   const [dniValue, setDniValue] = useState("");
 
+  const [dniActive, setdniActive] = useState(false);
+
   const [data, setData] = useState([]);
 
   const handleVerification = async () => {
@@ -18,10 +20,15 @@ function Register() {
     } else {
       const res = await GetAsegurado(dniValue);
       if (res !== null) {
-        MostrarDatos(res.data);
-        setInputVisible(true);
-        setButtonVisible(false);
-        setData(res.data);
+        if (res.data.contraseña === null) {
+          MostrarDatos(res.data);
+          setInputVisible(true);
+          setButtonVisible(false);
+          setdniActive(true);
+          setData(res.data);
+        } else {
+          toast.warning("Usted ya se encuentra registrado");
+        }
       } else {
         toast.error("Usted no tiene Seguro");
       }
@@ -80,6 +87,7 @@ function Register() {
         value={dniValue}
         onChange={handleDniChange}
         className="w-full p-2 mb-4 rounded border border-gray-300"
+        disabled={dniActive}
       />
       {buttonVisible && (
         <button
@@ -109,6 +117,7 @@ function Register() {
           placeholder="Dirección"
           id="Direccion"
           className="w-full p-2 mb-4 rounded border border-gray-300"
+          disabled
         />
         <input
           type="password"
