@@ -71,7 +71,7 @@ function Register() {
     <div className="max-w-md mx-auto mt-36 p-4 bg-gray-100 rounded-lg border border-amber-600 flex flex-col items-center">
       <h1 className="text-2xl font-bold mb-4">Regístrate</h1>
       <label htmlFor="dni" className="block mb-2">
-        Ingrese tu DNI
+        Ingrese su DNI
       </label>
       <input
         required

@@ -44,7 +44,7 @@ const Repartidor = () => {
       <button
         onClick={deleteStorage}
         className=" active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-out transition-all py-3 rounded-xl bg-orange-500 text-white text-lg fond bold">
-        Cerrar Sesion
+        Cerrar Sesión
       </button>
     </div>
   );
