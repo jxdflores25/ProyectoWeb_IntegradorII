@@ -106,7 +106,7 @@ export default function Receta() {
                     name="medicamento"
                     id="medicamento"
                     className="w-full border-2 border-gray-100 rounded-xl p-2 mt-1 bg-transparent">
-                    <option value="" selected disabled hidden c>
+                    <option value="" selected disabled hidden>
                       Elige Medicamento
                     </option>
 
