@@ -5,8 +5,8 @@ const HeroSection = () => {
   return (
     <div className="flex flex-col items-center mt-6 lg:mt-20">
       <h1 className="text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide">
-        Soluciones para tu
-        <span className="bg-gradient-to-r from-orange-500 to-orange-800 text-transparent bg-clip-text">
+        Soluciones para tu   
+        <span className="mx-3 bg-gradient-to-r from-orange-500 to-orange-800 text-transparent bg-clip-text">
           salud y bienestar
         </span>
       </h1>
