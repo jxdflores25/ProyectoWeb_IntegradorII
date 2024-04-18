@@ -106,6 +106,7 @@ export default function Receta() {
 
   return (
     <div className="flex justify-center items-center h-screen bg-slate-600 ">
+
     <section className="flex flex-col gap-4 bg-stone-400 justify-center items-center p-4">
       <h2 className="w-full text-center font-bold text-5xl my-5 ">RECETA</h2>
       <div className="flex flex-col gap-4 w-full px-20">
