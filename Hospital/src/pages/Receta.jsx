@@ -180,6 +180,7 @@ export default function Receta() {
                 />
                
                 <input
+                
                   type="submit"
                   value="Agregar"
                   onClick={handleAdd}
