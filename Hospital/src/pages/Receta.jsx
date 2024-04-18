@@ -63,11 +63,8 @@ export default function Receta() {
     // Crear el nuevo elemento y agregarlo a la lista
     setMedicamentos([...Medicamentos, medicamento]);
 
-    // Limpiar los campos
-
     document.querySelector("#descripcion").value = "";
-    document.querySelector("#cantidad").value = "";
-
+    setCantidad("");
     // Eliminar el medicamento seleccionado del menú desplegable
     const selectMedicamento = document.querySelector("#medicamento");
     const optionToRemove = selectMedicamento.querySelector(
