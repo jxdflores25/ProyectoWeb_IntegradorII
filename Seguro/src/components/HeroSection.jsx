@@ -10,7 +10,6 @@ const HeroSection = () => {
     salud y bienestar
   </span>
 </h1>
-
       <p className="mt-10 tex-lg text-center tex-neutral-500 max-w-4xl">
         En MediSalud, nuestra pasión es impulsar un estilo de vida saludable y
         feliz a través de productos y servicios que inspiran, nutren y
