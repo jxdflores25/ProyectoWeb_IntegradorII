@@ -77,6 +77,7 @@ export default function Receta() {
       selectMedicamento.removeChild(optionToRemove);
     }
   };
+
   const medicamento = {};
   const handleAdd = () => {
     const value = document.querySelector("#medicamento").value;
