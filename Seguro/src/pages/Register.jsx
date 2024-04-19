@@ -127,7 +127,13 @@ function Register() {
         />
         <div className="authButtons basis-1/4 border-4 flex flex-col items-center justify-center">
           <button
-            onClick={handleRegistration}
+            onClick={() => {
+              toast.promise(handleRegistration, {
+                pending: "Registrando Asegurado",
+                success: "Asegurado Registrado",
+                error: "Ocurrió un error",
+              })
+            }}
             className="bg-amber-600 hover:bg-amber-400 text-white font-bold py-2 px-4 rounded content-center">
             Registrar
           </button>
