@@ -31,7 +31,23 @@ export default function Login() {
       if (res.data.contraseña === contra) {
         localStorage.setItem("usuario", res.data.dni);
         localStorage.setItem("tipo", tipo);
-        window.location.href = "/";
+        console.log(tipo);
+        switch (tipo) {
+          case "Asegurado":
+            window.location.href = "/Asegurado";
+            break;
+
+          case "Conductor":
+            window.location.href = "/Repartidor";
+            break;
+
+          case "Administrador":
+            window.location.href = "/Administrador";
+            break;
+
+          default:
+            break;
+        }
       } else {
         toast.error("Contraseña incorrecta");
       }

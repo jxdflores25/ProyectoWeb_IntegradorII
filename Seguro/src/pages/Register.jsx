@@ -9,6 +9,8 @@ function Register() {
   const [buttonVisible, setButtonVisible] = useState(true);
   const [dniValue, setDniValue] = useState("");
 
+  const [dniActive, setdniActive] = useState(false);
+
   const [data, setData] = useState([]);
 
   const handleVerification = async () => {
@@ -18,10 +20,15 @@ function Register() {
     } else {
       const res = await GetAsegurado(dniValue);
       if (res !== null) {
-        MostrarDatos(res.data);
-        setInputVisible(true);
-        setButtonVisible(false);
-        setData(res.data);
+        if (res.data.contraseña === null) {
+          MostrarDatos(res.data);
+          setInputVisible(true);
+          setButtonVisible(false);
+          setdniActive(true);
+          setData(res.data);
+        } else {
+          toast.warning("Usted ya se encuentra registrado");
+        }
       } else {
         toast.error("Usted no tiene Seguro");
       }
@@ -71,7 +78,7 @@ function Register() {
     <div className="max-w-md mx-auto mt-36 p-4 bg-gray-100 rounded-lg border border-amber-600 flex flex-col items-center">
       <h1 className="text-2xl font-bold mb-4">Regístrate</h1>
       <label htmlFor="dni" className="block mb-2">
-        Ingrese tu DNI
+        Ingrese su DNI
       </label>
       <input
         required
@@ -80,6 +87,7 @@ function Register() {
         value={dniValue}
         onChange={handleDniChange}
         className="w-full p-2 mb-4 rounded border border-gray-300"
+        disabled={dniActive}
       />
       {buttonVisible && (
         <button
@@ -109,6 +117,7 @@ function Register() {
           placeholder="Dirección"
           id="Direccion"
           className="w-full p-2 mb-4 rounded border border-gray-300"
+          disabled
         />
         <input
           type="password"
@@ -118,7 +127,13 @@ function Register() {
         />
         <div className="authButtons basis-1/4 border-4 flex flex-col items-center justify-center">
           <button
-            onClick={handleRegistration}
+            onClick={() => {
+              toast.promise(handleRegistration, {
+                pending: "Registrando Asegurado",
+                success: "Asegurado Registrado",
+                error: "Ocurrió un error",
+              })
+            }}
             className="bg-amber-600 hover:bg-amber-400 text-white font-bold py-2 px-4 rounded content-center">
             Registrar
           </button>
