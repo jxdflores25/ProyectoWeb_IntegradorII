@@ -43,17 +43,17 @@ const Navbar = () => {
           </div>
         </div>
         {mobileDrawerOpen && (
-          <div className="fixed right-0  bg-amber-300 w-full p-12 flex flex-col justify-center items-center lg:hidden ">
+          <div className="fixed right-0  bg-white w-full p-12 flex flex-col justify-center items-center lg:hidden ">
             <ul>
               {navItems.map((item, index) => (
-                <li key={index} className="py-4">
+                <li key={index} className="py-3 border-b-2 border-orange-500">
                   <a href={item.href}>{item.label}</a>
                 </li>
               ))}
             </ul>
             <div className="flex space-x-6">
-              <a href="/login" className="py-2 px-3 border-4 border-black rounded-md"> Iniciar sesión</a>
-              <a href="/register" className="py-2 px-3 rounded-md bg-gradient-to-r from-orange-500 to-orange-800 text-white" >Crear cuenta</a>
+              <a href="/login" className="py-2 my-2.5 px-3 border-4 border-black rounded-md"> Iniciar sesión</a>
+              <a href="/register" className="py-2 my-2.5 px-3 rounded-md bg-gradient-to-r from-orange-500 to-orange-800 text-white" >Crear cuenta</a>
             </div>
           </div>
         )}
