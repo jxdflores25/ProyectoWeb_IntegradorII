@@ -8,17 +8,17 @@ const Repartidor = () => {
     apellido: "",
   });
 
-  useEffect(() => {
-    const Datos = async (dni) => {
-      const resp = await GetConductor(dni);
-      setRepartidor(resp.data);
-    };
-    Datos(localStorage.getItem("usuario"));
-  }, []);
+  // useEffect(() => {
+    // const Datos = async (dni) => {
+      // const resp = await GetConductor(dni);
+      // setRepartidor(resp.data);
+    // };
+    // Datos(localStorage.getItem("usuario"));
+  // }, []);
 
-  if (localStorage.getItem("tipo") !== "Conductor") {
-    return <Navigate to="/" />;
-  }
+  // if (localStorage.getItem("tipo") !== "Conductor") {
+    // return <Navigate to="/" />;
+  // }
 
   const deleteStorage = () => {
     localStorage.removeItem("usuario");
@@ -44,7 +44,7 @@ const Repartidor = () => {
       <button
         onClick={deleteStorage}
         className=" active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-out transition-all py-3 rounded-xl bg-orange-500 text-white text-lg fond bold">
-        Cerrar Sesion
+        Cerrar Sesión
       </button>
     </div>
   );

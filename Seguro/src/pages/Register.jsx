@@ -78,7 +78,7 @@ function Register() {
     <div className="max-w-md mx-auto mt-36 p-4 bg-gray-100 rounded-lg border border-amber-600 flex flex-col items-center">
       <h1 className="text-2xl font-bold mb-4">Regístrate</h1>
       <label htmlFor="dni" className="block mb-2">
-        Ingrese tu DNI
+        Ingrese su DNI
       </label>
       <input
         required
@@ -127,7 +127,13 @@ function Register() {
         />
         <div className="authButtons basis-1/4 border-4 flex flex-col items-center justify-center">
           <button
-            onClick={handleRegistration}
+            onClick={() => {
+              toast.promise(handleRegistration, {
+                pending: "Registrando Asegurado",
+                success: "Asegurado Registrado",
+                error: "Ocurrió un error",
+              })
+            }}
             className="bg-amber-600 hover:bg-amber-400 text-white font-bold py-2 px-4 rounded content-center">
             Registrar
           </button>

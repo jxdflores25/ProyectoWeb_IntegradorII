@@ -8,12 +8,12 @@ import Register from "./pages/Register.jsx";
 import Administrador from "./pages/Administrador.jsx";
 import Usuario from "./pages/Usuario.jsx";
 import Repartidor from "./pages/Repartidor.jsx";
-
+import InfoPerfil from "./pages/InfoPerfil.jsx";
 import "react-toastify/dist/ReactToastify.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <React.StrictMode>
+    
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
@@ -21,7 +21,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/Administrador" element={<Administrador />} />
         <Route path="/Asegurado" element={<Usuario />} />
         <Route path="/Repartidor" element={<Repartidor />} />
+        <Route path="/infoperfil" element={<InfoPerfil />} />
       </Routes>
-    </React.StrictMode>
+    
   </BrowserRouter>
 );
