@@ -1,10 +1,9 @@
 import axios from "axios";
 
-const URLAsegurado = "http://127.0.0.1:8000/Seguro/Asegurado/Asegurado/";
-const URLAdministrador =
-  "http://127.0.0.1:8000/Seguro/Administrador/Administrador/";
+const URLAsegurado = "http://127.0.0.1:8000/Seguro/Asegurado/";
+const URLAdministrador = "http://127.0.0.1:8000/Seguro/Administrador/";
 
-const URLConductor = "http://127.0.0.1:8000/Seguro/Conductor/Conductor/";
+const URLConductor = "http://127.0.0.1:8000/Seguro/Conductor/";
 
 const URLReceta = "http://127.0.0.1:8000/Hospital/RecetaMedicaFecha/";
 
