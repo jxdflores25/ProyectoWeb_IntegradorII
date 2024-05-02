@@ -1,5 +1,5 @@
-import { Navigate } from "react-router-dom";
-import { GetAdministrador } from "../API/API_Seguro";
+//import { Navigate } from "react-router-dom";
+import { GetAdministrador, GetRecetas } from "../API/API_Seguro";
 import { useEffect, useState } from "react";
 
 const Administrador = () => {
@@ -16,9 +16,14 @@ const Administrador = () => {
     Datos(localStorage.getItem("usuario"));
   }, []);
 
-  if (localStorage.getItem("tipo") !== "Administrador") {
+  /*if (localStorage.getItem("tipo") !== "Administrador") {
     return <Navigate to="/" />;
-  }
+  }*/
+
+  const getRecetas = async () => {
+    const recetas = await GetRecetas("2024-05-01");
+    console.log(recetas.data);
+  };
 
   const deleteStorage = () => {
     localStorage.removeItem("usuario");
@@ -46,6 +51,8 @@ const Administrador = () => {
         className=" active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-out transition-all py-3 rounded-xl bg-orange-500 text-white text-lg fond bold">
         Cerrar Sesion
       </button>
+
+      <button onClick={getRecetas}>Traer Datos</button>
     </div>
   );
 };
