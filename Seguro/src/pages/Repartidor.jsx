@@ -8,17 +8,17 @@ const Repartidor = () => {
     apellido: "",
   });
 
-  useEffect(() => {
-    const Datos = async (dni) => {
-      const resp = await GetConductor(dni);
-      setRepartidor(resp.data);
-    };
-    Datos(localStorage.getItem("usuario"));
-  }, []);
+  // useEffect(() => {
+    // const Datos = async (dni) => {
+      // const resp = await GetConductor(dni);
+      // setRepartidor(resp.data);
+    // };
+    // Datos(localStorage.getItem("usuario"));
+  // }, []);
 
-  if (localStorage.getItem("tipo") !== "Conductor") {
-    return <Navigate to="/" />;
-  }
+  // if (localStorage.getItem("tipo") !== "Conductor") {
+    // return <Navigate to="/" />;
+  // }
 
   const deleteStorage = () => {
     localStorage.removeItem("usuario");

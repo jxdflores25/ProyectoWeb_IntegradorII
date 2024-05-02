@@ -11,6 +11,11 @@ export const navItems = [
   { label: "Asegurados", href: "#" },
   { label: "Testimonios", href: "#" },
 ];
+export const navItemsAdmin = [
+  { label: "Pedidos", href: "#" },
+  { label: "Asegurado", href: "#" },
+  { label: "Distribuidores", href: "#" },
+];
 
 
 
