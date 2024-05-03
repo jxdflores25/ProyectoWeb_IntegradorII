@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { GetConductor } from "../API/API_Seguro";
+import { GetConductor } from "../../API/API_Seguro";
 
 const Repartidor = () => {
   const [Repartidor, setRepartidor] = useState({
@@ -8,17 +8,17 @@ const Repartidor = () => {
     apellido: "",
   });
 
-  // useEffect(() => {
-    // const Datos = async (dni) => {
-      // const resp = await GetConductor(dni);
-      // setRepartidor(resp.data);
-    // };
-    // Datos(localStorage.getItem("usuario"));
-  // }, []);
+  useEffect(() => {
+    const Datos = async (dni) => {
+      const resp = await GetConductor(dni);
+      setRepartidor(resp.data);
+    };
+    Datos(localStorage.getItem("usuario"));
+  }, []);
 
-  // if (localStorage.getItem("tipo") !== "Conductor") {
-    // return <Navigate to="/" />;
-  // }
+  if (localStorage.getItem("tipo") !== "Conductor") {
+    return <Navigate to="/" />;
+  }
 
   const deleteStorage = () => {
     localStorage.removeItem("usuario");
