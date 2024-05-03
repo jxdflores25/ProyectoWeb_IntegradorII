@@ -11,7 +11,7 @@ import { Navigate } from "react-router-dom";
 
 const Usuario = () => {
   const [Asegurado, setAsegurado] = useState({
-    nombre: "Usuario",
+    nombre: "",
     apellido: "",
   });
 
