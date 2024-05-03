@@ -27,7 +27,7 @@ const InfoPerfil = ({ Data }) => {
       <div className="flex items-center justify-center">
         <IconPerfil />
       </div>
-      <form onSubmit={handleRegistration} className="mt-8 mx-auto max-w-md">
+      <form className="mt-8 mx-auto max-w-md">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-6">
           <div className="col-span-6 sm:col-span-3">
             <label
@@ -111,6 +111,38 @@ const InfoPerfil = ({ Data }) => {
             </select>
           </div>
 
+          <div className="col-span-5 sm:col-span-3">
+            <label
+              htmlFor="Latitud"
+              className="block text-sm font-medium text-gray-700">
+              Latitud
+            </label>
+            <input
+              type="text"
+              id="Latitud"
+              name="Latitud"
+              className="mt-1 w-full rounded-md border border-amber-700  bg-white text-sm text-gray-700 shadow-sm"
+            />
+          </div>
+
+          <div className="col-span-5 sm:col-span-3">
+            <label
+              htmlFor="Longitud"
+              className="block text-sm font-medium text-gray-700">
+              Longitud
+            </label>
+            <input
+              type="text"
+              id="Longitud"
+              name="Longitud"
+              className="mt-1 w-full rounded-md border border-amber-700  bg-white text-sm text-gray-700 shadow-sm"
+            />
+          </div>
+
+          <div className="col-span-12 sm:col-span-3">
+            <button>Generar Mapa</button>
+          </div>
+
           <div className="col-span-6 sm:col-span-3">
             <label
               htmlFor="Password"
@@ -149,6 +181,7 @@ const InfoPerfil = ({ Data }) => {
               style={{ cursor: "pointer" }}
               type="submit"
               value="Guardar"
+              onClick={handleRegistration}
             />
           </div>
         </div>
