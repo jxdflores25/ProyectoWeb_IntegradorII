@@ -10,6 +10,7 @@ import Usuario from "./pages/Usuario.jsx";
 import Repartidor from "./pages/Repartidor.jsx";
 import InfoPerfil from "./pages/InfoPerfil.jsx";
 import "react-toastify/dist/ReactToastify.css";
+import CrudAsegurado from "./pages/CrudAsegurado.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -22,6 +23,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/Asegurado" element={<Usuario />} />
         <Route path="/Repartidor" element={<Repartidor />} />
         <Route path="/infoperfil" element={<InfoPerfil />} />
+        <Route path="/crudAsegurado" element={<CrudAsegurado />} />
       </Routes>
     
   </BrowserRouter>

@@ -41,7 +41,7 @@ const InfoPerfil = () => {
       </div>
       <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-amber-400 text-white">
         <Link to="/infoperfil">
-          <i className="bi bi-person-circle"></i>
+          <i className="bi bi-pers  on-circle"></i>
           <span className="text-[15px] ml-4 text-gray-700">Mi perfil</span>
         </Link>
         <div className="sidebar fixed bottom-0 left-0 p-2 w-[300px] text-center bg-amber-500">
