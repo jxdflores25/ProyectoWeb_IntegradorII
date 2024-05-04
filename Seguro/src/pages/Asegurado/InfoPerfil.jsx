@@ -1,6 +1,8 @@
+import { useCallback, useMemo, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import IconPerfil from "../../assets/Icons/IconPerfil";
 import { PutAsegurado } from "../../API/API_Seguro";
+import { Tooltip } from "react-tooltip";
 import {
   MapContainer,
   TileLayer,
@@ -9,11 +11,33 @@ import {
   useMapEvent,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { useState } from "react";
+import "react-tooltip/dist/react-tooltip.css";
 
 const InfoPerfil = ({ Data }) => {
   const LocationMarker = () => {
-    const [position, setPosition] = useState(null);
+    const [position, setPosition] = useState({
+      lat: Data.Latitud,
+      lng: Data.Longitud,
+    });
+    const [draggable, setDraggable] = useState(false);
+    const markerRef = useRef(null);
+    const eventHandlers = useMemo(
+      () => ({
+        dragend() {
+          const marker = markerRef.current;
+          if (marker != null) {
+            setPosition(marker.getLatLng());
+            document.getElementById("Latitud").value = marker.getLatLng().lat;
+            document.getElementById("Longitud").value = marker.getLatLng().lng;
+          }
+        },
+      }),
+      []
+    );
+    const toggleDraggable = useCallback(() => {
+      setDraggable((d) => !d);
+    }, []);
+
     const map = useMapEvent({
       click() {
         map.locate();
@@ -27,8 +51,18 @@ const InfoPerfil = ({ Data }) => {
     });
 
     return position === null ? null : (
-      <Marker position={position}>
-        <Popup>Tu estas Aqui</Popup>
+      <Marker
+        position={position}
+        draggable={draggable}
+        eventHandlers={eventHandlers}
+        ref={markerRef}>
+        <Popup minWidth={90}>
+          <span onClick={toggleDraggable}>
+            {draggable
+              ? "Haga Click en el texto para confirmar la ubicación"
+              : "Haga Click en el texto para mover el marcador"}
+          </span>
+        </Popup>
       </Marker>
     );
   };
@@ -74,7 +108,7 @@ const InfoPerfil = ({ Data }) => {
                 name="first_name"
                 className="mt-1 w-full rounded-md border border-amber-700 bg-white text-sm text-gray-700 shadow-sm"
                 defaultValue={Data.nombre}
-                required
+                disabled
               />
             </div>
 
@@ -90,7 +124,7 @@ const InfoPerfil = ({ Data }) => {
                 name="last_name"
                 defaultValue={Data.apellido}
                 className="mt-1 w-full rounded-md border border-amber-700  bg-white text-sm text-gray-700 shadow-sm"
-                required
+                disabled
               />
             </div>
 
@@ -137,7 +171,8 @@ const InfoPerfil = ({ Data }) => {
                 name="TipoSeguro"
                 id="TipoSeguro"
                 className="mt-1 w-full rounded-md border border-amber-700  bg-white text-sm text-gray-700 shadow-sm"
-                defaultValue={Data.TipoSeguro}>
+                defaultValue={Data.TipoSeguro}
+                disabled>
                 <option value="Rimac">Rimac</option>
                 <option value="Pacifico">Pacifico</option>
                 <option value="Mapfre">Mapfre</option>
@@ -172,9 +207,11 @@ const InfoPerfil = ({ Data }) => {
               />
             </div>
 
-            <div className=" col-span-6 lg:h-36 h-52  relative">
+            <div
+              className=" col-span-6 lg:h-36 h-52  relative"
+              data-tooltip-id="mapa">
               <MapContainer
-                center={{ lat: -12.0475761, lng: -77.0310159 }}
+                center={{ lat: Data.Latitud, lng: Data.Longitud }}
                 zoom={13}
                 scrollWheelZoom={true}>
                 <TileLayer
@@ -185,7 +222,14 @@ const InfoPerfil = ({ Data }) => {
               </MapContainer>
             </div>
 
-            <div className="col-span-6 sm:col-span-3">
+            <Tooltip
+              id="mapa"
+              place="right"
+              html='<div class="w-60"><h5>Indicaciones:<h5><br><h6>1. Haga click y espere a que salga su ubicación actual</h6><br><h6>2. Haga click en icono de ubicacion para cambiarla manualmente</h6></div>'
+              variant="warning"
+            />
+
+            <div className="col-span-6 sm:col-span-3 ">
               <label
                 htmlFor="Password"
                 className="block text-sm font-medium text-gray-700">

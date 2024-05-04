@@ -1,5 +1,5 @@
 import "leaflet/dist/leaflet.css";
-import { useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -12,6 +12,7 @@ import {
   Popup,
   useMapEvent,
 } from "react-leaflet";
+import { Tooltip } from "react-tooltip";
 
 function Register() {
   const [inputVisible, setInputVisible] = useState(false);
@@ -24,6 +25,24 @@ function Register() {
 
   const LocationMarker = () => {
     const [position, setPosition] = useState(null);
+    const [draggable, setDraggable] = useState(false);
+    const markerRef = useRef(null);
+    const eventHandlers = useMemo(
+      () => ({
+        dragend() {
+          const marker = markerRef.current;
+          if (marker != null) {
+            setPosition(marker.getLatLng());
+            document.getElementById("Latitud").value = marker.getLatLng().lat;
+            document.getElementById("Longitud").value = marker.getLatLng().lng;
+          }
+        },
+      }),
+      []
+    );
+    const toggleDraggable = useCallback(() => {
+      setDraggable((d) => !d);
+    }, []);
     const map = useMapEvent({
       click() {
         map.locate();
@@ -37,8 +56,18 @@ function Register() {
     });
 
     return position === null ? null : (
-      <Marker position={position}>
-        <Popup>Tu estas Aqui</Popup>
+      <Marker
+        position={position}
+        draggable={draggable}
+        eventHandlers={eventHandlers}
+        ref={markerRef}>
+        <Popup minWidth={90}>
+          <span onClick={toggleDraggable}>
+            {draggable
+              ? "Haga Click en el texto para confirmar la ubicación"
+              : "Haga Click en el texto para mover el marcador"}
+          </span>
+        </Popup>
       </Marker>
     );
   };
@@ -179,6 +208,7 @@ function Register() {
             id="Latitud"
             name="Latitud"
             className="mt-1 w-full rounded-md border border-amber-700  bg-white text-sm text-gray-700 shadow-sm"
+            required
           />
         </div>
 
@@ -193,10 +223,11 @@ function Register() {
             id="Longitud"
             name="Longitud"
             className="mt-1 w-full rounded-md border border-amber-700  bg-white text-sm text-gray-700 shadow-sm"
+            required
           />
         </div>
 
-        <div className="h-52 mb-4">
+        <div className="h-52 mb-4" data-tooltip-id="mapa">
           <MapContainer
             center={{ lat: -12.0475761, lng: -77.0310159 }}
             zoom={13}
@@ -208,6 +239,12 @@ function Register() {
             <LocationMarker />
           </MapContainer>
         </div>
+        <Tooltip
+          id="mapa"
+          place="right"
+          html='<div class="w-60"><h5>Indicaciones:<h5><br><h6>1. Haga click y espere a que salga su ubicación actual</h6><br><h6>2. Haga click en icono de ubicacion para cambiarla manualmente</h6></div>'
+          variant="warning"
+        />
         <input
           type="password"
           placeholder="Contraseña"
