@@ -161,7 +161,10 @@ function Register() {
         </button>
       )}
 
-      <div className={`input-container ${inputVisible ? "block" : "hidden"}`}>
+      <div>
+      <label htmlFor="Ubicacion" className="block mb-2 mx-1">
+      Nombre
+    </label>
         <input
           type="text"
           placeholder="Nombre"
@@ -169,6 +172,9 @@ function Register() {
           className="w-full p-2 mb-4 rounded border border-gray-300"
           disabled
         />
+        <label htmlFor="Ubicacion" className="block mb-2 mx-1">
+      Apellido
+    </label>
         <input
           type="text"
           placeholder="Apellido"
@@ -176,6 +182,9 @@ function Register() {
           className="w-full p-2 mb-4 rounded border border-gray-300"
           disabled
         />
+        <label htmlFor="Ubicacion" className="block mb-2 mx-1">
+      Seguro
+    </label>
         <input
           type="text"
           placeholder="TipoSeguro"
@@ -183,12 +192,17 @@ function Register() {
           className="w-full p-2 mb-4 rounded border border-gray-300"
           disabled
         />
+        <label htmlFor="Ubicacion" className="block mb-2 mx-1">
+      Direccion
+    </label>
         <input
           type="text"
           placeholder="Dirección"
           id="Direccion"
           className="w-full p-2 mb-4 rounded border border-gray-300"
         />
+        <label htmlFor="" className="mb-2 mx-1"></label>
+        Sector
         <select
           name="Ubicacion"
           id="Ubicacion"
@@ -226,6 +240,9 @@ function Register() {
             required
           />
         </div>
+        <label htmlFor="Ubicacion" className="block mb-2 text-center">
+      Ubicacion de Entregas
+    </label>
 
         <div className="h-52 mb-4" data-tooltip-id="mapa">
           <MapContainer
