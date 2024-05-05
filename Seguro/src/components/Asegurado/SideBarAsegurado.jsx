@@ -1,10 +1,12 @@
 import IconSalir from "../../assets/Icons/IconSalir";
 import IconClose from "../../assets/Icons/IconClose";
 import IconSearch from "../../assets/Icons/IconSearch";
+import "../../index.css";
 
 export default function SidebarAsegurado() {
   function close() {
-    document.querySelector(".sidebar").style.display = "none";
+    document.querySelector(".sidebar").className =
+      "sidebar hidden bg-amber-600 font-[Poppins] w-full";
   }
   const deleteStorage = () => {
     localStorage.removeItem("usuario");
@@ -12,8 +14,8 @@ export default function SidebarAsegurado() {
     window.location.href = "/";
   };
   return (
-    <div className="sidebar hidden bg-amber-600 font-[Poppins] w-full">
-      <div className="fixed top-0 bottom-0 left-0 p-2 w-[300px] overflow-y-auto text-center bg-amber-500">
+    <div className="sidebar lg:hidden bg-amber-600 font-[Poppins] w-full">
+      <div className="fixed top-0 bottom-0 left-0 p-2 w-[300px]  text-center bg-amber-500">
         <div className="text-gray-100 text-xl">
           <div className="p-2.5 mt-1 flex items-center">
             <i className="bi bi-hospital px-2 py-1 bg-white-300 rounded-md"></i>

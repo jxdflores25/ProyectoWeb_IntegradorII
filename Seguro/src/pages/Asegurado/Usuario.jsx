@@ -34,7 +34,8 @@ const Usuario = () => {
   };
 
   function open() {
-    document.querySelector(".sidebar").style.display = "block";
+    document.querySelector(".sidebar").className =
+      "sidebar block lg:hidden bg-amber-600 font-[Poppins] w-full";
   }
 
   return (
