@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { GetConductor } from "../API/API_Seguro";
+import { GetConductor } from "../../API/API_Seguro";
 
 const Repartidor = () => {
   const [Repartidor, setRepartidor] = useState({
