@@ -251,7 +251,7 @@ function Register() {
           id="Contraseña"
           className="w-full p-2 mb-4 rounded border border-gray-300"
         />
-        <div className="authButtons basis-1/4 border-4 flex flex-col items-center justify-center">
+        <div className="authButtons basis-1/4 flex flex-col items-center justify-center ">
           <button
             onClick={() => {
               toast.promise(handleRegistration, {
