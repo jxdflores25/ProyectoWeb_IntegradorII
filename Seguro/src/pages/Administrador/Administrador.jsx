@@ -62,6 +62,10 @@ const Administrador = () => {
       alert("Por favor completa todos los campos.");
       return; // Evitar enviar el formulario si algún campo está vacío
     }
+    if (telefono.length !== 9) {
+      alert("El teléfono debe contener exactamente 9 dígitos.");
+      return; // Evitar enviar el formulario si el teléfono no tiene 9 dígitos
+    }
     const nuevoAsegurado = { nombre, apellido, direccion, telefono };
     if (editIndex !== null) {
       const nuevosAsegurados = [...asegurados];
