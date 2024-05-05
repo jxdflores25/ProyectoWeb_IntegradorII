@@ -64,8 +64,8 @@ function Register() {
         <Popup minWidth={90}>
           <span onClick={toggleDraggable}>
             {draggable
-              ? "Haga Click en el texto para confirmar la ubicación"
-              : "Haga Click en el texto para mover el marcador"}
+              ? "Haga Click en este texto para confirmar la ubicación"
+              : "Haga Click en este texto para mover el marcador"}
           </span>
         </Popup>
       </Marker>
@@ -98,7 +98,7 @@ function Register() {
     document.getElementById("Nombre").value = data.nombre;
     document.getElementById("Apellido").value = data.apellido;
     document.getElementById("Direccion").value = data.direccion;
-    document.getElementById("TipoSeguro").value = data.TipoSeguro + " Seguro";
+    document.getElementById("TipoSeguro").value = data.TipoSeguro;
   };
 
   const handleDniChange = (e) => {
@@ -115,6 +115,7 @@ function Register() {
     if (dataActu !== null) {
       const res = await PutAsegurado(dniValue, dataActu);
       if (res !== null) {
+        localStorage.setItem("registrado", true);
         window.location.href = "/Login";
       }
     }
@@ -123,7 +124,9 @@ function Register() {
   const ActualizarDatos = (data) => {
     if (
       document.getElementById("Direccion").value === "" ||
-      document.getElementById("Contraseña").value === ""
+      document.getElementById("Contraseña").value === "" ||
+      document.getElementById("Latitud").value === "" ||
+      document.getElementById("Longitud").value === ""
     ) {
       toast.warning("Porfavor ingrese todos los datos");
       return null;
@@ -162,6 +165,9 @@ function Register() {
       )}
 
       <div className={`input-container ${inputVisible ? "block" : "hidden"}`}>
+        <label htmlFor="Ubicacion" className="block mb-2 mx-1">
+          Nombre
+        </label>
         <input
           type="text"
           placeholder="Nombre"
@@ -169,6 +175,9 @@ function Register() {
           className="w-full p-2 mb-4 rounded border border-gray-300"
           disabled
         />
+        <label htmlFor="Ubicacion" className="block mb-2 mx-1">
+          Apellido
+        </label>
         <input
           type="text"
           placeholder="Apellido"
@@ -176,6 +185,9 @@ function Register() {
           className="w-full p-2 mb-4 rounded border border-gray-300"
           disabled
         />
+        <label htmlFor="Ubicacion" className="block mb-2 mx-1">
+          Seguro
+        </label>
         <input
           type="text"
           placeholder="TipoSeguro"
@@ -183,12 +195,18 @@ function Register() {
           className="w-full p-2 mb-4 rounded border border-gray-300"
           disabled
         />
+        <label htmlFor="Ubicacion" className="block mb-2 mx-1">
+          Direccion
+        </label>
         <input
           type="text"
           placeholder="Dirección"
           id="Direccion"
           className="w-full p-2 mb-4 rounded border border-gray-300"
         />
+        <label htmlFor="" className="mb-2 mx-1">
+          Sector
+        </label>
         <select
           name="Ubicacion"
           id="Ubicacion"
@@ -208,7 +226,6 @@ function Register() {
             id="Latitud"
             name="Latitud"
             className="mt-1 w-full rounded-md border border-amber-700  bg-white text-sm text-gray-700 shadow-sm"
-            required
           />
         </div>
 
@@ -223,10 +240,11 @@ function Register() {
             id="Longitud"
             name="Longitud"
             className="mt-1 w-full rounded-md border border-amber-700  bg-white text-sm text-gray-700 shadow-sm"
-            required
           />
         </div>
-
+        <label htmlFor="Ubicacion" className="block mb-2 text-center">
+          Ubicacion donde llegaran los medicamentos
+        </label>
         <div className="h-52 mb-4" data-tooltip-id="mapa">
           <MapContainer
             center={{ lat: -12.0475761, lng: -77.0310159 }}
@@ -242,7 +260,7 @@ function Register() {
         <Tooltip
           id="mapa"
           place="right"
-          html='<div class="w-60"><h5>Indicaciones:<h5><br><h6>1. Haga click y espere a que salga su ubicación actual</h6><br><h6>2. Haga click en icono de ubicacion para cambiarla manualmente</h6></div>'
+          html='<div class="w-60"><h5>Indicaciones:<h5><br><h6>1. Haga click y espere a que salga su ubicación actual</h6><br><h6>2. Haga click en icono de ubicacion para cambiarla manualmente</h6><br><h6>3. Haga click en el texto que aparece arriba del icono para activar la funcion de mover</h6></div>'
           variant="warning"
         />
         <input
@@ -254,11 +272,7 @@ function Register() {
         <div className="authButtons basis-1/4 flex flex-col items-center justify-center ">
           <button
             onClick={() => {
-              toast.promise(handleRegistration, {
-                pending: "Registrando Asegurado",
-                success: "Asegurado Registrado",
-                error: "Ocurrió un error",
-              });
+              handleRegistration();
             }}
             className="bg-amber-600 hover:bg-amber-400 text-white font-bold py-2 px-4 rounded content-center">
             Registrar

@@ -14,6 +14,8 @@ import "leaflet/dist/leaflet.css";
 import "react-tooltip/dist/react-tooltip.css";
 
 const InfoPerfil = ({ Data }) => {
+  const [Telefono, setTelefono] = useState(Data.telefono);
+
   const LocationMarker = () => {
     const [position, setPosition] = useState({
       lat: Data.Latitud,
@@ -59,8 +61,8 @@ const InfoPerfil = ({ Data }) => {
         <Popup minWidth={90}>
           <span onClick={toggleDraggable}>
             {draggable
-              ? "Haga Click en el texto para confirmar la ubicación"
-              : "Haga Click en el texto para mover el marcador"}
+              ? "Haga Click en este texto para confirmar la ubicación"
+              : "Haga Click en este texto para mover el marcador"}
           </span>
         </Popup>
       </Marker>
@@ -85,6 +87,8 @@ const InfoPerfil = ({ Data }) => {
       window.location.href = "/Asegurado";
     }
   };
+
+  const soloNumerosRegex = /^[0-9]*$/;
 
   return (
     <div className="flex-row p-4 h-full">
@@ -165,18 +169,16 @@ const InfoPerfil = ({ Data }) => {
               <label
                 htmlFor="TipoSeguro"
                 className="block text-sm font-medium text-gray-700">
-                Tipo Seguro
+                Seguro
               </label>
-              <select
-                name="TipoSeguro"
+              <input
+                type="text"
                 id="TipoSeguro"
-                className="mt-1 w-full rounded-md border border-amber-700  bg-white text-sm text-gray-700 shadow-sm"
+                name="TipoSeguro"
                 defaultValue={Data.TipoSeguro}
-                disabled>
-                <option value="Rimac">Rimac</option>
-                <option value="Pacifico">Pacifico</option>
-                <option value="Mapfre">Mapfre</option>
-              </select>
+                className="mt-1 w-full rounded-md border border-amber-700  bg-white text-sm text-gray-700 shadow-sm"
+                disabled
+              />
             </div>
 
             <div className="col-span-5 sm:col-span-3 hidden">
@@ -210,6 +212,11 @@ const InfoPerfil = ({ Data }) => {
             <div
               className=" col-span-6 lg:h-36 h-52  relative"
               data-tooltip-id="mapa">
+              <label
+                htmlFor="Mapa"
+                className="block text-sm font-medium text-gray-700">
+                Ubicacion donde llegaran los medicamentos
+              </label>
               <MapContainer
                 center={{ lat: Data.Latitud, lng: Data.Longitud }}
                 zoom={13}
@@ -225,7 +232,7 @@ const InfoPerfil = ({ Data }) => {
             <Tooltip
               id="mapa"
               place="right"
-              html='<div class="w-60"><h5>Indicaciones:<h5><br><h6>1. Haga click y espere a que salga su ubicación actual</h6><br><h6>2. Haga click en icono de ubicacion para cambiarla manualmente</h6></div>'
+              html='<div class="w-60"><h5>Indicaciones:<h5><br><h6>1. Haga click y espere a que salga su ubicación actual</h6><br><h6>2. Haga click en icono de ubicacion para cambiarla manualmente</h6><br><h6>3. Haga click en el texto que aparece arriba del icono para activar la funcion de mover</h6></div>'
               variant="warning"
             />
 
@@ -252,12 +259,19 @@ const InfoPerfil = ({ Data }) => {
                 Teléfono
               </label>
               <input
-                type="number"
+                type="text"
                 id="Phone"
-                name="phone"
-                defaultValue={Data.telefono}
                 className="mt-1 w-full rounded-md border border-amber-700 bg-white text-sm text-gray-700 shadow-sm"
-                required
+                value={Telefono}
+                onChange={(e) => {
+                  const inputValue = e.target.value;
+                  if (
+                    soloNumerosRegex.test(inputValue) &&
+                    inputValue.length <= 9
+                  ) {
+                    setTelefono(inputValue);
+                  }
+                }}
               />
             </div>
 
