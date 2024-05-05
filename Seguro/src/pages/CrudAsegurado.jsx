@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import NavbarAdmin from '../components/NavbarAdmin';
+import NavbarAdmin from '../components/Administrador/NavbarAdmin';
 
 const CrudAsegurado = () => {
     return (

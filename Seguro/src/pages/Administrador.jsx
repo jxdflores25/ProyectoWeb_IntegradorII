@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { GetAdministrador } from "../API/API_Seguro";
 import { useEffect, useState } from "react";
-import NavbarAdmin from "../components/NavbarAdmin";
+import NavbarAdmin from "../components/Administrador/NavbarAdmin";
 
 const Administrador = () => {
   const [Administrador, setAdministrador] = useState({

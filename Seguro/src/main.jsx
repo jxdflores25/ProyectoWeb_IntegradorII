@@ -19,6 +19,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route path="/Administrador" element={<Administrador />} />
       <Route path="/Asegurado/*" element={<Usuario />} />
       <Route path="/Repartidor" element={<Repartidor />} />
+      
     </Routes>
   </BrowserRouter>
 );
