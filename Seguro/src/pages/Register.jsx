@@ -205,7 +205,7 @@ function Register() {
           className="w-full p-2 mb-4 rounded border border-gray-300"
         />
         <label htmlFor="" className="mb-2 mx-1">
-          Sector
+          Seleccione sector de entrega
         </label>
         <select
           name="Ubicacion"
@@ -243,7 +243,7 @@ function Register() {
           />
         </div>
         <label htmlFor="Ubicacion" className="block mb-2 text-center">
-          Ubicacion donde llegaran los medicamentos
+          Indique ubicación de entrega de medicamentos
         </label>
         <div className="h-52 mb-4" data-tooltip-id="mapa">
           <MapContainer
@@ -260,7 +260,7 @@ function Register() {
         <Tooltip
           id="mapa"
           place="right"
-          html='<div class="w-60"><h5>Indicaciones:<h5><br><h6>1. Haga click y espere a que salga su ubicación actual</h6><br><h6>2. Haga click en icono de ubicacion para cambiarla manualmente</h6><br><h6>3. Haga click en el texto que aparece arriba del icono para activar la funcion de mover</h6></div>'
+          html='<div class="w-60"><h5>Indicaciones:<h5><br><h6>1. Haga click y espere a que salga su ubicación actual</h6><br><h6>2. Si desea cambiar lugar entrega, haga click en icono de ubicacion para cambiarla manualmente</h6><br><h6>3. Haga click en el texto ubicado en la parte superior del icono para activar la funcion de mover</h6></div>'
           variant="warning"
         />
         <input
