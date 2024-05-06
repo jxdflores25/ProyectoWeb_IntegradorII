@@ -12,15 +12,16 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "react-tooltip/dist/react-tooltip.css";
+import { ToastContainer, Slide, toast } from "react-toastify";
 
 const InfoPerfil = ({ Data }) => {
   const [Telefono, setTelefono] = useState(Data.telefono);
+  const [position, setPosition] = useState({
+    lat: Data.Latitud,
+    lng: Data.Longitud,
+  });
 
   const LocationMarker = () => {
-    const [position, setPosition] = useState({
-      lat: Data.Latitud,
-      lng: Data.Longitud,
-    });
     const [draggable, setDraggable] = useState(false);
     const markerRef = useRef(null);
     const eventHandlers = useMemo(
@@ -82,9 +83,13 @@ const InfoPerfil = ({ Data }) => {
     Data.contraseña = document.getElementById("Password").value;
     Data.telefono = document.getElementById("Phone").value;
 
-    const res = await PutAsegurado(Data.dni, Data);
-    if (res !== null) {
-      window.location.href = "/Asegurado";
+    if (Data.telefono.length === 9) {
+      const res = await PutAsegurado(Data.dni, Data);
+      if (res !== null) {
+        window.location.href = "/Asegurado";
+      }
+    } else {
+      toast.warning("Ingrese un numero valido");
     }
   };
 
@@ -212,7 +217,7 @@ const InfoPerfil = ({ Data }) => {
             </div>
 
             <div
-              className=" col-span-6 lg:h-36 h-52 -z-10 relative"
+              className=" col-span-6 lg:h-36 h-52  z-10"
               data-tooltip-id="mapa">
               <label
                 htmlFor="Mapa"
@@ -289,6 +294,19 @@ const InfoPerfil = ({ Data }) => {
           </div>
         </form>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Slide}
+      />
     </div>
   );
 };

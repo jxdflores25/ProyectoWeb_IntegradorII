@@ -14,7 +14,7 @@ export default function SidebarAsegurado() {
     window.location.href = "/";
   };
   return (
-    <div className="sidebar lg:hidden bg-amber-600 font-[Poppins] w-full">
+    <div className="sidebar lg:hidden bg-amber-600 font-[Poppins] w-full z-20">
       <div className="fixed top-0 bottom-0 left-0 p-2 w-[300px]  text-center bg-amber-500">
         <div className="text-gray-100 text-xl">
           <div className="p-2.5 mt-1 flex items-center">
