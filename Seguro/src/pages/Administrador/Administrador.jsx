@@ -3,7 +3,8 @@ import { GetAdministrador } from "../../API/API_Seguro";
 import { useEffect, useState } from "react";
 import NavbarAdmin from "../../components/Administrador/NavbarAdmin";
 import AsignarReceta from "./AsignarReceta";
-import RegistroAsegurado from "../Administrador/RegistroAsegurado";
+import Asegurado from "./CRUDAsegurado";
+import Conductor from "./CRUDConductor";
 
 const Administrador = () => {
   const [Administrador, setAdministrador] = useState({
@@ -36,7 +37,8 @@ const Administrador = () => {
       </div>
       <Routes>
         <Route path="" element={<AsignarReceta />} />
-        <Route path="RegistroAsegurado" element={<RegistroAsegurado />} />
+        <Route path="Asegurado" element={<Asegurado />} />
+        <Route path="Conductor" element={<Conductor />} />
       </Routes>
     </div>
   );

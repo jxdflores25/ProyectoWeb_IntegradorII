@@ -16,7 +16,7 @@ const Administrador = () => {
       setAsegurados(resp.data);
     };
 
-    Datos(localStorage.getItem("usuario"));
+    Datos();
   }, []);
 
   const [modalOpen, setModalOpen] = useState(false);

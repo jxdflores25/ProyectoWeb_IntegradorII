@@ -6,6 +6,6 @@ export const navItems = [
 ];
 export const navItemsAdmin = [
   { label: "Pedidos", href: "" },
-  { label: "Asegurado", href: "RegistroAsegurado" },
-  { label: "Distribuidores", href: "#" },
+  { label: "Asegurado", href: "Asegurado" },
+  { label: "Distribuidores", href: "Conductor" },
 ];

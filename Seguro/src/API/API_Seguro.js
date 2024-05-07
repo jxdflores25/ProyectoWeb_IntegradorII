@@ -75,6 +75,40 @@ export const GetConductor = async (DNI) => {
   }
 };
 
+export const GetConductores = async () => {
+  try {
+    return await axios.get(URLConductor);
+  } catch (error) {
+    if (error.response.status === 404) {
+      return null;
+    }
+  }
+};
+
+export const PutConductor = async (DNI, data) => {
+  try {
+    return await axios.put(URLConductor + DNI + "/", data);
+  } catch (error) {
+    return null;
+  }
+};
+
+export const PostConductor = async (data) => {
+  try {
+    return await axios.post(URLConductor, data);
+  } catch (error) {
+    return null;
+  }
+};
+
+export const DeleteConductor = async (DNI) => {
+  try {
+    return await axios.delete(URLConductor + DNI + "/");
+  } catch (error) {
+    return null;
+  }
+};
+
 export const GetRecetas = async (fecha, hora) => {
   try {
     return await axios.get(URLReceta + fecha + "/" + hora);
