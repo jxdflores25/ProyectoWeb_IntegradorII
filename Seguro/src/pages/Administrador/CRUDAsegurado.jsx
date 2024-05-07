@@ -29,7 +29,7 @@ const Administrador = () => {
   const [dni, setDni] = useState("");
   const [contraseña, setContraseña] = useState("");
   const [editIndex, setEditIndex] = useState(null);
-  const [actu, setActu] = useState(false)
+  const [actu, setActu] = useState(false);
 
   const toggleModal = () => {
     // Limpiar los campos solo si no estamos editando
@@ -47,7 +47,7 @@ const Administrador = () => {
   };
 
   const handleAddClick = () => {
-    setActu(false)
+    setActu(false);
     setEditIndex(null);
     // Limpiar los campos
     setNombre("");
@@ -64,7 +64,7 @@ const Administrador = () => {
 
   const handleEditClick = (index) => {
     // Al hacer clic en "Editar", llenamos los campos con los datos correspondientes
-    setActu(true)
+    setActu(true);
     setEditIndex(index);
     // Abrir el modal
     toggleModal();
@@ -99,13 +99,13 @@ const Administrador = () => {
       toast.warning("Ingrese un DNI valido");
       return;
     }
-    if (document.getElementById('telefono').value.length !== 9) {
+    if (document.getElementById("telefono").value.length !== 9) {
       toast.warning("Ingrese un telefono valido");
       return;
     }
 
     //const nuevoAsegurado = { nombre, apellido, direccion, telefono };
-    if (editIndex !== null) {     
+    if (editIndex !== null) {
       asegurados[editIndex].nombre = nombre;
       asegurados[editIndex].apellido = apellido;
       asegurados[editIndex].direccion = direccion;
@@ -186,7 +186,7 @@ const Administrador = () => {
                   id="dni"
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                   value={dni}
-                  disabled = {actu}
+                  disabled={actu}
                   onChange={(e) => {
                     const inputValue = e.target.value;
                     if (
@@ -306,22 +306,25 @@ const Administrador = () => {
                   <option value="Mapfre">Mapfre</option>
                 </select>
               </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="nombre"
-                  className="block text-sm font-medium text-gray-700">
-                  Contraseña
-                </label>
-                <input
-                  type="password"
-                  id="Contraseña"
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                  value={contraseña}
-                  onChange={(e) => {
-                    setContraseña(e.target.value);
-                  }}
-                />
-              </div>
+              {actu && (
+                <div className="mb-4">
+                  <label
+                    htmlFor="nombre"
+                    className="block text-sm font-medium text-gray-700">
+                    Contraseña
+                  </label>
+                  <input
+                    type="password"
+                    id="Contraseña"
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    value={contraseña}
+                    onChange={(e) => {
+                      setContraseña(e.target.value);
+                    }}
+                  />
+                </div>
+              )}
+
               <div className="flex justify-end">
                 <button
                   type="button"
