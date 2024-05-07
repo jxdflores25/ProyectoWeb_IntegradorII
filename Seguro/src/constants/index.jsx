@@ -1,10 +1,3 @@
-import { BotMessageSquare } from "lucide-react";
-import { BatteryCharging } from "lucide-react";
-import { Fingerprint } from "lucide-react";
-import { ShieldHalf } from "lucide-react";
-import { PlugZap } from "lucide-react";
-import { GlobeLock } from "lucide-react";
-
 export const navItems = [
   { label: "Farmacia", href: "#" },
   { label: "Bienestar", href: "#" },
@@ -12,10 +5,7 @@ export const navItems = [
   { label: "Testimonios", href: "#" },
 ];
 export const navItemsAdmin = [
-  { label: "Pedidos", href: "#" },
-  { label: "Asegurado", href: "#" },
+  { label: "Pedidos", href: "" },
+  { label: "Asegurado", href: "RegistroAsegurado" },
   { label: "Distribuidores", href: "#" },
 ];
-
-
-

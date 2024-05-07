@@ -16,7 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/Administrador" element={<Administrador />} />
+      <Route path="/Administrador/*" element={<Administrador />} />
       <Route path="/Asegurado/*" element={<Usuario />} />
       <Route path="/Repartidor" element={<Repartidor />} />
       <Route path="/Prueba" element={<Prueba />} />
