@@ -28,6 +28,7 @@ const Administrador = () => {
   const [sector, setSector] = useState("");
   const [dni, setDni] = useState("");
   const [editIndex, setEditIndex] = useState(null);
+  const [actu, setActu] = useState(false)
 
   const toggleModal = () => {
     // Limpiar los campos solo si no estamos editando
@@ -44,6 +45,7 @@ const Administrador = () => {
   };
 
   const handleAddClick = () => {
+    setActu(false)
     setEditIndex(null);
     // Limpiar los campos
     setNombre("");
@@ -59,6 +61,7 @@ const Administrador = () => {
 
   const handleEditClick = (index) => {
     // Al hacer clic en "Editar", llenamos los campos con los datos correspondientes
+    setActu(true)
     setEditIndex(index);
     // Abrir el modal
     toggleModal();
@@ -85,13 +88,13 @@ const Administrador = () => {
       toast.warning("Ingrese un DNI valido");
       return;
     }
-    if (telefono.length !== 9) {
+    if (document.getElementById('telefono').value.length !== 9) {
       toast.warning("Ingrese un telefono valido");
       return;
     }
 
     //const nuevoAsegurado = { nombre, apellido, direccion, telefono };
-    if (editIndex !== null) {
+    if (editIndex !== null) {     
       asegurados[editIndex].nombre = nombre;
       asegurados[editIndex].apellido = apellido;
       asegurados[editIndex].direccion = direccion;
@@ -115,7 +118,7 @@ const Administrador = () => {
         contraseña: null,
         direccion: direccion,
         dni: dni,
-        nombre: apellido,
+        nombre: nombre,
         telefono: telefono,
         ubicacion: document.getElementById("Sector").value,
       };
@@ -171,6 +174,7 @@ const Administrador = () => {
                   id="dni"
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                   value={dni}
+                  disabled = {actu}
                   onChange={(e) => {
                     const inputValue = e.target.value;
                     if (
