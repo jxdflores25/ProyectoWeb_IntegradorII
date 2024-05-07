@@ -27,6 +27,7 @@ const Administrador = () => {
   const [seguro, setSeguro] = useState("");
   const [sector, setSector] = useState("");
   const [dni, setDni] = useState("");
+  const [contraseña, setContraseña] = useState("");
   const [editIndex, setEditIndex] = useState(null);
 
   const toggleModal = () => {
@@ -38,6 +39,7 @@ const Administrador = () => {
       setTelefono("");
       setSeguro("");
       setSector("");
+      setContraseña("");
       setDni("");
     }
     setModalOpen(!modalOpen);
@@ -52,6 +54,7 @@ const Administrador = () => {
     setTelefono("");
     setSeguro("");
     setSector("");
+    setContraseña("");
     setDni("");
     // Abrir el modal
     toggleModal();
@@ -71,13 +74,21 @@ const Administrador = () => {
       setSector(asegurados[editIndex].ubicacion || "");
       setSeguro(asegurados[editIndex].TipoSeguro);
       setTelefono(asegurados[editIndex].telefono);
+      setContraseña(asegurados[editIndex].contraseña);
       setDni(asegurados[editIndex].dni);
     }
   }, [editIndex]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!nombre || !apellido || !direccion || !telefono || !dni) {
+    if (
+      !nombre ||
+      !apellido ||
+      !direccion ||
+      !telefono ||
+      !dni ||
+      !contraseña
+    ) {
       toast.warning("Por favor completa todos los campos.");
       return; // Evitar enviar el formulario si algún campo está vacío
     }
@@ -98,6 +109,7 @@ const Administrador = () => {
       asegurados[editIndex].telefono = telefono;
       asegurados[editIndex].ubicacion = sector;
       asegurados[editIndex].TipoSeguro = seguro;
+      asegurados[editIndex].contraseña = contraseña;
       asegurados[editIndex].dni = dni;
       const res = await PutAsegurado(dni, asegurados[editIndex]);
       if (res !== null) {
@@ -289,6 +301,22 @@ const Administrador = () => {
                   <option value="Pacifico">Pacifico</option>
                   <option value="Mapfre">Mapfre</option>
                 </select>
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="nombre"
+                  className="block text-sm font-medium text-gray-700">
+                  Contraseña
+                </label>
+                <input
+                  type="password"
+                  id="Contraseña"
+                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                  value={contraseña}
+                  onChange={(e) => {
+                    setContraseña(e.target.value);
+                  }}
+                />
               </div>
               <div className="flex justify-end">
                 <button
