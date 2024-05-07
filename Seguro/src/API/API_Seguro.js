@@ -21,9 +21,35 @@ export const GetAsegurado = async (DNI) => {
   }
 };
 
+export const GetAsegurados = async () => {
+  try {
+    return await axios.get(URLAsegurado);
+  } catch (error) {
+    if (error.response.status === 404) {
+      return null;
+    }
+  }
+};
+
 export const PutAsegurado = async (DNI, data) => {
   try {
     return await axios.put(URLAsegurado + DNI + "/", data);
+  } catch (error) {
+    return null;
+  }
+};
+
+export const PostAsegurado = async (data) => {
+  try {
+    return await axios.post(URLAsegurado, data);
+  } catch (error) {
+    return null;
+  }
+};
+
+export const DeleteAsegurado = async (DNI) => {
+  try {
+    return await axios.delete(URLAsegurado + DNI + "/");
   } catch (error) {
     return null;
   }

@@ -1,6 +1,7 @@
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { navItemsAdmin } from "../../constants";
+import { NavLink } from "react-router-dom";
 
 const NavbarAdmin = () => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
@@ -24,7 +25,7 @@ const NavbarAdmin = () => {
           <ul className="hidden lg:flex ml-14 space-x-12">
             {navItemsAdmin.map((item, index) => (
               <li key={index}>
-                <a href={item.href}>{item.label}</a>
+                <NavLink to={item.href}>{item.label}</NavLink>
               </li>
             ))}
           </ul>
@@ -44,7 +45,7 @@ const NavbarAdmin = () => {
             <ul>
               {navItemsAdmin.map((item, index) => (
                 <li key={index} className="py-3 border-b-2 border-orange-500">
-                  <a href={item.href}>{item.label}</a>
+                  <NavLink to={item.href}>{item.label}</NavLink>
                 </li>
               ))}
             </ul>
