@@ -245,7 +245,7 @@ function Register() {
         <label htmlFor="Ubicacion" className="block mb-2 text-center">
           Indique ubicación de entrega de medicamentos
         </label>
-        <div className="h-52 mb-4" data-tooltip-id="mapa">
+        <div id="Mapa" className="h-52 mb-4" data-tooltip-id="mapa">
           <MapContainer
             center={{ lat: -12.0475761, lng: -77.0310159 }}
             zoom={13}
