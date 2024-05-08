@@ -8,6 +8,8 @@ import {
 import { useState } from "react";
 
 import IconDelivery from "../../assets/Icons/IconDelivery";
+import Fecha from "../../constants/FechaTime";
+import { Slide, ToastContainer, toast } from "react-toastify";
 
 export default function AsignarReceta() {
   const [RecetasAlta, setRecetasAlta] = useState([]);
@@ -16,8 +18,11 @@ export default function AsignarReceta() {
   const [Medicinas, setMedicinas] = useState([]);
   const [Paciente, setPaciente] = useState([]);
 
+  //Para obtener la fecha
+  const { fecha, horaInicio, horaFin, corte } = Fecha();
+
   const getRecetas = async () => {
-    const data = await GetRecetas("2024-05-01", "13:00:00");
+    const data = await GetRecetas(fecha, horaInicio, horaFin);
     const receta = data.data;
     const recetaAlta = [];
     const recetaBaja = [];
@@ -52,17 +57,30 @@ export default function AsignarReceta() {
     return data;
   };
 
+  const AsignarConductor = () => {
+    for (let index = 0; index < Medicinas.length; index++) {
+      if (Medicinas[index].Kardex > Medicinas[index].cantidad) {
+        console.log("si hay ");
+      } else {
+        toast.error(
+          "No hay stock de la medicina:" + Medicinas[index].nombreMedicina
+        );
+      }
+    }
+  };
+
   return (
     <div className="flex h-full ">
       <div className="basis-1/4 flex flex-col items-center">
-        <div className="border border-amber-500 w-44 rounded-md py-4">
+        <div className="flex w-full justify-around items-center ">
           <button
-            className="w-full h-full flex justify-center items-center"
+            className="h-full flex justify-center items-center border border-amber-500  rounded-md py-4"
             onClick={getRecetas}>
             cargar recetas
           </button>
+          <h3>{fecha}</h3>
         </div>
-
+        <h2 className="mt-8">{corte}</h2>
         <div className=" text-start w-full px-4 mt-8">
           <h4 className=" pb-5 text-xl text-center font-bold">
             Prioridad Alta
@@ -140,7 +158,14 @@ export default function AsignarReceta() {
                     <tr key={medicina.id}>
                       <td>{medicina.nombreMedicina}</td>
                       <td>{medicina.cantidad}</td>
-                      <td>{medicina.Kardex}</td>
+                      <td
+                        className={
+                          medicina.cantidad > medicina.Kardex
+                            ? " bg-red-300"
+                            : ""
+                        }>
+                        {medicina.Kardex}
+                      </td>
                     </tr>
                   ))}
               </tbody>
@@ -163,13 +188,28 @@ export default function AsignarReceta() {
 
             <div className="flex justify-around items-center">
               <h3 className=" text-xl text-start ">Asignar Conductor</h3>
-              <button className=" text-xl bg-blue-700 text-white p-2 rounded-md hover:scale-105 duration-300">
+              <button
+                className=" text-xl bg-blue-700 text-white p-2 rounded-md hover:scale-105 duration-300"
+                onClick={AsignarConductor}>
                 Asignar
               </button>
             </div>
           </div>
         </div>
       )}
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Slide}
+      />
     </div>
   );
 }

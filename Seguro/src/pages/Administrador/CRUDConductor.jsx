@@ -148,7 +148,7 @@ const Administrador = () => {
         <div className="fixed inset-0 z-50 overflow-auto bg-gray-800 bg-opacity-75 flex justify-center items-center">
           <div className="bg-white p-8 max-w-md">
             <h2 className="text-2xl font-bold mb-4 text-center">
-              Registro Asegurado
+              Registro Distribuidor
             </h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
@@ -285,7 +285,7 @@ const Administrador = () => {
             <thead className="ltr:text-left rtl:text-right">
               <tr>
                 <th className="px-4 py-2 font-bold text-2xl text-gray-900">
-                  Asegurados
+                  Distribuidor
                 </th>
                 <th className="px-4 py-2">
                   <button

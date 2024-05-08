@@ -109,9 +109,11 @@ export const DeleteConductor = async (DNI) => {
   }
 };
 
-export const GetRecetas = async (fecha, hora) => {
+export const GetRecetas = async (fecha, horaInicio, horaFin) => {
   try {
-    return await axios.get(URLReceta + fecha + "/" + hora);
+    return await axios.get(
+      URLReceta + fecha + "/" + horaInicio + "/" + horaFin
+    );
   } catch (error) {
     if (error.response.status === 404) {
       return null;
