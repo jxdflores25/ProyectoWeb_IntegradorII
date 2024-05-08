@@ -11,7 +11,7 @@ import { Navigate } from "react-router-dom";
 
 const Usuario = () => {
   const [Asegurado, setAsegurado] = useState({
-    nombre: "Usuario",
+    nombre: "",
     apellido: "",
   });
 
@@ -34,7 +34,8 @@ const Usuario = () => {
   };
 
   function open() {
-    document.querySelector(".sidebar").style.display = "block";
+    document.querySelector(".sidebar").className =
+      "sidebar block lg:hidden bg-amber-600 font-[Poppins] w-full";
   }
 
   return (
@@ -51,7 +52,7 @@ const Usuario = () => {
         </h1>
         <div className="w-8"></div>
       </div>
-      <div className="flex flex-row h-full">
+      <div className="flex flex-row h-full relative">
         <div className="font-[Poppins] h-full hidden lg:flex">
           <div className="text-center bg-amber-500 w-[300px]  p-2">
             <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-amber-400 text-white">
@@ -70,7 +71,7 @@ const Usuario = () => {
                 </span>
               </NavLink>
             </div>
-            <div className="fixed bottom-0 left-0 p-2 w-[300px] text-center bg-amber-500">
+            <div className="absolute bottom-0 left-0 p-2 w-[300px] text-center bg-amber-500">
               <div
                 className="p-2.5 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-amber-400 text-white"
                 onClick={deleteStorage}>

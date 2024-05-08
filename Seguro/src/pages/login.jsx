@@ -9,6 +9,11 @@ import { ToastContainer, Slide, toast } from "react-toastify";
 export default function Login() {
   const [dni, setDni] = useState("");
 
+  if (localStorage.getItem("registrado")) {
+    toast.success("Se registro correctamente");
+    localStorage.removeItem("registrado");
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     let res = await GetAsegurado(dni);

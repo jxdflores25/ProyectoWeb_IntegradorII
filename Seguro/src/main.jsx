@@ -7,6 +7,7 @@ import Register from "./pages/Register.jsx";
 import Administrador from "./pages/Administrador/Administrador.jsx";
 import Usuario from "./pages/Asegurado/Usuario.jsx";
 import Repartidor from "./pages/Repartidor/Repartidor.jsx";
+import Prueba from "./pages/Prueba.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import CrudAsegurado from "./pages/CrudAsegurado.jsx";
 
@@ -16,10 +17,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/Administrador" element={<Administrador />} />
+      <Route path="/Administrador/*" element={<Administrador />} />
       <Route path="/Asegurado/*" element={<Usuario />} />
       <Route path="/Repartidor" element={<Repartidor />} />
-      
+
+      <Route path="/Prueba" element={<Prueba />} />
+
     </Routes>
   </BrowserRouter>
 );
