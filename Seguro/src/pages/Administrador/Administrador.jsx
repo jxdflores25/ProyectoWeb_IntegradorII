@@ -1,5 +1,4 @@
-
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { GetAdministrador } from "../../API/API_Seguro";
 import { useEffect, useState } from "react";
 import NavbarAdmin from "../../components/Administrador/NavbarAdmin";
@@ -7,33 +6,19 @@ import AsignarReceta from "./AsignarReceta";
 import Asegurado from "./CRUDAsegurado";
 import Conductor from "./CRUDConductor";
 
-
 const Administrador = () => {
-  const [asegurados, setAsegurados] = useState([
-    { nombre: "John Doe", telefono: "123-456-7890" },
-    { nombre: "Jane Doe", telefono: "987-654-3210" },
-    { nombre: "Gary Barlow", telefono: "555-555-5555" },
-  ]);
+  const [Administrador, setAdministrador] = useState({
+    nombre: "Usuario",
+    apellido: "",
+  });
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const [nombre, setNombre] = useState("");
-  const [apellido, setApellido] = useState("");
-  const [direccion, setDireccion] = useState("");
-  const [telefono, setTelefono] = useState("");
-  const [editIndex, setEditIndex] = useState(null);
-
-  const toggleModal = () => {
-    // Limpiar los campos solo si no estamos editando
-  if (editIndex === null) {
-    setNombre("");
-    setApellido("");
-    setDireccion("");
-    setTelefono("");
-  }
-  setModalOpen(!modalOpen);
-};
-
-
+  useEffect(() => {
+    const Administrador = async () => {
+      const data = await GetAdministrador(localStorage.getItem("usuario"));
+      setAdministrador(data.data);
+    };
+    Administrador();
+  }, []);
 
   return (
     <div className="h-full">
@@ -52,7 +37,6 @@ const Administrador = () => {
         <Route path="Asegurado" element={<Asegurado />} />
         <Route path="Conductor" element={<Conductor />} />
       </Routes>
-
     </div>
   );
 };
