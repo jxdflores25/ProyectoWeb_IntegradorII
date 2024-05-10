@@ -5,8 +5,9 @@ import {
   GetMedicina,
   GetMedicinaNombre,
   GetPedidoPrioridad,
-  GetRecetaSeguro,
+  GetRecetaSeguroID,
   GetRecetas,
+  PostMedicinaSeguro,
   PostPedido,
   PostRecetaSeguro,
 } from "../../API/API_Seguro";
@@ -28,15 +29,22 @@ export default function AsignarReceta() {
   const [modalOpen, setModalOpen] = useState(false);
 
   //Para obtener la fecha
-  const { fecha, horaInicio, horaFin, corte } = Fecha();
+  const {
+    fechaHoy,
+    fechaConsulta,
+    fechaAsignacion,
+    horaInicio,
+    horaFin,
+    corte,
+  } = Fecha();
 
   const getRecetas = async () => {
-    const data = await GetRecetas("2024-05-08", "12:00", "14:00");
+    const data = await GetRecetas(fechaConsulta, horaInicio, horaFin);
     const receta = data.data;
     const recetaAlta = [];
     const recetaBaja = [];
     for (let index = 0; index < receta.length; index++) {
-      const resp = await GetRecetaSeguro(receta[index].id);
+      const resp = await GetRecetaSeguroID(receta[index].id);
       if (receta[index].prioridad === "Alta") {
         if (resp.data.length === 0) {
           recetaAlta.push(receta[index]);
@@ -92,12 +100,12 @@ export default function AsignarReceta() {
     const eliminar = [];
     for (let index = 0; index < con.data.length; index++) {
       const PedAlta = await GetPedidoPrioridad(
-        fecha,
+        fechaAsignacion,
         "Alta",
         con.data[index].dni
       );
       const PedBaja = await GetPedidoPrioridad(
-        fecha,
+        fechaAsignacion,
         "Baja",
         con.data[index].dni
       );
@@ -148,9 +156,11 @@ export default function AsignarReceta() {
           id_administrador: localStorage.getItem("usuario"),
           estatus: "Pendiente",
           prioridad: "Alta",
-          fecha: fecha,
+          fecha: fechaAsignacion,
         };
         const PedidoSeguro = await PostPedido(dataPedido);
+
+        await PostMedicinaSeguro(RecetaSeguro.data.id, Medicinas);
 
         if (PedidoSeguro !== null) {
           toast.success("Se asigno correctamente el Pedido");
@@ -175,14 +185,16 @@ export default function AsignarReceta() {
           nom_doctor: Detalle.nombre_Medico,
         };
         const RecetaSeguro = await PostRecetaSeguro(dataReceta);
+
         const dataPedido = {
           id_receta: RecetaSeguro.data.id,
           id_conductor: conductor.dni,
           id_administrador: localStorage.getItem("usuario"),
           estatus: "Pendiente",
           prioridad: "Baja",
-          fecha: fecha,
+          fecha: fechaAsignacion,
         };
+        await PostMedicinaSeguro(RecetaSeguro.data.id, Medicinas);
         const PedidoSeguro = await PostPedido(dataPedido);
         if (PedidoSeguro !== null) {
           toast.success("Se asigno correctamente el Pedido");
@@ -229,7 +241,7 @@ export default function AsignarReceta() {
                       <td>{conductor.Baja}</td>
                       <td>{conductor.Total}</td>
                       <td
-                        className="flex justify-center"
+                        className="flex justify-center cursor-pointer"
                         onClick={() => {
                           RegistrarPedido(conductor);
                         }}>
@@ -257,7 +269,7 @@ export default function AsignarReceta() {
             onClick={getRecetas}>
             cargar recetas
           </button>
-          <h3>{fecha}</h3>
+          <h3>{fechaHoy}</h3>
         </div>
         <h2 className="mt-8">{corte}</h2>
         <div className=" text-start w-full px-4 mt-8">

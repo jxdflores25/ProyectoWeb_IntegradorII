@@ -12,6 +12,8 @@ const URLRecetaHospital = "http://127.0.0.1:8080/Hospital/RecetaMedicaFecha/";
 
 const URLMedicina = "http://127.0.0.1:8080/Hospital/RecetaDetalle/";
 const URLMedicinaNombre = "http://localhost:8000/Seguro/Medicina/";
+const URLMedicinaDetalleSeguro = "http://localhost:8000/Seguro/RecetaMedicina/";
+const URLMedicinaIDReceta = "http://localhost:8000/Seguro/RecetaIDMedicina/";
 
 const URLPedidosPrioridad = "http://localhost:8000/Seguro/PedidoPrioridad/";
 const URLPedido = "http://localhost:8000/Seguro/Pedido/";
@@ -151,9 +153,30 @@ export const GetMedicina = async (receta) => {
   }
 };
 
+export const PostMedicinaSeguro = async (ID_Receta, Medicina) => {
+  for (let i = 0; i < Medicina.length; i++) {
+    axios.post(URLMedicinaDetalleSeguro, {
+      id_receta: ID_Receta,
+      id_medicina: Medicina[i].id_medicina,
+      cantidad: Medicina[i].cantidad,
+      descripcion: Medicina[i].description,
+    });
+  }
+};
+
 export const GetMedicinaNombre = async (id) => {
   try {
     return await axios.get(URLMedicinaNombre + id);
+  } catch (error) {
+    if (error.response.status === 404) {
+      return null;
+    }
+  }
+};
+
+export const GetMedicinaIDReceta = async (id) => {
+  try {
+    return await axios.get(URLMedicinaIDReceta + id);
   } catch (error) {
     if (error.response.status === 404) {
       return null;
@@ -183,9 +206,19 @@ export const GetPedidoPrioridad = async (fecha, prioridad, conductor) => {
   }
 };
 
-export const GetRecetaSeguro = async (id) => {
+export const GetRecetaSeguroID = async (id) => {
   try {
     return await axios.get(URLRecetaIDHospital + id);
+  } catch (error) {
+    if (error.response.status === 404) {
+      return null;
+    }
+  }
+};
+
+export const GetRecetaSeguro = async (id) => {
+  try {
+    return await axios.get(URLRecetaSeguro + id);
   } catch (error) {
     if (error.response.status === 404) {
       return null;
@@ -196,6 +229,14 @@ export const GetRecetaSeguro = async (id) => {
 export const PostRecetaSeguro = async (data) => {
   try {
     return await axios.post(URLRecetaSeguro, data);
+  } catch (error) {
+    return null;
+  }
+};
+
+export const GetPedido = async () => {
+  try {
+    return await axios.get(URLPedido);
   } catch (error) {
     return null;
   }

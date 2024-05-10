@@ -5,6 +5,7 @@ import NavbarAdmin from "../../components/Administrador/NavbarAdmin";
 import AsignarReceta from "./AsignarReceta";
 import Asegurado from "./CRUDAsegurado";
 import Conductor from "./CRUDConductor";
+import PedidosListar from "./PedidosListar";
 
 const Administrador = () => {
   const [Administrador, setAdministrador] = useState({
@@ -36,6 +37,7 @@ const Administrador = () => {
         <Route path="" element={<AsignarReceta />} />
         <Route path="Asegurado" element={<Asegurado />} />
         <Route path="Conductor" element={<Conductor />} />
+        <Route path="Pedidos" element={<PedidosListar />} />
       </Routes>
     </div>
   );

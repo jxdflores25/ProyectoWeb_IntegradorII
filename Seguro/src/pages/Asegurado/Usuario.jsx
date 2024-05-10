@@ -15,18 +15,18 @@ const Usuario = () => {
     apellido: "",
   });
 
-  // useEffect(() => {
-  //   const Datos = async (dni) => {
-  //     const resp = await GetAsegurado(dni);
-  //     setAsegurado(resp.data);
-  //   };
+  useEffect(() => {
+    const Datos = async (dni) => {
+      const resp = await GetAsegurado(dni);
+      setAsegurado(resp.data);
+    };
 
-  //   Datos(localStorage.getItem("usuario"));
-  // }, []);
+    Datos(localStorage.getItem("usuario"));
+  }, []);
 
-  // if (localStorage.getItem("tipo") !== "Asegurado") {
-  //   return <Navigate to="/" />;
-  // }
+  if (localStorage.getItem("tipo") !== "Asegurado") {
+    return <Navigate to="/" />;
+  }
   const deleteStorage = () => {
     localStorage.removeItem("usuario");
     localStorage.removeItem("tipo");
