@@ -228,9 +228,9 @@ const Administrador = () => {
                   className="t-1 p-2 border border-gray-300 rounded-md w-full"
                   value={sector}
                   onChange={(e) => setSector(e.target.value)}>
-                  <option value="Lima Sur">Lima Sur</option>
-                  <option value="Lima Norte">Lima Norte</option>
-                  <option value="Lima Centro">Lima Centro</option>
+                  <option value="LimaSur">Lima Sur</option>
+                  <option value="LimaNorte">Lima Norte</option>
+                  <option value="LimaCentro">Lima Centro</option>
                 </select>
               </div>
               <div className="mb-4">
