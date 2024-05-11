@@ -3,6 +3,7 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { navItemsAdmin } from "../../constants";
 import { NavLink } from "react-router-dom";
+import IconLogo from "../../assets/Icons/IconLogo";
 
 const NavbarAdmin = () => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
@@ -21,7 +22,9 @@ const NavbarAdmin = () => {
       <div className="container px-4 mx-auto relative text-sm">
         <div className="flex justify-between items-center">
           <div className="flex items-center flex-shrink-0">
-            <span className="text-xl tracking-tight">MediSalud</span>
+
+          <span className="text-2xl tracking-tight text-celeste flex gap-1">Health <span className="text-verde">Express</span> <IconLogo/>
+            </span>
           </div>
           <ul className="hidden lg:flex ml-14 space-x-12">
             {navItemsAdmin.map((item, index) => (
@@ -31,7 +34,7 @@ const NavbarAdmin = () => {
             ))}
           </ul>
           <div className="flex space-x-6" onClick={deleteStorage}>
-            <button className="py-2 my-2.5 px-3 rounded-md bg-gradient-to-r from-orange-500 to-orange-800 text-white">
+            <button className="py-2 my-2.5 px-3 rounded-md bg-gradient-to-r from-verde to-verde text-white transition-transform transform hover:scale-110">
               Cerrar Sesion
             </button>
           </div>

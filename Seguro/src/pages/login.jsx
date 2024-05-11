@@ -72,8 +72,8 @@ export default function Login() {
     <div className="flex w full h-screen bg-white px-10 py-20 rounded-3xl border-2 border-gray-200">
       <div className="w-full flex items-center justify-center lg:w-1/2">
         <div className="mt-8">
-          <h1 className="text-5xl font-semibold">MediSalud</h1>
-          <p className="font-medium text-lg tex-gray-500 mt-4">
+          <h1 className="text-5xl font-semibold text-center text-celeste">Health <span className="text-verde">Express</span> </h1>
+          <p className="font-medium text-lg tex-gray-500 mt-4 text-center">
             {" "}
             Por favor Ingrese sus Datos{" "}
           </p>
@@ -82,7 +82,7 @@ export default function Login() {
               <div>
                 <label className="text-lg font-medium">DNI</label>
                 <input
-                  className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                  className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent focus:outline-none focus:border-celeste"
                   placeholder="Introduce tu DNI"
                   type="text"
                   pattern="[0-9]{0,8}"
@@ -95,7 +95,7 @@ export default function Login() {
                 <label className="text-lg font-medium">Password</label>
                 <input
                   id="password"
-                  className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                  className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent focus:outline-none focus:border-celeste"
                   placeholder="Introduce tu Contraseña"
                   type="password"
                   required
@@ -105,7 +105,7 @@ export default function Login() {
                 <input
                   type="submit"
                   value="Ingresar"
-                  className=" active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-out transition-all py-3 rounded-xl bg-orange-500 text-white text-lg fond bold"
+                  className=" active:scale-[110] active:duration-75  ease-out  py-3 rounded-xl  bg-gradient-to-r from-celeste to-verde text-white text-lg fond bold transition-transform transform hover:scale-110 "
                 />
               </div>
             </form>
@@ -113,7 +113,7 @@ export default function Login() {
         </div>
       </div>
       <div className="hidden relative lg:flex h-full w-1/2 items-center justify-center bg-gray-200">
-        <div className="w-60 h-60 bg-gradient-to-tr bg-orange-500 to-pink-500 rounded-full animate-bounce" />
+        <div className="w-60 h-60 bg-gradient-to-tr bg-verde to-celeste rounded-full animate-bounce" />
         <div className="w-full h-1/2 absolute bottom-0 bg-white/10 backdrop-blur-lg" />
       </div>
       <ToastContainer

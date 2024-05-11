@@ -4,9 +4,9 @@ import medicina2 from "../assets/medicina2.mp4";
 const HeroSection = () => {
   return (
     <div className="flex flex-col items-center mt-6 lg:mt-20">
-      <h1 className="text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide">
+      <h1 className="text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide text-verde">
   Soluciones para tu&nbsp;
-  <span className="bg-gradient-to-r from-orange-500 to-orange-800 text-transparent bg-clip-text">
+  <span className="bg-gradient-to-r from-verde to-celeste text-transparent bg-clip-text">
     salud y bienestar
   </span>
 </h1>
@@ -18,10 +18,10 @@ const HeroSection = () => {
         sostenible.
       </p>
       <div className="flex mt-10 justify-center">
-        <video autoPlay loop muted className="rounded-lg w-1/2 border border-orange-700 shadow-orange-500 mx-2 my-4">
+        <video autoPlay loop muted className="rounded-lg w-1/2 border border-celeste shadow-verde mx-2 my-4">
             <source src={medicina1} type="video/mp4"/>
         </video>
-        <video autoPlay loop muted className="rounded-lg w-1/2 border border-orange-700 shadow-orange-500 mx-2 my-4">
+        <video autoPlay loop muted className="rounded-lg w-1/2 border border-celeste shadow-verde mx-2 my-4">
             <source src={medicina2} type="video/mp4"/>
         </video>
       </div>

@@ -74,7 +74,7 @@ export default function AsignarReceta() {
       <div className="basis-1/4 flex flex-col items-center">
         <div className="flex w-full justify-around items-center ">
           <button
-            className="h-full flex justify-center items-center border border-amber-500  rounded-md py-4"
+            className="h-full flex justify-center items-center border border-verde  rounded-md py-4 px-3 transition-transform transform hover:scale-110"
             onClick={getRecetas}>
             cargar recetas
           </button>
@@ -189,7 +189,7 @@ export default function AsignarReceta() {
             <div className="flex justify-around items-center">
               <h3 className=" text-xl text-start ">Asignar Conductor</h3>
               <button
-                className=" text-xl bg-blue-700 text-white p-2 rounded-md hover:scale-105 duration-300"
+                className=" text-xl rounded-md bg-gradient-to-r from-celeste to-verde text-white p-2 duration-300 transition-transform transform hover:scale-110"
                 onClick={AsignarConductor}>
                 Asignar
               </button>

@@ -142,7 +142,7 @@ function Register() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-36 p-4 bg-gray-100 rounded-lg border border-amber-600 flex flex-col items-center">
+    <div className="max-w-md mx-auto mt-36 p-4 bg-gray-100 rounded-lg border border-celeste flex flex-col items-center">
       <h1 className="text-2xl font-bold mb-4">Regístrate</h1>
       <label htmlFor="dni" className="block mb-2">
         Ingrese su DNI
@@ -153,13 +153,13 @@ function Register() {
         id="dni"
         value={dniValue}
         onChange={handleDniChange}
-        className="w-full p-2 mb-4 rounded border border-gray-300"
+        className="w-full p-2 mb-4 rounded border border-gray-300 focus:outline-none focus:border-celeste"
         disabled={dniActive}
       />
       {buttonVisible && (
         <button
           onClick={handleVerification}
-          className="bg-amber-600 hover:bg-amber-400 text-white font-bold py-2 px-4 rounded mb-4">
+          className="rounded-md bg-gradient-to-r from-celeste to-verde text-white font-bold py-2 px-4 mb-4 transition-transform transform hover:scale-110">
           Verificar
         </button>
       )}
@@ -172,7 +172,7 @@ function Register() {
           type="text"
           placeholder="Nombre"
           id="Nombre"
-          className="w-full p-2 mb-4 rounded border border-gray-300"
+          className="w-full p-2 mb-4 rounded border border-gray-300 focus:outline-none focus:border-celeste"
           disabled
         />
         <label htmlFor="Ubicacion" className="block mb-2 mx-1">
@@ -182,7 +182,7 @@ function Register() {
           type="text"
           placeholder="Apellido"
           id="Apellido"
-          className="w-full p-2 mb-4 rounded border border-gray-300"
+          className="w-full p-2 mb-4 rounded border border-gray-300 focus:outline-none focus:border-celeste"
           disabled
         />
         <label htmlFor="Ubicacion" className="block mb-2 mx-1">
@@ -192,7 +192,7 @@ function Register() {
           type="text"
           placeholder="TipoSeguro"
           id="TipoSeguro"
-          className="w-full p-2 mb-4 rounded border border-gray-300"
+          className="w-full p-2 mb-4 rounded border border-gray-300 focus:outline-none focus:border-celeste"
           disabled
         />
         <label htmlFor="Ubicacion" className="block mb-2 mx-1">
@@ -202,7 +202,7 @@ function Register() {
           type="text"
           placeholder="Dirección"
           id="Direccion"
-          className="w-full p-2 mb-4 rounded border border-gray-300"
+          className="w-full p-2 mb-4 rounded border border-gray-300 focus:outline-none focus:border-celeste"
         />
         <label htmlFor="" className="mb-2 mx-1">
           Seleccione sector de entrega
@@ -225,7 +225,7 @@ function Register() {
             type="text"
             id="Latitud"
             name="Latitud"
-            className="mt-1 w-full rounded-md border border-amber-700  bg-white text-sm text-gray-700 shadow-sm"
+            className="mt-1 w-full rounded-md border border-celeste  bg-white text-sm text-gray-700 shadow-sm"
           />
         </div>
 
@@ -239,7 +239,7 @@ function Register() {
             type="text"
             id="Longitud"
             name="Longitud"
-            className="mt-1 w-full rounded-md border border-amber-700  bg-white text-sm text-gray-700 shadow-sm"
+            className="mt-1 w-full rounded-md border border-celeste  bg-white text-sm text-gray-700 shadow-sm"
           />
         </div>
         <label htmlFor="Ubicacion" className="block mb-2 text-center">
@@ -274,7 +274,7 @@ function Register() {
             onClick={() => {
               handleRegistration();
             }}
-            className="bg-amber-600 hover:bg-amber-400 text-white font-bold py-2 px-4 rounded content-center">
+            className="rounded-md bg-gradient-to-r from-celeste to-verde text-white font-bold py-2 px-4 mb-4 transition-transform transform hover:scale-110">
             Registrar
           </button>
         </div>

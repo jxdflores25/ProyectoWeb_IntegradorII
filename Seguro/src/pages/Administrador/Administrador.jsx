@@ -40,9 +40,9 @@ const Administrador = () => {
       <NavbarAdmin />
 
       <div className="flex flex-col items-center mt-2 lg:mt-5">
-        <h1 className="text-4xl sm:text-6xl lg:text-2xl text-center tracking-wide">
+        <h1 className="text-4xl sm:text-6xl lg:text-2xl text-center tracking-wide text-verde">
           Bienvenido Administrador: &nbsp;
-          <span className="bg-gradient-to-r from-orange-500 to-orange-800 text-transparent bg-clip-text">
+          <span className="bg-gradient-to-r from-verde to-celeste text-transparent bg-clip-text">
             {Administrador.nombre + " " + Administrador.apellido}
           </span>
         </h1>

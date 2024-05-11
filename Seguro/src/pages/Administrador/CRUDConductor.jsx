@@ -160,7 +160,8 @@ const Administrador = () => {
                 <input
                   type="text"
                   id="dni"
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                  className="mt-1 p-2 border border-gray-300 rounded-md w-full 
+                  focus:outline-none focus:border-celeste"
                   value={dni}
                   onChange={(e) => {
                     const inputValue = e.target.value;
@@ -176,13 +177,15 @@ const Administrador = () => {
               <div className="mb-4">
                 <label
                   htmlFor="nombre"
-                  className="block text-sm font-medium text-gray-700">
+                  className="block text-sm font-medium text-gray-700 
+                  focus:outline-none focus:border-celeste">
                   Nombre
                 </label>
                 <input
                   type="text"
                   id="nombre"
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                  className="mt-1 p-2 border border-gray-300 rounded-md w-full 
+                  focus:outline-none focus:border-celeste"
                   value={nombre}
                   onChange={(e) => {
                     const inputValue = e.target.value;
@@ -201,7 +204,8 @@ const Administrador = () => {
                 <input
                   type="text"
                   id="apellido"
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                  className="mt-1 p-2 border border-gray-300 rounded-md w-full 
+                  focus:outline-none focus:border-celeste"
                   value={apellido}
                   onChange={(e) => {
                     const inputValue = e.target.value;
@@ -254,23 +258,24 @@ const Administrador = () => {
                 <input
                   type="password"
                   id="Contraseña"
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                  className="mt-1 p-2 border border-gray-300 rounded-md w-full 
+                  focus:outline-none focus:border-celeste"
                   value={contraseña}
                   onChange={(e) => {
                     setContraseña(e.target.value);
                   }}
                 />
               </div>
-              <div className="flex justify-end">
+              <div className="flex justify-center">
                 <button
                   type="button"
                   onClick={toggleModal}
-                  className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mr-2">
+                  className="bg-verde hover:bg-verde text-white font-bold py-2 px-4 rounded mr-2 transition-transform transform hover:scale-110">
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded">
+                  className="bg-celeste hover:bg-celeste text-white font-bold py-2 px-4 rounded transition-transform transform hover:scale-110">
                   Guardar
                 </button>
               </div>
@@ -280,7 +285,7 @@ const Administrador = () => {
       )}
 
       <div className="overflow-x-auto mt-5">
-        <div className="border border-amber-500 mx-40">
+        <div className="border border-celeste p-4 mx-40">
           <table className="mx-auto min-w-full divide-y-2 divide-gray-200 bg-white text-sm text-center">
             <thead className="ltr:text-left rtl:text-right">
               <tr>
@@ -290,7 +295,7 @@ const Administrador = () => {
                 <th className="px-4 py-2">
                   <button
                     onClick={handleAddClick}
-                    className="rounded bg-gradient-to-r from-orange-500 to-orange-800 px-4 py-2 text-xs font-medium text-white hover:bg-gradient-to-r hover:from-orange-800 hover:to-orange-500">
+                    className="rounded bg-gradient-to-r from-verde to-celeste px-4 py-2 text-xs font-medium text-white hover:bg-gradient-to-r hover:from-celeste hover:to-verde">
                     Agregar
                   </button>
                 </th>
