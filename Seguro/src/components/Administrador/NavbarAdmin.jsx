@@ -48,13 +48,13 @@ const NavbarAdmin = () => {
           <div className="fixed right-0  bg-white w-full p-12 flex flex-col justify-center items-center lg:hidden ">
             <ul>
               {navItemsAdmin.map((item, index) => (
-                <li key={index} className="py-3 border-b-2 border-orange-500">
+                <li key={index} className="py-3 border-b-2 border-celeste">
                   <NavLink to={item.href}>{item.label}</NavLink>
                 </li>
               ))}
             </ul>
             <div className="flex space-x-6" onClick={deleteStorage}>
-              <button className="py-2 my-2.5 px-3 rounded-md bg-gradient-to-r from-orange-500 to-orange-800 text-white">
+              <button className="py-2 my-2.5 px-3 rounded-md bg-gradient-to-r from-celeste to-verde text-white">
                 Cerrar Sesion
               </button>
             </div>

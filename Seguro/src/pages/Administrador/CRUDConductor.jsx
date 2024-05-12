@@ -319,11 +319,11 @@ const Administrador = () => {
                     <td className="px-4 py-2">
                       <button
                         onClick={() => handleEditClick(index)}
-                        className="inline-block rounded bg-amber-500 px-4 py-2 text-xs font-medium text-white hover:bg-amber-600">
+                        className="inline-block rounded bg-verde px-4 py-2 text-xs font-medium text-white hover:bg-verde">
                         Edit
                       </button>
                       <button
-                        className="inline-block rounded bg-red-800 px-4 py-2 text-xs font-medium text-white hover:bg-red-600 ml-2"
+                        className="inline-block rounded bg-celeste px-4 py-2 text-xs font-medium text-white hover:bg-celeste ml-2"
                         onClick={() => eliminarFila(index)}>
                         Delete
                       </button>

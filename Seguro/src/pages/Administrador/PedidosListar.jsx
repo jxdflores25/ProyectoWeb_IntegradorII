@@ -255,12 +255,12 @@ export default function PedidosListar() {
 
           <button
             onClick={Filtros}
-            className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded">
+            className="bg-verde hover:bg-verde text-white font-bold py-2 px-4 rounded">
             Aplicar
           </button>
           <button
             onClick={LimpiarFiltro}
-            className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded ">
+            className="bg-celeste hover:bg-celeste text-white font-bold py-2 px-4 rounded ">
             Limpiar
           </button>
         </div>

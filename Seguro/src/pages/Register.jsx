@@ -142,7 +142,7 @@ function Register() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-36 p-4 bg-gray-100 rounded-lg border border-celeste flex flex-col items-center">
+    <div className="max-w-md mx-auto mt-36 p-4 bg-gray-100 rounded-lg border-4  flex flex-col items-center border-animated overflow-hidden">
       <h1 className="text-2xl font-bold mb-4">Regístrate</h1>
       <label htmlFor="dni" className="block mb-2">
         Ingrese su DNI
@@ -159,7 +159,7 @@ function Register() {
       {buttonVisible && (
         <button
           onClick={handleVerification}
-          className="rounded-md bg-gradient-to-r from-celeste to-verde text-white font-bold py-2 px-4 mb-4 transition-transform transform hover:scale-110">
+          className="css-button-sliding-to-top--green transition-transform transform hover:scale-105">
           Verificar
         </button>
       )}

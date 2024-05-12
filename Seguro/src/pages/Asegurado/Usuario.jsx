@@ -25,9 +25,9 @@ const Usuario = () => {
     Datos(localStorage.getItem("usuario"));
   }, []);
 
-  if (localStorage.getItem("tipo") !== "Asegurado") {
-    return <Navigate to="/" />;
-  }
+  // if (localStorage.getItem("tipo") !== "Asegurado") {
+  //   return <Navigate to="/" />;
+  // }
   const deleteStorage = () => {
     localStorage.removeItem("usuario");
     localStorage.removeItem("tipo");
