@@ -33,6 +33,7 @@ export default function AsignarReceta() {
     fechaHoy,
     fechaConsulta,
     fechaAsignacion,
+    fechaConsultaAyer,
     horaInicio,
     horaFin,
     corte,
@@ -40,6 +41,14 @@ export default function AsignarReceta() {
 
   const getRecetas = async () => {
     const data = await GetRecetas(fechaConsulta, horaInicio, horaFin);
+    console.log(localStorage.getItem("PedidoAyer"));
+    if (localStorage.getItem("PedidoAyer") === "true") {
+      const data2 = await GetRecetas(fechaConsultaAyer, "19:50", "23:59");
+      for (let index = 0; index < data2.data.length; index++) {
+        data.data.splice(-1, 0, data2.data[index]);
+      }
+    }
+
     const receta = data.data;
     const recetaAlta = [];
     const recetaBaja = [];
@@ -57,6 +66,7 @@ export default function AsignarReceta() {
     }
     if (recetaBaja.length === 0 && recetaAlta.length === 0) {
       toast.success("No hay mas recetas por asignar");
+      localStorage.setItem("PedidoAyer", "false");
     } else {
       toast.success("Se cargaron las recetas por asignar");
     }

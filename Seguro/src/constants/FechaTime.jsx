@@ -9,11 +9,13 @@ export default function Fecha() {
   ];
 
   var Dia = "";
+  var DiaAyer = "";
   var Mes = "";
   var Corte = "";
   var horainicio = "";
   var horafin = "";
   var FechaAsignacion = "";
+  var FechaConsultaAyer = "";
 
   if (mes + 1 < 10) {
     Mes = "0" + (mes + 1);
@@ -27,10 +29,17 @@ export default function Fecha() {
     } else {
       Dia = dia;
     }
+
+    if (dia - 1 < 10) {
+      DiaAyer = "0" + (dia - 1);
+    } else {
+      DiaAyer = dia - 1;
+    }
     Corte = "Envios en La tarde";
     horainicio = "00:00";
     horafin = "11:59";
     FechaAsignacion = año + "-" + Mes + "-" + Dia;
+    FechaConsultaAyer = año + "-" + Mes + "-" + DiaAyer;
   } else {
     if (dia + 1 < 10) {
       Dia = "0" + (dia + 1);
@@ -58,6 +67,7 @@ export default function Fecha() {
   return {
     fechaHoy: fechaHoy,
     fechaConsulta: fechaConsulta,
+    fechaConsultaAyer: FechaConsultaAyer,
     fechaAsignacion: FechaAsignacion,
     horaInicio: horainicio,
     horaFin: horafin,

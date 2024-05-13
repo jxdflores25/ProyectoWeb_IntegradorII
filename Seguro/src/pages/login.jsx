@@ -36,6 +36,7 @@ export default function Login() {
       if (res.data.contraseña === contra) {
         localStorage.setItem("usuario", res.data.dni);
         localStorage.setItem("tipo", tipo);
+        localStorage.setItem("PedidoAyer", "true");
         console.log(tipo);
         switch (tipo) {
           case "Asegurado":
@@ -72,7 +73,9 @@ export default function Login() {
     <div className="flex w full h-screen bg-white px-10 py-20 rounded-3xl border-2 border-gray-200">
       <div className="w-full flex items-center justify-center lg:w-1/2">
         <div className="mt-8">
-          <h1 className="text-5xl font-semibold text-center text-celeste">Health <span className="text-verde">Express</span> </h1>
+          <h1 className="text-5xl font-semibold text-center text-celeste">
+            Health <span className="text-verde">Express</span>{" "}
+          </h1>
           <p className="font-medium text-lg tex-gray-500 mt-4 text-center">
             {" "}
             Por favor Ingrese sus Datos{" "}
