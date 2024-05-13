@@ -6,7 +6,7 @@ export default function IconPerfil() {
       viewBox="0 0 24 24"
       strokeWidth="2"
       stroke="currentColor"
-      className="w-20 h-20 mt-8 border rounded-full border-orange-700">
+      className="w-20 h-20 mt-8 border rounded-full border-verde">
       <path
         strokeLinecap="round"
         strokeLinejoin="round"

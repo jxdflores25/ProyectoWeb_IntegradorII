@@ -115,7 +115,7 @@ const InfoPerfil = ({ Data }) => {
                 type="text"
                 id="FirstName"
                 name="first_name"
-                className="mt-1 w-full rounded-md border border-amber-700  text-sm text-gray-700 shadow-sm"
+                className="mt-1 w-full rounded-md border border-celeste  text-sm text-gray-700 shadow-sm"
                 defaultValue={Data.nombre}
                 disabled
               />
@@ -132,7 +132,7 @@ const InfoPerfil = ({ Data }) => {
                 id="LastName"
                 name="last_name"
                 defaultValue={Data.apellido}
-                className="mt-1 w-full rounded-md border border-amber-700  text-sm text-gray-700 shadow-sm"
+                className="mt-1 w-full rounded-md border border-celeste  text-sm text-gray-700 shadow-sm"
                 disabled
               />
             </div>
@@ -148,7 +148,7 @@ const InfoPerfil = ({ Data }) => {
                 id="Direccion"
                 name="Direccion"
                 defaultValue={Data.direccion}
-                className="mt-1 w-full rounded-md border border-amber-700   text-sm text-gray-700 shadow-sm"
+                className="mt-1 w-full rounded-md border border-celeste   text-sm text-gray-700 shadow-sm"
                 required
               />
             </div>
@@ -162,7 +162,7 @@ const InfoPerfil = ({ Data }) => {
               <select
                 name="Ubicacion"
                 id="Ubicacion"
-                className="mt-1 w-full rounded-md border border-amber-700   text-sm text-gray-700 shadow-sm"
+                className="mt-1 w-full rounded-md border border-celeste   text-sm text-gray-700 shadow-sm"
                 defaultValue={Data.ubicacion}>
                 <option value="Lima Sur">Lima Sur</option>
                 <option value="Lima Norte">Lima Norte</option>
@@ -181,7 +181,7 @@ const InfoPerfil = ({ Data }) => {
                 id="TipoSeguro"
                 name="TipoSeguro"
                 defaultValue={Data.TipoSeguro}
-                className="mt-1 w-full rounded-md border border-amber-700   text-sm text-gray-700 shadow-sm"
+                className="mt-1 w-full rounded-md border border-celeste  text-sm text-gray-700 shadow-sm"
                 disabled
               />
             </div>
@@ -197,7 +197,7 @@ const InfoPerfil = ({ Data }) => {
                 id="Latitud"
                 name="Latitud"
                 defaultValue={Data.Latitud}
-                className="mt-1 w-full rounded-md border border-amber-700   text-sm text-gray-700 shadow-sm"
+                className="mt-1 w-full rounded-md border border-celeste   text-sm text-gray-700 shadow-sm"
               />
             </div>
 
@@ -212,7 +212,7 @@ const InfoPerfil = ({ Data }) => {
                 id="Longitud"
                 name="Longitud"
                 defaultValue={Data.Longitud}
-                className="mt-1 w-full rounded-md border border-amber-700   text-sm text-gray-700 shadow-sm"
+                className="mt-1 w-full rounded-md border border-celeste  text-sm text-gray-700 shadow-sm"
               />
             </div>
 
@@ -254,7 +254,7 @@ const InfoPerfil = ({ Data }) => {
                 id="Password"
                 name="password"
                 defaultValue={Data.contraseña}
-                className="mt-1 w-full rounded-md border border-amber-700   text-sm text-gray-700 shadow-sm"
+                className="mt-1 w-full rounded-md border border-celeste   text-sm text-gray-700 shadow-sm"
                 required
               />
             </div>
@@ -268,7 +268,7 @@ const InfoPerfil = ({ Data }) => {
               <input
                 type="text"
                 id="Phone"
-                className="mt-1 w-full rounded-md border border-amber-700  text-sm text-gray-700 shadow-sm"
+                className="mt-1 w-full rounded-md border border-celeste text-sm text-gray-700 shadow-sm"
                 value={Telefono}
                 onChange={(e) => {
                   const inputValue = e.target.value;
@@ -284,7 +284,7 @@ const InfoPerfil = ({ Data }) => {
 
             <div className="col-span-6 flex justify-center">
               <input
-                className="inline-block w-full sm:w-auto shrink-0 rounded-md border border-amber-600 bg-amber-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-amber-600 focus:outline-none focus:ring active:text-amber-500 text-center"
+                className="inline-block w-full sm:w-auto shrink-0 rounded-md border border-celeste bg-celeste  px-12 py-3 text-sm font-medium text-white transition hover:bg-gradient-to-r hover:from-verde hover:to-celeste focus:ring focus:outline-none focus:border-celeste text-center"
                 style={{ cursor: "pointer" }}
                 type="submit"
                 value="Actualizar"

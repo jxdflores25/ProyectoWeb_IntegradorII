@@ -5,7 +5,7 @@ export default function PrincipalMenu({ Data }) {
     <div className="flex-1 p-4 flex flex-col justify-center items-center">
     <h1 className="text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide">
       Bienvenido Asegurado: &nbsp;
-      <span className="bg-gradient-to-r from-orange-500 to-orange-800 text-transparent bg-clip-text">
+      <span className="bg-gradient-to-r from-verde to-celeste text-transparent bg-clip-text">
         {Data.nombre + " " + Data.apellido}
       </span>
     </h1>
