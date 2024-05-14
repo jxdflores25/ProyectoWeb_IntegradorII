@@ -23,7 +23,7 @@ const Administrador = () => {
   const [modalDelete, setmodalDelete] = useState(false);
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
-  const [direccion, setDireccion] = useState(" ");
+  const [direccion, setDireccion] = useState("");
   const [telefono, setTelefono] = useState("");
   const [seguro, setSeguro] = useState("");
   const [sector, setSector] = useState("");
@@ -34,7 +34,7 @@ const Administrador = () => {
 
   const toggleModal = () => {
     // Limpiar los campos solo si no estamos editando
-    setContraseña("");
+
     if (editIndex === null) {
       setNombre("");
       setApellido("");
@@ -58,7 +58,7 @@ const Administrador = () => {
     // Limpiar los campos
     setNombre("");
     setApellido("");
-    setDireccion(" ");
+    setDireccion("");
     setTelefono("");
     setSeguro("");
     setSector("");
@@ -83,7 +83,7 @@ const Administrador = () => {
       setSector(asegurados[editIndex].ubicacion || "");
       setSeguro(asegurados[editIndex].TipoSeguro);
       setTelefono(asegurados[editIndex].telefono);
-      setContraseña(asegurados[editIndex].contraseña);
+      setContraseña(asegurados[editIndex].contraseña || "");
       setDni(asegurados[editIndex].dni);
     }
   }, [editIndex]);
@@ -111,7 +111,11 @@ const Administrador = () => {
       asegurados[editIndex].telefono = telefono;
       asegurados[editIndex].ubicacion = sector;
       asegurados[editIndex].TipoSeguro = seguro;
-      asegurados[editIndex].contraseña = contraseña;
+      if (contraseña === "") {
+        asegurados[editIndex].contraseña = null;
+      } else {
+        asegurados[editIndex].contraseña = contraseña;
+      }
       asegurados[editIndex].dni = dni;
       const res = await PutAsegurado(dni, asegurados[editIndex]);
       if (res !== null) {
