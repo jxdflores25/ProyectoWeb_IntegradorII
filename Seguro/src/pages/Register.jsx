@@ -97,7 +97,6 @@ function Register() {
   const MostrarDatos = (data) => {
     document.getElementById("Nombre").value = data.nombre;
     document.getElementById("Apellido").value = data.apellido;
-    document.getElementById("Direccion").value = data.direccion;
     document.getElementById("TipoSeguro").value = data.TipoSeguro;
   };
 
@@ -123,7 +122,6 @@ function Register() {
 
   const ActualizarDatos = (data) => {
     if (
-      document.getElementById("Direccion").value === "" ||
       document.getElementById("Contraseña").value === "" ||
       document.getElementById("Latitud").value === "" ||
       document.getElementById("Longitud").value === ""
@@ -131,7 +129,6 @@ function Register() {
       toast.warning("Porfavor ingrese todos los datos");
       return null;
     } else {
-      data.direccion = document.getElementById("Direccion").value;
       data.contraseña = document.getElementById("Contraseña").value;
       data.ubicacion = document.getElementById("Ubicacion").value;
       data.TipoSeguro = document.getElementById("TipoSeguro").value;
@@ -194,15 +191,6 @@ function Register() {
           id="TipoSeguro"
           className="w-full p-2 mb-4 rounded border border-gray-300 focus:outline-none focus:border-celeste"
           disabled
-        />
-        <label htmlFor="Ubicacion" className="block mb-2 mx-1">
-          Direccion
-        </label>
-        <input
-          type="text"
-          placeholder="Dirección"
-          id="Direccion"
-          className="w-full p-2 mb-4 rounded border border-gray-300 focus:outline-none focus:border-celeste"
         />
         <label htmlFor="" className="mb-2 mx-1">
           Seleccione sector de entrega
