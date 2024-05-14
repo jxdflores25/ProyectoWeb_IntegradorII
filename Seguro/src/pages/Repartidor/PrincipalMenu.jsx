@@ -9,9 +9,8 @@ export default function PrincipalMenu({ Data }) {
   const [PedidoAlta, setPedidoAlta] = useState([]);
   const [PedidoBaja, setPedidoBaja] = useState([]);
 
-  const { fechaConsulta } = Fecha();
-
   useEffect(() => {
+    const { fechaConsulta } = Fecha();
     const pedidos = async () => {
       const pedAlta = await GetPedidoPrioridad(
         fechaConsulta,
