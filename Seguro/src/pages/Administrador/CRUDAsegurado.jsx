@@ -23,7 +23,7 @@ const Administrador = () => {
   const [modalDelete, setmodalDelete] = useState(false);
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
-  const [direccion, setDireccion] = useState("");
+  const [direccion, setDireccion] = useState(" ");
   const [telefono, setTelefono] = useState("");
   const [seguro, setSeguro] = useState("");
   const [sector, setSector] = useState("");
@@ -34,10 +34,11 @@ const Administrador = () => {
 
   const toggleModal = () => {
     // Limpiar los campos solo si no estamos editando
+    setContraseña("");
     if (editIndex === null) {
       setNombre("");
       setApellido("");
-      setDireccion("");
+      setDireccion(" ");
       setTelefono("");
       setSeguro("");
       setSector("");
@@ -57,7 +58,7 @@ const Administrador = () => {
     // Limpiar los campos
     setNombre("");
     setApellido("");
-    setDireccion("");
+    setDireccion(" ");
     setTelefono("");
     setSeguro("");
     setSector("");
@@ -78,7 +79,7 @@ const Administrador = () => {
     if (editIndex !== null) {
       setNombre(asegurados[editIndex].nombre);
       setApellido(asegurados[editIndex].apellido || "");
-      setDireccion(asegurados[editIndex].direccion || "");
+      setDireccion(asegurados[editIndex].direccion || " ");
       setSector(asegurados[editIndex].ubicacion || "");
       setSeguro(asegurados[editIndex].TipoSeguro);
       setTelefono(asegurados[editIndex].telefono);
@@ -126,7 +127,7 @@ const Administrador = () => {
         TipoSeguro: document.getElementById("seguro").value,
         apellido: apellido,
         contraseña: null,
-        direccion: direccion,
+        direccion: null,
         dni: dni,
         nombre: nombre,
         telefono: telefono,
@@ -142,10 +143,11 @@ const Administrador = () => {
     }
     setNombre("");
     setApellido("");
-    setDireccion("");
+    setDireccion(" ");
     setTelefono("");
     setSeguro("");
     setSector("");
+    setContraseña("");
     toggleModal();
   };
 
