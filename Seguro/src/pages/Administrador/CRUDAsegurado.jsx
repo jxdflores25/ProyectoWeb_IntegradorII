@@ -89,7 +89,7 @@ const Administrador = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!nombre || !apellido || !telefono || !dni || !contraseña) {
+    if (!nombre || !apellido || !telefono || !dni) {
       toast.warning("Por favor completa todos los campos.");
       return; // Evitar enviar el formulario si algún campo está vacío
     }
