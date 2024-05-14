@@ -20,6 +20,7 @@ const Administrador = () => {
   }, []);
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalDelete, setmodalDelete] = useState(false);
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [estado, setEstado] = useState(true);
@@ -38,6 +39,9 @@ const Administrador = () => {
       setDni("");
     }
     setModalOpen(!modalOpen);
+  };
+  const toggleModalEliminar = () => {
+    setmodalDelete(!modalDelete);
   };
 
   const handleAddClick = () => {
@@ -127,13 +131,19 @@ const Administrador = () => {
     toggleModal();
   };
 
-  const eliminarFila = async (index) => {
-    const res = DeleteConductor(conductores[index].dni);
+  const confirmarEliminar = async (index) => {
+    toggleModalEliminar();
+    setEditIndex(index);
+  };
+
+  const eliminarFila = async () => {
+    const res = DeleteConductor(conductores[editIndex].dni);
     if (res !== null) {
       toast.success("Se elimino correctamente");
       const nuevoConductores = [...conductores];
-      nuevoConductores.splice(index, 1);
+      nuevoConductores.splice(editIndex, 1);
       setConductores(nuevoConductores);
+      toggleModalEliminar();
     } else {
       toast.error("Ocurrio un problema al eliminar");
     }
@@ -144,6 +154,31 @@ const Administrador = () => {
 
   return (
     <div>
+      {modalDelete && (
+        <div className="fixed inset-0 z-50 overflow-auto bg-gray-800 bg-opacity-75 flex justify-center items-center">
+          <div className="bg-white p-8 max-w-md">
+            <h4>
+              Desea eliminar al asegurado: <br />
+              Nombre: {conductores[editIndex].nombre}{" "}
+              {conductores[editIndex].apellido}
+              <br />
+              DNI: {conductores[editIndex].dni}
+            </h4>
+            <div className="flex justify-center my-4">
+              <button
+                onClick={toggleModalEliminar}
+                className="bg-verde hover:bg-verde text-white font-bold py-2 px-4 rounded mr-2 transition-transform transform hover:scale-110 duration-700">
+                Cancelar
+              </button>
+              <button
+                onClick={eliminarFila}
+                className="bg-celeste hover:bg-celeste text-white font-bold py-2 px-4 rounded transition-transform transform hover:scale-110">
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {modalOpen && (
         <div className="fixed inset-0 z-50 overflow-auto bg-gray-800 bg-opacity-75 flex justify-center items-center">
           <div className="bg-white p-8 max-w-md">
@@ -324,7 +359,7 @@ const Administrador = () => {
                       </button>
                       <button
                         className="inline-block rounded bg-celeste px-4 py-2 text-xs font-medium text-white hover:bg-celeste ml-2"
-                        onClick={() => eliminarFila(index)}>
+                        onClick={() => confirmarEliminar(index)}>
                         Delete
                       </button>
                     </td>
