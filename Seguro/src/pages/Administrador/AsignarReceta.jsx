@@ -89,8 +89,17 @@ export default function AsignarReceta() {
       const medicina = await GetMedicinaNombre(data[index].id_medicina);
       const kardex = await GetKardex(data[index].id_medicina);
       data[index].nombreMedicina = medicina.data.nombre;
-      data[index].Kardex = kardex.data[0].saldo;
+      if (kardex.data.length > 1) {
+        var Saldo = 0;
+        for (let index = 0; index < kardex.data.length; index++) {
+          Saldo += kardex.data[index].saldo;
+        }
+        data[index].Kardex = Saldo;
+      } else {
+        data[index].Kardex = kardex.data[0].saldo;
+      }
     }
+    console.log(data);
     return data;
   };
 
