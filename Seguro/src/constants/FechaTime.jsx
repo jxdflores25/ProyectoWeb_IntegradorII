@@ -12,6 +12,7 @@ export default function Fecha() {
   var DiaAyer = "";
   var Mes = "";
   var Corte = "";
+  var Envio = "";
   var horainicio = "";
   var horafin = "";
   var FechaAsignacion = "";
@@ -36,6 +37,7 @@ export default function Fecha() {
       DiaAyer = dia - 1;
     }
     Corte = "Envios en La tarde";
+    Envio = "Entregas para la mañana";
     horainicio = "00:00";
     horafin = "11:59";
     FechaAsignacion = año + "-" + Mes + "-" + Dia;
@@ -47,6 +49,7 @@ export default function Fecha() {
       Dia = dia + 1;
     }
     Corte = "Envios al dia siguiente";
+    Envio = "Entregas para la tarde";
     horainicio = "12:00";
     horafin = "23:59";
     FechaAsignacion = año + "-" + Mes + "-" + Dia;
@@ -72,5 +75,6 @@ export default function Fecha() {
     horaInicio: horainicio,
     horaFin: horafin,
     corte: corte,
+    envios: Envio,
   };
 }

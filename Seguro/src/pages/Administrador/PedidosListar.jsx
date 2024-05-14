@@ -162,6 +162,7 @@ export default function PedidosListar() {
       setPedidos(PedidosFiltro);
     } else {
       toast.warning("No hay coincidencias con los filtros aplicados");
+      setPedidos([]);
     }
   };
 

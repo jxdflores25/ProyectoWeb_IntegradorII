@@ -8,6 +8,7 @@ import Fecha from "../../constants/FechaTime";
 export default function PrincipalMenu({ Data }) {
   const [PedidoAlta, setPedidoAlta] = useState([]);
   const [PedidoBaja, setPedidoBaja] = useState([]);
+  const { envios, fechaHoy } = Fecha();
 
   useEffect(() => {
     const { fechaConsulta } = Fecha();
@@ -58,7 +59,11 @@ export default function PrincipalMenu({ Data }) {
       </h1>
       <div className="flex flex-col items-center w-full">
         <div className=" text-start w-full px-4 mt-8">
-          <div className="flex w-full">
+          <div className=" flex justify-between my-5 border-b-2 border-verde">
+            <h2 className=" text-xl">{fechaHoy}</h2>
+            <h2 className=" text-xl">{envios}</h2>
+          </div>
+          <div className="flex w-full mt-10">
             <h4 className=" w-2/3 pb-5 text-xl text-center font-bold">
               Prioridad Alta
             </h4>
