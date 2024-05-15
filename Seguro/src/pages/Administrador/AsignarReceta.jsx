@@ -40,12 +40,13 @@ export default function AsignarReceta() {
   } = Fecha();
 
   const getRecetas = async () => {
-    const data = await GetRecetas(fechaConsulta, horaInicio, horaFin);
-    console.log(localStorage.getItem("PedidoAyer"));
-    if (localStorage.getItem("PedidoAyer") === "true") {
-      const data2 = await GetRecetas(fechaConsultaAyer, "19:50", "23:59");
-      for (let index = 0; index < data2.data.length; index++) {
-        data.data.splice(-1, 0, data2.data[index]);
+    const data = await GetRecetas(fechaConsulta, "8:00", horaFin);
+    if (fechaConsultaAyer) {
+      if (localStorage.getItem("PedidoAyer") === "true") {
+        const data2 = await GetRecetas(fechaConsultaAyer, "19:50", "23:59");
+        for (let index = 0; index < data2.data.length; index++) {
+          data.data.splice(-1, 0, data2.data[index]);
+        }
       }
     }
 
@@ -99,7 +100,6 @@ export default function AsignarReceta() {
         data[index].Kardex = kardex.data[0].saldo;
       }
     }
-    console.log(data);
     return data;
   };
 
@@ -159,7 +159,7 @@ export default function AsignarReceta() {
       if (conductor.Alta === 4) {
         toast.error("No se pueden asignar mas recetas con prioridad Alta");
       } else {
-        var dataReceta = {
+        /*var dataReceta = {
           dni_asegurado: Detalle.dni_Paciente,
           id_receta: Detalle.id,
           fecha: Detalle.fecha,
@@ -167,7 +167,7 @@ export default function AsignarReceta() {
           nom_doctor: Detalle.nombre_Medico,
         };
 
-        const RecetaSeguro = await PostRecetaSeguro(dataReceta);
+        //const RecetaSeguro = await PostRecetaSeguro(dataReceta);
 
         var dataPedido = {
           id_receta: RecetaSeguro.data.id,
@@ -179,7 +179,17 @@ export default function AsignarReceta() {
         };
         const PedidoSeguro = await PostPedido(dataPedido);
 
-        await PostMedicinaSeguro(RecetaSeguro.data.id, Medicinas);
+        //await PostMedicinaSeguro(RecetaSeguro.data.id, Medicinas);
+
+        var dataKardex = {
+          id: 3,
+          id_medicina: "9",
+          nro_lote: "653489",
+          fec_entrada: "2024-05-13",
+          fec_venci: "2024-05-30",
+          cantidad: 300,
+          saldo: 300,
+        };
 
         if (PedidoSeguro !== null) {
           toast.success("Se asigno correctamente el Pedido");
@@ -190,6 +200,10 @@ export default function AsignarReceta() {
           setModalOpen(false);
         } else {
           toast.error("Hubo un problema en la asignacion del Pedido");
+        }*/
+        for (let index = 0; index < Medicinas.length; index++) {
+          const kardex = await GetKardex(Medicinas[index].id_medicina);
+          console.log(kardex.data);
         }
       }
     } else {
