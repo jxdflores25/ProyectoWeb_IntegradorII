@@ -9,11 +9,13 @@ import { Slide, ToastContainer, toast } from "react-toastify";
 
 const Administrador = () => {
   const [asegurados, setAsegurados] = useState([]);
+  const [EstaticoAsegurados, setEstaticoAsegurados] = useState(null);
 
   useEffect(() => {
     const Datos = async () => {
       const resp = await GetAsegurados();
       setAsegurados(resp.data);
+      setEstaticoAsegurados(resp.data);
     };
 
     Datos();
@@ -31,6 +33,8 @@ const Administrador = () => {
   const [contraseña, setContraseña] = useState("");
   const [editIndex, setEditIndex] = useState(null);
   const [actu, setActu] = useState(false);
+
+  const [filAseg, setfilAseg] = useState("");
 
   const toggleModal = () => {
     // Limpiar los campos solo si no estamos editando
@@ -174,6 +178,50 @@ const Administrador = () => {
     }
   };
 
+  const Filtros = () => {
+    if (!filAseg) {
+      toast.warning("Ingrese un filtro por lo menos");
+      return;
+    }
+
+    var AseguradoFiltro = [];
+
+    var filAsegExiste = true;
+
+    if (filAseg) {
+      if (AseguradoFiltro.length !== 0) {
+        var FilterAseg = [];
+        for (let index = 0; index < AseguradoFiltro.length; index++) {
+          if (AseguradoFiltro[index].dni === filAseg) {
+            FilterAseg.push(AseguradoFiltro[index]);
+          }
+        }
+        AseguradoFiltro = FilterAseg;
+      } else {
+        for (let index = 0; index < EstaticoAsegurados.length; index++) {
+          if (EstaticoAsegurados[index].dni === filAseg) {
+            AseguradoFiltro.push(EstaticoAsegurados[index]);
+          }
+        }
+      }
+      if (AseguradoFiltro.length === 0) {
+        filAsegExiste = false;
+      }
+    }
+
+    if (filAsegExiste && AseguradoFiltro.length > 0) {
+      toast.success("Se aplicaron los filtros");
+      setAsegurados(AseguradoFiltro);
+    } else {
+      toast.warning("No hay coincidencias con los filtros aplicados");
+      setAsegurados([]);
+    }
+  };
+
+  const LimpiarFiltro = () => {
+    setfilAseg("");
+    setAsegurados(EstaticoAsegurados);
+  };
   const soloTextoRegex = /^[A-Za-z\s]+$/; // Expresión regular para aceptar solo letras y espacios
   const soloNumerosRegex = /^[0-9]*$/; // Expresión regular para aceptar solo números
 
@@ -384,12 +432,46 @@ const Administrador = () => {
                 <th className="px-4 py-2 font-bold text-2xl text-gray-900">
                   Asegurados
                 </th>
-                <th className="px-4 py-2">
-                  <button
-                    onClick={handleAddClick}
-                    className="rounded-md bg-gradient-to-r from-celeste to-verde px-4 py-2 text-xs font-medium text-white hover:bg-gradient-to-r hover:from-verde hover:to-celeste transition-transform transform hover:scale-110">
-                    Agregar
-                  </button>
+                <th className="px-4 py-2" colSpan="2">
+                  <div className="w-full flex justify-end">
+                    <button
+                      onClick={handleAddClick}
+                      className="rounded-md bg-gradient-to-r from-celeste to-verde px-4 py-2 text-xs font-medium text-white hover:bg-gradient-to-r hover:from-verde hover:to-celeste transition-transform transform hover:scale-110">
+                      Agregar
+                    </button>
+                  </div>
+                </th>
+              </tr>
+              <tr>
+                <th className="px-4 py-2" colSpan="3">
+                  <div className="flex gap-3 ">
+                    <input
+                      type="text"
+                      id="Asegurado"
+                      value={filAseg}
+                      className=" p-2 rounded border border-black"
+                      placeholder="Ingrese el DNI"
+                      onChange={(e) => {
+                        const inputValue = e.target.value;
+                        if (
+                          soloNumerosRegex.test(inputValue) &&
+                          inputValue.length <= 8
+                        ) {
+                          setfilAseg(inputValue);
+                        }
+                      }}
+                    />
+                    <button
+                      onClick={Filtros}
+                      className="bg-verde  hover:bg-verde text-white font-bold py-2 px-4 rounded">
+                      Aplicar
+                    </button>
+                    <button
+                      onClick={LimpiarFiltro}
+                      className="bg-celeste hover:bg-celeste text-white font-bold py-2 px-4 rounded ">
+                      Limpiar
+                    </button>
+                  </div>
                 </th>
               </tr>
               <tr>

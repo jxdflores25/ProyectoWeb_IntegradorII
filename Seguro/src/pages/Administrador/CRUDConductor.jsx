@@ -9,11 +9,13 @@ import { Slide, ToastContainer, toast } from "react-toastify";
 
 const Administrador = () => {
   const [conductores, setConductores] = useState([]);
+  const [EstaticoConductores, setEstaticoConductoress] = useState(null);
 
   useEffect(() => {
     const Datos = async () => {
       const resp = await GetConductores();
       setConductores(resp.data);
+      setEstaticoConductoress(resp.data);
     };
 
     Datos();
@@ -29,6 +31,8 @@ const Administrador = () => {
   const [dni, setDni] = useState("");
   const [editIndex, setEditIndex] = useState(null);
   const [actu, setActu] = useState(false);
+
+  const [filCond, setfilCond] = useState("");
 
   const toggleModal = () => {
     // Limpiar los campos solo si no estamos editando
@@ -92,14 +96,13 @@ const Administrador = () => {
     } else {
       setEstado(false);
     }
-    
-    
 
     //const nuevoAsegurado = { nombre, apellido, direccion, telefono };
     if (editIndex !== null) {
       conductores[editIndex].nombre = nombre;
       conductores[editIndex].apellido = apellido;
-      conductores[editIndex].direccion = document.getElementById("Sector").value;
+      conductores[editIndex].direccion =
+        document.getElementById("Sector").value;
       conductores[editIndex].contraseña = contraseña;
       conductores[editIndex].estado = estado;
       conductores[editIndex].dni = dni;
@@ -152,6 +155,51 @@ const Administrador = () => {
     } else {
       toast.error("Ocurrio un problema al eliminar");
     }
+  };
+
+  const Filtros = () => {
+    if (!filCond) {
+      toast.warning("Ingrese un filtro por lo menos");
+      return;
+    }
+
+    var ConductorFiltro = [];
+
+    var filCondExiste = true;
+
+    if (filCond) {
+      if (ConductorFiltro.length !== 0) {
+        var FilterAseg = [];
+        for (let index = 0; index < ConductorFiltro.length; index++) {
+          if (ConductorFiltro[index].dni === filCond) {
+            FilterAseg.push(ConductorFiltro[index]);
+          }
+        }
+        ConductorFiltro = FilterAseg;
+      } else {
+        for (let index = 0; index < EstaticoConductores.length; index++) {
+          if (EstaticoConductores[index].dni === filCond) {
+            ConductorFiltro.push(EstaticoConductores[index]);
+          }
+        }
+      }
+      if (ConductorFiltro.length === 0) {
+        filCondExiste = false;
+      }
+    }
+
+    if (filCondExiste && ConductorFiltro.length > 0) {
+      toast.success("Se aplicaron los filtros");
+      setConductores(ConductorFiltro);
+    } else {
+      toast.warning("No hay coincidencias con los filtros aplicados");
+      setConductores([]);
+    }
+  };
+
+  const LimpiarFiltro = () => {
+    setfilCond("");
+    setConductores(EstaticoConductores);
   };
 
   const soloTextoRegex = /^[A-Za-z\s]+$/; // Expresión regular para aceptar solo letras y espacios
@@ -213,7 +261,6 @@ const Administrador = () => {
                       setDni(inputValue);
                     }
                   }}
-                  
                 />
               </div>
               <div className="mb-4">
@@ -334,12 +381,46 @@ const Administrador = () => {
                 <th className="px-4 py-2 font-bold text-2xl text-gray-900">
                   Distribuidor
                 </th>
-                <th className="px-4 py-2">
-                  <button
-                    onClick={handleAddClick}
-                    className="rounded bg-gradient-to-r from-verde to-celeste px-4 py-2 text-xs font-medium text-white hover:bg-gradient-to-r hover:from-celeste hover:to-verde">
-                    Agregar
-                  </button>
+                <th className="px-4 py-2" colSpan="2">
+                  <div className="w-full flex justify-end">
+                    <button
+                      onClick={handleAddClick}
+                      className="rounded-md bg-gradient-to-r from-celeste to-verde px-4 py-2 text-xs font-medium text-white hover:bg-gradient-to-r hover:from-verde hover:to-celeste transition-transform transform hover:scale-110">
+                      Agregar
+                    </button>
+                  </div>
+                </th>
+              </tr>
+              <tr>
+                <th className="px-4 py-2" colSpan="3">
+                  <div className="flex gap-3 ">
+                    <input
+                      type="text"
+                      id="Asegurado"
+                      value={filCond}
+                      className=" p-2 rounded border border-black"
+                      placeholder="Ingrese el DNI"
+                      onChange={(e) => {
+                        const inputValue = e.target.value;
+                        if (
+                          soloNumerosRegex.test(inputValue) &&
+                          inputValue.length <= 8
+                        ) {
+                          setfilCond(inputValue);
+                        }
+                      }}
+                    />
+                    <button
+                      onClick={Filtros}
+                      className="bg-verde  hover:bg-verde text-white font-bold py-2 px-4 rounded">
+                      Aplicar
+                    </button>
+                    <button
+                      onClick={LimpiarFiltro}
+                      className="bg-celeste hover:bg-celeste text-white font-bold py-2 px-4 rounded ">
+                      Limpiar
+                    </button>
+                  </div>
                 </th>
               </tr>
               <tr>
