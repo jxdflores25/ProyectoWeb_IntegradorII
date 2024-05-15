@@ -139,7 +139,9 @@ function Register() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-36 p-4 bg-gray-100 rounded-lg border-4  flex flex-col items-center border-animated overflow-hidden">
+    
+    <div className="max-w-md mx-auto mt-36 p-4 bg-gradient-to-r from-blue-200 to-verdesuave rounded-lg border-4 border-spin flex flex-col items-center overflow-hidden">
+      <div className="top-line border-line"></div>
       <h1 className="text-2xl font-bold mb-4">Regístrate</h1>
       <label htmlFor="dni" className="block mb-2">
         Ingrese su DNI
@@ -267,6 +269,7 @@ function Register() {
           </button>
         </div>
       </div>
+      <div className="bottom-line border-line"></div>
       <ToastContainer
         position="top-center"
         autoClose={2000}
