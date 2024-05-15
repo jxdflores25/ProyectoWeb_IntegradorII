@@ -6,6 +6,7 @@ import {
   PutAsegurado,
 } from "../../API/API_Seguro";
 import { Slide, ToastContainer, toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 const Administrador = () => {
   const [asegurados, setAsegurados] = useState([]);
@@ -206,8 +207,20 @@ const Administrador = () => {
       )}
 
       {modalOpen && (
-        <div className="fixed inset-0 z-50 overflow-auto bg-gray-800 bg-opacity-75 flex justify-center items-center">
-          <div className="bg-white p-8 max-w-md">
+        <motion.div
+         className="fixed inset-0 z-50 overflow-auto bg-gray-800 bg-opacity-75 flex justify-center items-center"
+         initial={{ opacity: 0, y: "-100%" }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: "-100%" }}
+          transition={{ type: "spring", damping: 20, stiffness: 100 }}
+         >
+          <motion.div
+          className="bg-white p-8 max-w-md rounded-lg"
+          initial={{ opacity: 0, y: "-50%" }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: "-50%" }}
+            transition={{ type: "spring", damping: 20, stiffness: 100 }}
+           >
             <h2 className="text-2xl font-bold mb-4 text-center">
               Registro Asegurado
             </h2>
@@ -372,9 +385,11 @@ const Administrador = () => {
                 </button>
               </div>
             </form>
-          </div>
-        </div>
+         
+            </motion.div>
+  </motion.div>
       )}
+      
 
       <div className="overflow-x-auto mt-5">
         <div className="border border-celeste p-4 mx-40">
