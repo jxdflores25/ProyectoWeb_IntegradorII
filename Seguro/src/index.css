@@ -14,7 +14,7 @@
   height: 100%;
   width: 100%;
 }
-@keyframes borderAnimation {
+/* @keyframes borderAnimation {
   0% {
     border-color: #4DC9FE; 
   }
@@ -26,14 +26,7 @@
   }
 }
 
-@keyframes border-spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(-360deg);
-  }
-}
+
 
 @keyframes borderAnimation {
   0% {
@@ -51,8 +44,8 @@
   animation: borderAnimation 2s infinite;
   position: relative;
   border: 4px solid transparent; /* Ajusta el grosor del borde */
-  overflow: hidden;
-}
+  /* overflow: hidden; */
+
 
 .css-button-sliding-to-top--green {
   min-width: 130px;
@@ -94,4 +87,75 @@
 /* Hace que el gradiente se expanda al pasar el mouse */
 .css-button-sliding-to-top--green:hover:after {
   height: 100%;
+}
+
+
+
+
+/* .box::before{
+  content: "";
+  position: absolute;
+  width: 170px;
+  height: 140%;
+  background:linear-gradient(#00CB6A,#4DC9FE);
+  animation: rotate 4s linear infinite;
+}
+@keyframes rotate{
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+} */
+
+.border-spin {
+  position: relative;
+  overflow: hidden;
+}
+
+.border-line {
+  position: absolute;
+  width: 100%;
+  height: 3px; /* Grosor de la línea */
+  
+}
+
+.top-line {
+  top: 0;
+  background: linear-gradient(to right, #00CB6A, #4DC9FE);
+}
+
+.bottom-line {
+  bottom: 0;
+  background: linear-gradient(to right, #4DC9FE, #00CB6A);
+}
+
+@keyframes moveTopLine {
+  from {
+    transform: translateX(-80%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes moveBottomLine {
+  from {
+    transform: translateX(80%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.top-line {
+  animation: moveTopLine 4s linear infinite;
+}
+
+.bottom-line {
+  animation: moveBottomLine 4s linear infinite;
+}
+.menu-backdrop-padding {
+  padding: 10px; /* ajusta el valor según tu preferencia */
 }

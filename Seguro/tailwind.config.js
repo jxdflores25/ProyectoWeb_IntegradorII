@@ -9,6 +9,7 @@ export default {
     colors: {
       verde:'#00CB6A',
       celeste:'#4DC9FE',
+      verdesuave:'#8cf1c1',
     }
     },
   },
