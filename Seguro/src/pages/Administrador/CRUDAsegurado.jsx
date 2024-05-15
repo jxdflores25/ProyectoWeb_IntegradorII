@@ -184,7 +184,7 @@ const Administrador = () => {
           <div className="bg-white p-8 max-w-md">
             <h4>
               Desea eliminar al asegurado: <br />
-              Nombre: {asegurados[editIndex].nombre}{" "}
+              Nombres: {asegurados[editIndex].nombre}{" "}
               {asegurados[editIndex].apellido}
               <br />
               DNI: {asegurados[editIndex].dni}
@@ -239,7 +239,7 @@ const Administrador = () => {
                 <label
                   htmlFor="nombre"
                   className="block text-sm font-medium text-gray-700 focus:outline-none focus:border-celeste">
-                  Nombre
+                  Nombres
                 </label>
                 <input
                   type="text"
@@ -258,7 +258,7 @@ const Administrador = () => {
                 <label
                   htmlFor="nombre"
                   className="block text-sm font-medium text-gray-700 focus:outline-none focus:border-celeste">
-                  Apellido
+                  Apellidos
                 </label>
                 <input
                   type="text"

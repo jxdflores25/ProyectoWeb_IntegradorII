@@ -28,6 +28,7 @@ const Administrador = () => {
   const [contraseña, setContraseña] = useState("");
   const [dni, setDni] = useState("");
   const [editIndex, setEditIndex] = useState(null);
+  const [actu, setActu] = useState(false);
 
   const toggleModal = () => {
     // Limpiar los campos solo si no estamos editando
@@ -45,6 +46,7 @@ const Administrador = () => {
   };
 
   const handleAddClick = () => {
+    setActu(false);
     setEditIndex(null);
     // Limpiar los campos
     setNombre("");
@@ -59,6 +61,7 @@ const Administrador = () => {
   const handleEditClick = (index) => {
     // Al hacer clic en "Editar", llenamos los campos con los datos correspondientes
     setEditIndex(index);
+    setActu(true);
     // Abrir el modal
     toggleModal();
   };
@@ -89,20 +92,22 @@ const Administrador = () => {
     } else {
       setEstado(false);
     }
+    
+    
 
     //const nuevoAsegurado = { nombre, apellido, direccion, telefono };
     if (editIndex !== null) {
       conductores[editIndex].nombre = nombre;
       conductores[editIndex].apellido = apellido;
-      conductores[editIndex].direccion = sector;
+      conductores[editIndex].direccion = document.getElementById("Sector").value;
       conductores[editIndex].contraseña = contraseña;
       conductores[editIndex].estado = estado;
       conductores[editIndex].dni = dni;
       const res = await PutConductor(dni, conductores[editIndex]);
       if (res !== null) {
-        toast.success("Se actulizo correctamente");
+        toast.success("Se actualizó correctamente");
       } else {
-        toast.error("Ocurrio un problema al actualizar");
+        toast.error("Ocurrió un problema al actualizar");
       }
       setEditIndex(null);
     } else {
@@ -111,7 +116,7 @@ const Administrador = () => {
         nombre: nombre,
         apellido: apellido,
         contraseña: contraseña,
-        direccion: sector,
+        direccion: document.getElementById("Sector").value,
         ubicacion: null,
         estado: estado,
       };
@@ -158,8 +163,8 @@ const Administrador = () => {
         <div className="fixed inset-0 z-50 overflow-auto bg-gray-800 bg-opacity-75 flex justify-center items-center">
           <div className="bg-white p-8 max-w-md">
             <h4>
-              Desea eliminar al asegurado: <br />
-              Nombre: {conductores[editIndex].nombre}{" "}
+              Desea eliminar al distribuidor: <br />
+              Nombres: {conductores[editIndex].nombre}{" "}
               {conductores[editIndex].apellido}
               <br />
               DNI: {conductores[editIndex].dni}
@@ -198,6 +203,7 @@ const Administrador = () => {
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full 
                   focus:outline-none focus:border-celeste"
                   value={dni}
+                  disabled={actu}
                   onChange={(e) => {
                     const inputValue = e.target.value;
                     if (
@@ -207,6 +213,7 @@ const Administrador = () => {
                       setDni(inputValue);
                     }
                   }}
+                  
                 />
               </div>
               <div className="mb-4">
@@ -214,7 +221,7 @@ const Administrador = () => {
                   htmlFor="nombre"
                   className="block text-sm font-medium text-gray-700 
                   focus:outline-none focus:border-celeste">
-                  Nombre
+                  Nombres
                 </label>
                 <input
                   type="text"
@@ -234,7 +241,7 @@ const Administrador = () => {
                 <label
                   htmlFor="nombre"
                   className="block text-sm font-medium text-gray-700">
-                  Apellido
+                  Apellidos
                 </label>
                 <input
                   type="text"

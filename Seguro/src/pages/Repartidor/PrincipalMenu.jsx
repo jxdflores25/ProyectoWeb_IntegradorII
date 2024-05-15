@@ -6,8 +6,8 @@ import { Slide, ToastContainer, toast } from "react-toastify";
 import Fecha from "../../constants/FechaTime";
 
 export default function PrincipalMenu({ Data }) {
-  const [PedidoAlta, setPedidoAlta] = useState([]);
-  const [PedidoBaja, setPedidoBaja] = useState([]);
+  const [PedidoAlta, setPedidoAlta] = useState(null);
+  const [PedidoBaja, setPedidoBaja] = useState(null);
   const { envios, fechaHoy } = Fecha();
 
   useEffect(() => {
@@ -16,15 +16,19 @@ export default function PrincipalMenu({ Data }) {
       const pedAlta = await GetPedidoPrioridad(
         fechaConsulta,
         "Alta",
-        "65214359"
+        localStorage.getItem("usuario")
       );
       const pedBaja = await GetPedidoPrioridad(
         fechaConsulta,
         "Baja",
-        "65214359"
+        localStorage.getItem("usuario")
       );
-      setPedidoAlta(pedAlta.data);
-      setPedidoBaja(pedBaja.data);
+      if (pedAlta.data.length>0) {
+        setPedidoAlta(pedAlta.data);
+      }
+      if (pedBaja.data.length>0) {
+        setPedidoBaja(pedBaja.data);
+      }      
     };
     pedidos();
   }, []);
@@ -77,7 +81,7 @@ export default function PrincipalMenu({ Data }) {
             </h6>
           </div>
 
-          <table className="w-full text-center">
+          <table className="w-full text-center ">
             <thead>
               <tr>
                 <th>ID</th>
@@ -86,14 +90,14 @@ export default function PrincipalMenu({ Data }) {
               </tr>
             </thead>
             <tbody>
-              {PedidoAlta &&
+              {PedidoAlta ?
                 PedidoAlta.map((Pedido) => (
                   <tr key={Pedido.id} className=" my-2 border-y-2 border-black">
                     <td>{Pedido.id}</td>
                     <td>{Pedido.id_receta}</td>
                     <td>{Pedido.estatus}</td>
                   </tr>
-                ))}
+                )): (<tr className=" h-24 border-2 border-[#9ca3af] border-dashed border-black"><td colSpan="3" className="text-lg text-[#9ca3af]">Aqui se mostraran sus pedidos de prioridad alta</td></tr>)}
             </tbody>
           </table>
 
@@ -119,14 +123,14 @@ export default function PrincipalMenu({ Data }) {
               </tr>
             </thead>
             <tbody>
-              {PedidoBaja &&
+              {PedidoBaja ?
                 PedidoBaja.map((Pedido) => (
                   <tr key={Pedido.id} className=" my-2 border-y-2 border-black">
                     <td>{Pedido.id}</td>
                     <td>{Pedido.id_receta}</td>
                     <td>{Pedido.estatus}</td>
                   </tr>
-                ))}
+                )):(<tr className=" h-24 border-2 border-[#9ca3af] border-dashed border-black"><td colSpan="3" className="text-lg text-[#9ca3af]">Aqui se mostraran sus pedidos de prioridad baja</td></tr>)}
             </tbody>
           </table>
         </div>
