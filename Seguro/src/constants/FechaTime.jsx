@@ -9,11 +9,14 @@ export default function Fecha() {
   ];
 
   var Dia = "";
+  var DiaAyer = "";
   var Mes = "";
   var Corte = "";
+  var Envio = "";
   var horainicio = "";
   var horafin = "";
   var FechaAsignacion = "";
+  var FechaConsultaAyer = "";
 
   if (mes + 1 < 10) {
     Mes = "0" + (mes + 1);
@@ -27,10 +30,18 @@ export default function Fecha() {
     } else {
       Dia = dia;
     }
+
+    if (dia - 1 < 10) {
+      DiaAyer = "0" + (dia - 1);
+    } else {
+      DiaAyer = dia - 1;
+    }
     Corte = "Envios en La tarde";
+    Envio = "Entregas para la mañana";
     horainicio = "00:00";
     horafin = "11:59";
     FechaAsignacion = año + "-" + Mes + "-" + Dia;
+    FechaConsultaAyer = año + "-" + Mes + "-" + DiaAyer;
   } else {
     if (dia + 1 < 10) {
       Dia = "0" + (dia + 1);
@@ -38,6 +49,7 @@ export default function Fecha() {
       Dia = dia + 1;
     }
     Corte = "Envios al dia siguiente";
+    Envio = "Entregas para la tarde";
     horainicio = "12:00";
     horafin = "23:59";
     FechaAsignacion = año + "-" + Mes + "-" + Dia;
@@ -58,9 +70,11 @@ export default function Fecha() {
   return {
     fechaHoy: fechaHoy,
     fechaConsulta: fechaConsulta,
+    fechaConsultaAyer: FechaConsultaAyer,
     fechaAsignacion: FechaAsignacion,
     horaInicio: horainicio,
     horaFin: horafin,
     corte: corte,
+    envios: Envio,
   };
 }

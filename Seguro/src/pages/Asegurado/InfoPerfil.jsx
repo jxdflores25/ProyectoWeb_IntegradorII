@@ -75,7 +75,6 @@ const InfoPerfil = ({ Data }) => {
 
     Data.nombre = document.getElementById("FirstName").value;
     Data.apellido = document.getElementById("LastName").value;
-    Data.direccion = document.getElementById("Direccion").value;
     Data.ubicacion = document.getElementById("Ubicacion").value;
     Data.TipoSeguro = document.getElementById("TipoSeguro").value;
     Data.Latitud = document.getElementById("Latitud").value;
@@ -115,7 +114,7 @@ const InfoPerfil = ({ Data }) => {
                 type="text"
                 id="FirstName"
                 name="first_name"
-                className="mt-1 w-full rounded-md border border-celeste  text-sm text-gray-700 shadow-sm"
+                className="mt-1 w-full rounded-md bg-slate-300  border border-celeste  text-sm text-gray-700 shadow-sm"
                 defaultValue={Data.nombre}
                 disabled
               />
@@ -132,24 +131,8 @@ const InfoPerfil = ({ Data }) => {
                 id="LastName"
                 name="last_name"
                 defaultValue={Data.apellido}
-                className="mt-1 w-full rounded-md border border-celeste  text-sm text-gray-700 shadow-sm"
+                className="mt-1 w-full rounded-md bg-slate-300  border border-celeste  text-sm text-gray-700 shadow-sm"
                 disabled
-              />
-            </div>
-
-            <div className="col-span-6">
-              <label
-                htmlFor="text"
-                className="block text-sm font-medium text-gray-700">
-                Dirección
-              </label>
-              <input
-                type="text"
-                id="Direccion"
-                name="Direccion"
-                defaultValue={Data.direccion}
-                className="mt-1 w-full rounded-md border border-celeste   text-sm text-gray-700 shadow-sm"
-                required
               />
             </div>
 
@@ -181,7 +164,7 @@ const InfoPerfil = ({ Data }) => {
                 id="TipoSeguro"
                 name="TipoSeguro"
                 defaultValue={Data.TipoSeguro}
-                className="mt-1 w-full rounded-md border border-celeste  text-sm text-gray-700 shadow-sm"
+                className="mt-1 w-full rounded-md bg-slate-300  border border-celeste  text-sm text-gray-700 shadow-sm"
                 disabled
               />
             </div>

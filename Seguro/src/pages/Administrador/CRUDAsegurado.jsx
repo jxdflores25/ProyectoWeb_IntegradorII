@@ -20,6 +20,7 @@ const Administrador = () => {
   }, []);
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalDelete, setmodalDelete] = useState(false);
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [direccion, setDireccion] = useState("");
@@ -33,10 +34,11 @@ const Administrador = () => {
 
   const toggleModal = () => {
     // Limpiar los campos solo si no estamos editando
+
     if (editIndex === null) {
       setNombre("");
       setApellido("");
-      setDireccion("");
+      setDireccion(" ");
       setTelefono("");
       setSeguro("");
       setSector("");
@@ -44,6 +46,10 @@ const Administrador = () => {
       setDni("");
     }
     setModalOpen(!modalOpen);
+  };
+
+  const toggleModalEliminar = () => {
+    setmodalDelete(!modalDelete);
   };
 
   const handleAddClick = () => {
@@ -73,25 +79,18 @@ const Administrador = () => {
     if (editIndex !== null) {
       setNombre(asegurados[editIndex].nombre);
       setApellido(asegurados[editIndex].apellido || "");
-      setDireccion(asegurados[editIndex].direccion || "");
+      setDireccion(asegurados[editIndex].direccion || " ");
       setSector(asegurados[editIndex].ubicacion || "");
       setSeguro(asegurados[editIndex].TipoSeguro);
       setTelefono(asegurados[editIndex].telefono);
-      setContraseña(asegurados[editIndex].contraseña);
+      setContraseña(asegurados[editIndex].contraseña || "");
       setDni(asegurados[editIndex].dni);
     }
   }, [editIndex]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (
-      !nombre ||
-      !apellido ||
-      !direccion ||
-      !telefono ||
-      !dni ||
-      !contraseña
-    ) {
+    if (!nombre || !apellido || !telefono || !dni) {
       toast.warning("Por favor completa todos los campos.");
       return; // Evitar enviar el formulario si algún campo está vacío
     }
@@ -112,7 +111,11 @@ const Administrador = () => {
       asegurados[editIndex].telefono = telefono;
       asegurados[editIndex].ubicacion = sector;
       asegurados[editIndex].TipoSeguro = seguro;
-      asegurados[editIndex].contraseña = contraseña;
+      if (contraseña === "") {
+        asegurados[editIndex].contraseña = null;
+      } else {
+        asegurados[editIndex].contraseña = contraseña;
+      }
       asegurados[editIndex].dni = dni;
       const res = await PutAsegurado(dni, asegurados[editIndex]);
       if (res !== null) {
@@ -128,7 +131,7 @@ const Administrador = () => {
         TipoSeguro: document.getElementById("seguro").value,
         apellido: apellido,
         contraseña: null,
-        direccion: direccion,
+        direccion: null,
         dni: dni,
         nombre: nombre,
         telefono: telefono,
@@ -144,20 +147,28 @@ const Administrador = () => {
     }
     setNombre("");
     setApellido("");
-    setDireccion("");
+    setDireccion(" ");
     setTelefono("");
     setSeguro("");
     setSector("");
+    setContraseña("");
     toggleModal();
   };
 
-  const eliminarFila = async (index) => {
-    const res = DeleteAsegurado(asegurados[index].dni);
+  const confirmarEliminar = async (index) => {
+    toggleModalEliminar();
+    setEditIndex(index);
+  };
+
+  const eliminarFila = async () => {
+    const res = DeleteAsegurado(asegurados[editIndex].dni);
+
     if (res !== null) {
       toast.success("Se elimino correctamente");
       const nuevosAsegurados = [...asegurados];
-      nuevosAsegurados.splice(index, 1);
+      nuevosAsegurados.splice(editIndex, 1);
       setAsegurados(nuevosAsegurados);
+      toggleModalEliminar();
     } else {
       toast.error("Ocurrio un problema al eliminar");
     }
@@ -168,6 +179,32 @@ const Administrador = () => {
 
   return (
     <div>
+      {modalDelete && (
+        <div className="fixed inset-0 z-50 overflow-auto bg-gray-800 bg-opacity-75 flex justify-center items-center">
+          <div className="bg-white p-8 max-w-md">
+            <h4>
+              Desea eliminar al asegurado: <br />
+              Nombres: {asegurados[editIndex].nombre}{" "}
+              {asegurados[editIndex].apellido}
+              <br />
+              DNI: {asegurados[editIndex].dni}
+            </h4>
+            <div className="flex justify-center my-4">
+              <button
+                onClick={toggleModalEliminar}
+                className="bg-verde hover:bg-verde text-white font-bold py-2 px-4 rounded mr-2 transition-transform transform hover:scale-110 duration-700">
+                Cancelar
+              </button>
+              <button
+                onClick={eliminarFila}
+                className="bg-celeste hover:bg-celeste text-white font-bold py-2 px-4 rounded transition-transform transform hover:scale-110">
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {modalOpen && (
         <div className="fixed inset-0 z-50 overflow-auto bg-gray-800 bg-opacity-75 flex justify-center items-center">
           <div className="bg-white p-8 max-w-md">
@@ -202,7 +239,7 @@ const Administrador = () => {
                 <label
                   htmlFor="nombre"
                   className="block text-sm font-medium text-gray-700 focus:outline-none focus:border-celeste">
-                  Nombre
+                  Nombres
                 </label>
                 <input
                   type="text"
@@ -221,7 +258,7 @@ const Administrador = () => {
                 <label
                   htmlFor="nombre"
                   className="block text-sm font-medium text-gray-700 focus:outline-none focus:border-celeste">
-                  Apellido
+                  Apellidos
                 </label>
                 <input
                   type="text"
@@ -276,16 +313,12 @@ const Administrador = () => {
                 </select>
               </div>
               <div className="mb-4">
-                <label
-                  htmlFor="nombre"
-                  className="block text-sm font-medium text-gray-700">
-                  Direccion
-                </label>
                 <input
                   type="text"
                   id="direccion"
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:border-celeste"
                   value={direccion}
+                  hidden
                   onChange={(e) => setDireccion(e.target.value)}
                 />
               </div>
@@ -383,7 +416,7 @@ const Administrador = () => {
                       </button>
                       <button
                         className="inline-block rounded bg-celeste px-4 py-2 text-xs font-medium text-white hover:bg-celeste ml-2"
-                        onClick={() => eliminarFila(index)}>
+                        onClick={() => confirmarEliminar(index)}>
                         Delete
                       </button>
                     </td>

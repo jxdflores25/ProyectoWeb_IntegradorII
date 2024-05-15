@@ -71,11 +71,19 @@ export default function PedidosListar() {
 
     var PedidosFiltro = [];
 
+    var fechaExiste = true;
+    var filCondExiste = true;
+    var filAsegExiste = true;
+    var filEstaExiste = true;
+
     if (fecha) {
       for (let index = 0; index < EstaticoPedidos.length; index++) {
         if (EstaticoPedidos[index].fecha === fecha) {
           PedidosFiltro.push(EstaticoPedidos[index]);
         }
+      }
+      if (PedidosFiltro.length === 0) {
+        fechaExiste = false;
       }
     }
 
@@ -95,6 +103,9 @@ export default function PedidosListar() {
           }
         }
       }
+      if (PedidosFiltro.length === 0) {
+        filCondExiste = false;
+      }
     }
 
     if (filAseg) {
@@ -112,6 +123,9 @@ export default function PedidosListar() {
             PedidosFiltro.push(EstaticoPedidos[index]);
           }
         }
+      }
+      if (PedidosFiltro.length === 0) {
+        filAsegExiste = false;
       }
     }
 
@@ -132,14 +146,23 @@ export default function PedidosListar() {
           }
         }
       }
+      if (PedidosFiltro.length === 0) {
+        filEstaExiste = false;
+      }
     }
 
-    if (PedidosFiltro - length === 0) {
-      toast.warning("No hay coincidencias con los filtros aplicados");
-      setPedidos(PedidosFiltro);
-    } else {
+    if (
+      filEstaExiste &&
+      fechaExiste &&
+      filCondExiste &&
+      filAsegExiste &&
+      PedidosFiltro.length > 0
+    ) {
       toast.success("Se aplicaron los filtros");
       setPedidos(PedidosFiltro);
+    } else {
+      toast.warning("No hay coincidencias con los filtros aplicados");
+      setPedidos([]);
     }
   };
 
@@ -249,7 +272,7 @@ export default function PedidosListar() {
               Eliger Estado
             </option>
             <option value="Pendiente">Pendiente</option>
-            <option value="Curso">Curso</option>
+            <option value="En Curso">En Curso</option>
             <option value="Completado">Completado</option>
           </select>
 

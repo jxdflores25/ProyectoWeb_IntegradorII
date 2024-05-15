@@ -10,6 +10,7 @@ import {
   PostMedicinaSeguro,
   PostPedido,
   PostRecetaSeguro,
+  PutKardex,
 } from "../../API/API_Seguro";
 import { useState } from "react";
 
@@ -33,6 +34,7 @@ export default function AsignarReceta() {
     fechaHoy,
     fechaConsulta,
     fechaAsignacion,
+    fechaConsultaAyer,
     horaInicio,
     horaFin,
     corte,
@@ -40,6 +42,15 @@ export default function AsignarReceta() {
 
   const getRecetas = async () => {
     const data = await GetRecetas(fechaConsulta, horaInicio, horaFin);
+    if (fechaConsultaAyer) {
+      if (localStorage.getItem("PedidoAyer") === "true") {
+        const data2 = await GetRecetas(fechaConsultaAyer, "19:50", "23:59");
+        for (let index = 0; index < data2.data.length; index++) {
+          data.data.splice(-1, 0, data2.data[index]);
+        }
+      }
+    }
+
     const receta = data.data;
     const recetaAlta = [];
     const recetaBaja = [];
@@ -57,6 +68,7 @@ export default function AsignarReceta() {
     }
     if (recetaBaja.length === 0 && recetaAlta.length === 0) {
       toast.success("No hay mas recetas por asignar");
+      localStorage.setItem("PedidoAyer", "false");
     } else {
       toast.success("Se cargaron las recetas por asignar");
     }
@@ -79,7 +91,15 @@ export default function AsignarReceta() {
       const medicina = await GetMedicinaNombre(data[index].id_medicina);
       const kardex = await GetKardex(data[index].id_medicina);
       data[index].nombreMedicina = medicina.data.nombre;
-      data[index].Kardex = kardex.data[0].saldo;
+      if (kardex.data.length > 1) {
+        var Saldo = 0;
+        for (let index = 0; index < kardex.data.length; index++) {
+          Saldo += kardex.data[index].saldo;
+        }
+        data[index].Kardex = Saldo;
+      } else {
+        data[index].Kardex = kardex.data[0].saldo;
+      }
     }
     return data;
   };
@@ -150,6 +170,23 @@ export default function AsignarReceta() {
 
         const RecetaSeguro = await PostRecetaSeguro(dataReceta);
 
+        for (let index = 0; index < Medicinas.length; index++) {
+          const kardex = await GetKardex(Medicinas[index].id_medicina);
+          if (kardex.data[0].saldo > Medicinas[index].cantidad) {
+            var canSaldo = kardex.data[0].saldo;
+            kardex.data[0].saldo = canSaldo - Medicinas[index].cantidad;
+            await PutKardex(kardex.data[0].id, kardex.data[0]);
+          } else {
+            var faltaSaldo = Medicinas[index].cantidad - kardex.data[0].saldo;
+            canSaldo = kardex.data[1].saldo - faltaSaldo;
+            kardex.data[0].saldo = 0;
+            kardex.data[1].saldo = canSaldo;
+
+            await PutKardex(kardex.data[0].id, kardex.data[0]);
+            await PutKardex(kardex.data[1].id, kardex.data[1]);
+          }
+        }
+
         var dataPedido = {
           id_receta: RecetaSeguro.data.id,
           id_conductor: conductor.dni,
@@ -185,6 +222,23 @@ export default function AsignarReceta() {
           nom_doctor: Detalle.nombre_Medico,
         };
         const RecetaSeguro = await PostRecetaSeguro(dataReceta);
+
+        for (let index = 0; index < Medicinas.length; index++) {
+          const kardex = await GetKardex(Medicinas[index].id_medicina);
+          if (kardex.data[0].saldo > Medicinas[index].cantidad) {
+            canSaldo = kardex.data[0].saldo;
+            kardex.data[0].saldo = canSaldo - Medicinas[index].cantidad;
+            await PutKardex(kardex.data[0].id, kardex.data[0]);
+          } else {
+            faltaSaldo = Medicinas[index].cantidad - kardex.data[0].saldo;
+            canSaldo = kardex.data[1].saldo - faltaSaldo;
+            kardex.data[0].saldo = 0;
+            kardex.data[1].saldo = canSaldo;
+
+            await PutKardex(kardex.data[0].id, kardex.data[0]);
+            await PutKardex(kardex.data[1].id, kardex.data[1]);
+          }
+        }
 
         const dataPedido = {
           id_receta: RecetaSeguro.data.id,
