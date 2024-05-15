@@ -1,13 +1,19 @@
 
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { navItemsAdmin } from "../../constants";
 import { NavLink } from "react-router-dom";
 import IconLogo from "../../assets/Icons/IconLogo";
 
 const NavbarAdmin = () => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
-  const [activeMenuIndex, setActiveMenuIndex] = useState(0);
+  const [activeMenuIndex, setActiveMenuIndex] = useState(() => {
+    const storedIndex = localStorage.getItem("activeMenuIndex");
+    return storedIndex !== null ? parseInt(storedIndex) : 0;
+  });
+  useEffect(() => {
+    localStorage.setItem("activeMenuIndex", activeMenuIndex.toString());
+  }, [activeMenuIndex]);
 
   const deleteStorage = () => {
     localStorage.removeItem("usuario");
