@@ -23,12 +23,12 @@ export default function PrincipalMenu({ Data }) {
         "Baja",
         localStorage.getItem("usuario")
       );
-      if (pedAlta.data.length>0) {
+      if (pedAlta.data.length > 0) {
         setPedidoAlta(pedAlta.data);
       }
-      if (pedBaja.data.length>0) {
+      if (pedBaja.data.length > 0) {
         setPedidoBaja(pedBaja.data);
-      }      
+      }
     };
     pedidos();
   }, []);
@@ -90,14 +90,21 @@ export default function PrincipalMenu({ Data }) {
               </tr>
             </thead>
             <tbody>
-              {PedidoAlta ?
+              {PedidoAlta ? (
                 PedidoAlta.map((Pedido) => (
                   <tr key={Pedido.id} className=" my-2 border-y-2 border-black">
                     <td>{Pedido.id}</td>
                     <td>{Pedido.id_receta}</td>
                     <td>{Pedido.estatus}</td>
                   </tr>
-                )): (<tr className=" h-24 border-2 border-[#9ca3af] border-dashed border-black"><td colSpan="3" className="text-lg text-[#9ca3af]">Aqui se mostraran sus pedidos de prioridad alta</td></tr>)}
+                ))
+              ) : (
+                <tr className=" h-24 border-2 border-[#9ca3af] border-dashed ">
+                  <td colSpan="3" className="text-lg text-[#9ca3af]">
+                    Aqui se mostraran sus pedidos de prioridad alta
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
 
@@ -123,14 +130,21 @@ export default function PrincipalMenu({ Data }) {
               </tr>
             </thead>
             <tbody>
-              {PedidoBaja ?
+              {PedidoBaja ? (
                 PedidoBaja.map((Pedido) => (
                   <tr key={Pedido.id} className=" my-2 border-y-2 border-black">
                     <td>{Pedido.id}</td>
                     <td>{Pedido.id_receta}</td>
                     <td>{Pedido.estatus}</td>
                   </tr>
-                )):(<tr className=" h-24 border-2 border-[#9ca3af] border-dashed border-black"><td colSpan="3" className="text-lg text-[#9ca3af]">Aqui se mostraran sus pedidos de prioridad baja</td></tr>)}
+                ))
+              ) : (
+                <tr className=" h-24 border-2 border-[#9ca3af] border-dashed ">
+                  <td colSpan="3" className="text-lg text-[#9ca3af]">
+                    Aqui se mostraran sus pedidos de prioridad baja
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

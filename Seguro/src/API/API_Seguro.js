@@ -18,7 +18,8 @@ const URLMedicinaIDReceta = "http://localhost:8000/Seguro/RecetaIDMedicina/";
 const URLPedidosPrioridad = "http://localhost:8000/Seguro/PedidoPrioridad/";
 const URLPedido = "http://localhost:8000/Seguro/Pedido/";
 
-const URLKardex = "http://localhost:8000/Seguro/KardexMedicina/";
+const URLKardexMedicina = "http://localhost:8000/Seguro/KardexMedicina/";
+const URLKardex = "http://localhost:8000/Seguro/Kardex/";
 
 const URLRecetaSeguro = "http://localhost:8000/Seguro/Receta/";
 const URLRecetaIDHospital = "http://localhost:8000/Seguro/RecetaIDHospital/";
@@ -186,11 +187,19 @@ export const GetMedicinaIDReceta = async (id) => {
 
 export const GetKardex = async (id) => {
   try {
-    return await axios.get(URLKardex + id);
+    return await axios.get(URLKardexMedicina + id);
   } catch (error) {
     if (error.response.status === 404) {
       return null;
     }
+  }
+};
+
+export const PutKardex = async (id, data) => {
+  try {
+    return await axios.put(URLKardex + id + "/", data);
+  } catch (error) {
+    return null;
   }
 };
 

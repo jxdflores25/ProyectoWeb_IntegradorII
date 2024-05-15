@@ -10,6 +10,7 @@ import {
   PostMedicinaSeguro,
   PostPedido,
   PostRecetaSeguro,
+  PutKardex,
 } from "../../API/API_Seguro";
 import { useState } from "react";
 
@@ -40,7 +41,7 @@ export default function AsignarReceta() {
   } = Fecha();
 
   const getRecetas = async () => {
-    const data = await GetRecetas(fechaConsulta, "8:00", horaFin);
+    const data = await GetRecetas(fechaConsulta, horaInicio, horaFin);
     if (fechaConsultaAyer) {
       if (localStorage.getItem("PedidoAyer") === "true") {
         const data2 = await GetRecetas(fechaConsultaAyer, "19:50", "23:59");
@@ -159,7 +160,7 @@ export default function AsignarReceta() {
       if (conductor.Alta === 4) {
         toast.error("No se pueden asignar mas recetas con prioridad Alta");
       } else {
-        /*var dataReceta = {
+        var dataReceta = {
           dni_asegurado: Detalle.dni_Paciente,
           id_receta: Detalle.id,
           fecha: Detalle.fecha,
@@ -167,7 +168,24 @@ export default function AsignarReceta() {
           nom_doctor: Detalle.nombre_Medico,
         };
 
-        //const RecetaSeguro = await PostRecetaSeguro(dataReceta);
+        const RecetaSeguro = await PostRecetaSeguro(dataReceta);
+
+        for (let index = 0; index < Medicinas.length; index++) {
+          const kardex = await GetKardex(Medicinas[index].id_medicina);
+          if (kardex.data[0].saldo > Medicinas[index].cantidad) {
+            var canSaldo = kardex.data[0].saldo;
+            kardex.data[0].saldo = canSaldo - Medicinas[index].cantidad;
+            await PutKardex(kardex.data[0].id, kardex.data[0]);
+          } else {
+            var faltaSaldo = Medicinas[index].cantidad - kardex.data[0].saldo;
+            canSaldo = kardex.data[1].saldo - faltaSaldo;
+            kardex.data[0].saldo = 0;
+            kardex.data[1].saldo = canSaldo;
+
+            await PutKardex(kardex.data[0].id, kardex.data[0]);
+            await PutKardex(kardex.data[1].id, kardex.data[1]);
+          }
+        }
 
         var dataPedido = {
           id_receta: RecetaSeguro.data.id,
@@ -179,17 +197,7 @@ export default function AsignarReceta() {
         };
         const PedidoSeguro = await PostPedido(dataPedido);
 
-        //await PostMedicinaSeguro(RecetaSeguro.data.id, Medicinas);
-
-        var dataKardex = {
-          id: 3,
-          id_medicina: "9",
-          nro_lote: "653489",
-          fec_entrada: "2024-05-13",
-          fec_venci: "2024-05-30",
-          cantidad: 300,
-          saldo: 300,
-        };
+        await PostMedicinaSeguro(RecetaSeguro.data.id, Medicinas);
 
         if (PedidoSeguro !== null) {
           toast.success("Se asigno correctamente el Pedido");
@@ -200,10 +208,6 @@ export default function AsignarReceta() {
           setModalOpen(false);
         } else {
           toast.error("Hubo un problema en la asignacion del Pedido");
-        }*/
-        for (let index = 0; index < Medicinas.length; index++) {
-          const kardex = await GetKardex(Medicinas[index].id_medicina);
-          console.log(kardex.data);
         }
       }
     } else {
@@ -218,6 +222,23 @@ export default function AsignarReceta() {
           nom_doctor: Detalle.nombre_Medico,
         };
         const RecetaSeguro = await PostRecetaSeguro(dataReceta);
+
+        for (let index = 0; index < Medicinas.length; index++) {
+          const kardex = await GetKardex(Medicinas[index].id_medicina);
+          if (kardex.data[0].saldo > Medicinas[index].cantidad) {
+            canSaldo = kardex.data[0].saldo;
+            kardex.data[0].saldo = canSaldo - Medicinas[index].cantidad;
+            await PutKardex(kardex.data[0].id, kardex.data[0]);
+          } else {
+            faltaSaldo = Medicinas[index].cantidad - kardex.data[0].saldo;
+            canSaldo = kardex.data[1].saldo - faltaSaldo;
+            kardex.data[0].saldo = 0;
+            kardex.data[1].saldo = canSaldo;
+
+            await PutKardex(kardex.data[0].id, kardex.data[0]);
+            await PutKardex(kardex.data[1].id, kardex.data[1]);
+          }
+        }
 
         const dataPedido = {
           id_receta: RecetaSeguro.data.id,
