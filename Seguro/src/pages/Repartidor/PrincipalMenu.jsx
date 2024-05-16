@@ -101,7 +101,7 @@ export default function PrincipalMenu({ Data }) {
               ) : (
                 <tr className=" h-24 border-2 border-[#9ca3af] border-dashed ">
                   <td colSpan="3" className="text-lg text-[#9ca3af]">
-                    Aqui se mostraran sus pedidos de prioridad alta
+                    Aquí se mostrarán sus pedidos de prioridad alta
                   </td>
                 </tr>
               )}
@@ -141,7 +141,7 @@ export default function PrincipalMenu({ Data }) {
               ) : (
                 <tr className=" h-24 border-2 border-[#9ca3af] border-dashed ">
                   <td colSpan="3" className="text-lg text-[#9ca3af]">
-                    Aqui se mostraran sus pedidos de prioridad baja
+                    Aquí se mostrarán sus pedidos de prioridad baja
                   </td>
                 </tr>
               )}

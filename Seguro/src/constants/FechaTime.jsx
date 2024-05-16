@@ -36,7 +36,7 @@ export default function Fecha() {
     } else {
       DiaAyer = dia - 1;
     }
-    Corte = "Envios en La tarde";
+    Corte = "Envíos en La tarde";
     Envio = "Entregas para la mañana";
     horainicio = "00:00";
     horafin = "11:59";
