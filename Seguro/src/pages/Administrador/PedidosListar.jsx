@@ -62,6 +62,7 @@ export default function PedidosListar() {
   const toggleModal = () => {
     setModalOpen(false);
   };
+
   const Filtros = () => {
     var fecha = document.getElementById("fecha").value;
     if (!fecha && !filCond && !filAseg && !filEsta) {
