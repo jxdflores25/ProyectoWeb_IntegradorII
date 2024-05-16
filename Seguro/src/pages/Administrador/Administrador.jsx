@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { GetAdministrador } from "../../API/API_Seguro";
 import { useEffect, useState } from "react";
 import NavbarAdmin from "../../components/Administrador/NavbarAdmin";
@@ -20,6 +20,10 @@ const Administrador = () => {
     };
     Administrador();
   }, []);
+
+  if (localStorage.getItem("tipo") !== "Administrador") {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="h-full">

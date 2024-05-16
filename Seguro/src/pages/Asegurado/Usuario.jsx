@@ -25,9 +25,9 @@ const Usuario = () => {
     Datos(localStorage.getItem("usuario"));
   }, []);
 
-  // if (localStorage.getItem("tipo") !== "Asegurado") {
-  //   return <Navigate to="/" />;
-  // }
+  if (localStorage.getItem("tipo") !== "Asegurado") {
+    return <Navigate to="/" />;
+  }
   const deleteStorage = () => {
     localStorage.removeItem("usuario");
     localStorage.removeItem("tipo");
@@ -42,20 +42,21 @@ const Usuario = () => {
   return (
     <div className="flex flex-col w-full h-full">
       <div className="flex justify-between lg:justify-center items-center bg-white p-2 border-b-2 border-verde">
-  <span
-    className="text-verde text-4xl cursor-pointer block lg:hidden"
-    onClick={open}
-  >
-    <IconHamburger />
-  </span>
-  <div className="flex items-center"> {/* Nuevo contenedor para el título y el logotipo */}
-    <h1 className="font-bold  text-[px] hidden lg:block text-3xl text-celeste">
-      Helth <span className="text-verde">Express</span>
-    </h1>
-    <IconLogo /> {/* Aquí agregamos el logotipo */}
-  </div>
-  <div className="w-8"></div>
-</div>
+        <span
+          className="text-verde text-4xl cursor-pointer block lg:hidden"
+          onClick={open}>
+          <IconHamburger />
+        </span>
+        <div className="flex items-center">
+          {" "}
+          {/* Nuevo contenedor para el título y el logotipo */}
+          <h1 className="font-bold  text-[px] hidden lg:block text-3xl text-celeste">
+            Helth <span className="text-verde">Express</span>
+          </h1>
+          <IconLogo /> {/* Aquí agregamos el logotipo */}
+        </div>
+        <div className="w-8"></div>
+      </div>
       <div className="flex flex-row h-full relative">
         <div className="font-[Poppins] h-full hidden lg:flex border-r-2 border-verde">
           <div className="text-center bg-white w-[300px]  p-2">

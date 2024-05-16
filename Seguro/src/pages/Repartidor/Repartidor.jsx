@@ -24,9 +24,9 @@ const Repartidor = () => {
     Datos(localStorage.getItem("usuario"));
   }, []);
 
-  // if (localStorage.getItem("tipo") !== "Conductor") {
-  //   return <Navigate to="/" />;
-  // }
+  if (localStorage.getItem("tipo") !== "Conductor") {
+    return <Navigate to="/" />;
+  }
 
   const deleteStorage = () => {
     localStorage.removeItem("usuario");
