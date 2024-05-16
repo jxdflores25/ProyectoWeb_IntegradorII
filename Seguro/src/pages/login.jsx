@@ -36,7 +36,6 @@ export default function Login() {
       if (res.data.contraseña === contra) {
         localStorage.setItem("usuario", res.data.dni);
         localStorage.setItem("tipo", tipo);
-        localStorage.setItem("PedidoAyer", "true");
         console.log(tipo);
         switch (tipo) {
           case "Asegurado":

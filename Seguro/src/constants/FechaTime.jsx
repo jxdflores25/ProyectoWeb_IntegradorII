@@ -24,31 +24,34 @@ export default function Fecha() {
     Mes = mes + 1;
   }
 
-  if (hora < 12) {
+  if (hora < 14) {
     if (dia < 10) {
       Dia = "0" + dia;
     } else {
       Dia = dia;
     }
 
-    if (dia - 1 < 10) {
-      DiaAyer = "0" + (dia - 1);
-    } else {
-      DiaAyer = dia - 1;
+    if (hora < 8) {
+      if (dia - 1 < 10) {
+        DiaAyer = "0" + (dia - 1);
+      } else {
+        DiaAyer = dia - 1;
+      }
+      FechaConsultaAyer = año + "-" + Mes + "-" + DiaAyer;
     }
-    Corte = "Envios en La tarde";
+
+    Corte = "Entregas en La tarde";
     Envio = "Entregas para la mañana";
     horainicio = "00:00";
     horafin = "11:59";
     FechaAsignacion = año + "-" + Mes + "-" + Dia;
-    FechaConsultaAyer = año + "-" + Mes + "-" + DiaAyer;
   } else {
     if (dia + 1 < 10) {
       Dia = "0" + (dia + 1);
     } else {
       Dia = dia + 1;
     }
-    Corte = "Envios al dia siguiente";
+    Corte = "Entregas para el dia siguiente";
     Envio = "Entregas para la tarde";
     horainicio = "12:00";
     horafin = "23:59";

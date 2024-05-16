@@ -41,17 +41,16 @@ export default function AsignarReceta() {
   } = Fecha();
 
   const getRecetas = async () => {
-    const data = await GetRecetas(fechaConsulta, horaInicio, horaFin);
+    var receta = [];
+    console.log(fechaConsultaAyer);
     if (fechaConsultaAyer) {
-      if (localStorage.getItem("PedidoAyer") === "true") {
-        const data2 = await GetRecetas(fechaConsultaAyer, "19:50", "23:59");
-        for (let index = 0; index < data2.data.length; index++) {
-          data.data.splice(-1, 0, data2.data[index]);
-        }
-      }
+      const data2 = await GetRecetas(fechaConsultaAyer, "19:50", "23:59");
+      receta = data2.data;
+    } else {
+      const data = await GetRecetas(fechaConsulta, horaInicio, horaFin);
+      receta = data.data;
     }
 
-    const receta = data.data;
     const recetaAlta = [];
     const recetaBaja = [];
     for (let index = 0; index < receta.length; index++) {
@@ -76,14 +75,30 @@ export default function AsignarReceta() {
     setRecetasBaja(recetaBaja);
   };
 
-  const detalleReceta = async (receta, index) => {
-    setDetalle(receta);
-    const med = await GetMedicina(receta.id);
-    const pac = await GetAsegurado(receta.dni_Paciente);
-    const medicina = await NombreMedicina(med.data);
-    setMedicinas(medicina);
-    setPaciente(pac.data);
-    setRectaIndex(index);
+  const detalleReceta = async (receta, index, tipo) => {
+    if (tipo === "Baja") {
+      if (RecetasAlta.length === 0) {
+        setDetalle(receta);
+        const med = await GetMedicina(receta.id);
+        const pac = await GetAsegurado(receta.dni_Paciente);
+        const medicina = await NombreMedicina(med.data);
+        setMedicinas(medicina);
+        setPaciente(pac.data);
+        setRectaIndex(index);
+      } else {
+        toast.warning(
+          "Termine de asignar primero las recetas de prioridad Alta"
+        );
+      }
+    } else {
+      setDetalle(receta);
+      const med = await GetMedicina(receta.id);
+      const pac = await GetAsegurado(receta.dni_Paciente);
+      const medicina = await NombreMedicina(med.data);
+      setMedicinas(medicina);
+      setPaciente(pac.data);
+      setRectaIndex(index);
+    }
   };
 
   const NombreMedicina = async (data) => {
@@ -319,13 +334,15 @@ export default function AsignarReceta() {
       <div className="basis-1/4 flex flex-col items-center">
         <div className="flex w-full justify-around items-center ">
           <button
-            className="h-full flex justify-center items-center border border-verde  rounded-md py-4 px-3 transition-transform transform hover:scale-110"
+            className="h-full flex justify-center items-center bg-gradient-to-r from-blue-200 to-verdesuave rounded-md py-4 px-3 transition-transform transform hover:scale-110"
             onClick={getRecetas}>
             cargar recetas
           </button>
           <h3>{fechaHoy}</h3>
         </div>
-        <h2 className="mt-8">{corte}</h2>
+        <h2 className="mt-8">
+          {fechaConsultaAyer ? "Entregas para la mañana" : corte}
+        </h2>
         <div className=" text-start w-full px-4 mt-8">
           <h4 className=" pb-5 text-xl text-center font-bold">
             Prioridad Alta
@@ -347,7 +364,7 @@ export default function AsignarReceta() {
                     <td
                       className="flex justify-center cursor-pointer"
                       onClick={() => {
-                        detalleReceta(Receta, index);
+                        detalleReceta(Receta, index, "Alta");
                       }}>
                       <IconDelivery />
                     </td>
@@ -374,7 +391,7 @@ export default function AsignarReceta() {
                     <td
                       className="flex justify-center cursor-pointer"
                       onClick={() => {
-                        detalleReceta(Receta, index);
+                        detalleReceta(Receta, index, "Baja");
                       }}>
                       <IconDelivery />
                     </td>
@@ -384,7 +401,7 @@ export default function AsignarReceta() {
           </table>
         </div>
       </div>
-      {Detalle && (
+      {Detalle ? (
         <div className="basis-3/4 p-5">
           <div className=" w-full border-2 min-h-96 border-gray-700 rounded-md flex flex-col gap-4 p-5">
             <h2 className=" text-3xl text-center ">Receta {Detalle.id} </h2>
@@ -439,6 +456,14 @@ export default function AsignarReceta() {
                 Asignar
               </button>
             </div>
+          </div>
+        </div>
+      ) : (
+        <div className="basis-3/4 p-5 h-3/4 ">
+          <div className="h-full border-2 flex flex-col justify-center  border-[#9ca3af] border-dashed ">
+            <h4 className="text-lg h-1/6 text-center text-[#9ca3af] ">
+              Aqui se mostraran los detalles de la receta para asignar
+            </h4>
           </div>
         </div>
       )}
