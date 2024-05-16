@@ -22,7 +22,7 @@ const InfoPerfil = ({ Data }) => {
   return (
     <div className="flex-row p-4 h-full">
       {/* Contenedor para el contenido principal */}
-      <h1 className="text-center text-2xl font-bold">Informacion</h1>
+      <h1 className="text-center text-2xl font-bold">Información</h1>
       <div className="flex items-center justify-center">
         <IconPerfil />
       </div>
@@ -64,7 +64,7 @@ const InfoPerfil = ({ Data }) => {
               <label
                 htmlFor="Ubicacion"
                 className="block text-sm font-medium text-gray-700">
-                Ubicacion
+                Ubicación
               </label>
               <select
                 name="Ubicacion"

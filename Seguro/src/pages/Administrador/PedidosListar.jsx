@@ -66,7 +66,7 @@ export default function PedidosListar() {
   const Filtros = () => {
     var fecha = document.getElementById("fecha").value;
     if (!fecha && !filCond && !filAseg && !filEsta) {
-      toast.warning("Ingrese un filtro por lo menos");
+      toast.warning("ingrese por lo menos un filtro");
       return;
     }
 

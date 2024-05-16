@@ -66,7 +66,7 @@ export default function AsignarReceta() {
       }
     }
     if (recetaBaja.length === 0 && recetaAlta.length === 0) {
-      toast.success("No hay mas recetas por asignar");
+      toast.success("No hay más recetas por asignar");
       localStorage.setItem("PedidoAyer", "false");
     } else {
       toast.success("Se cargaron las recetas por asignar");
@@ -173,7 +173,7 @@ export default function AsignarReceta() {
   const RegistrarPedido = async (conductor) => {
     if (Detalle.prioridad === "Alta") {
       if (conductor.Alta === 4) {
-        toast.error("No se pueden asignar mas recetas con prioridad Alta");
+        toast.error("No se pueden asignar más recetas con prioridad Alta");
       } else {
         var dataReceta = {
           dni_asegurado: Detalle.dni_Paciente,
@@ -215,19 +215,19 @@ export default function AsignarReceta() {
         await PostMedicinaSeguro(RecetaSeguro.data.id, Medicinas);
 
         if (PedidoSeguro !== null) {
-          toast.success("Se asigno correctamente el Pedido");
+          toast.success("Se asignó correctamente el Pedido");
           const nuevoReceta = [...RecetasAlta];
           nuevoReceta.splice(RectaIndex, 1);
           setRecetasAlta(nuevoReceta);
           setDetalle(null);
           setModalOpen(false);
         } else {
-          toast.error("Hubo un problema en la asignacion del Pedido");
+          toast.error("Hubo un problema en la asignación del Pedido");
         }
       }
     } else {
       if (conductor.Baja === 6) {
-        toast.error("No se pueden asignar mas recetas con prioridad Baja");
+        toast.error("No se pueden asignar más recetas con prioridad Baja");
       } else {
         const dataReceta = {
           dni_asegurado: Detalle.dni_Paciente,
@@ -266,14 +266,14 @@ export default function AsignarReceta() {
         await PostMedicinaSeguro(RecetaSeguro.data.id, Medicinas);
         const PedidoSeguro = await PostPedido(dataPedido);
         if (PedidoSeguro !== null) {
-          toast.success("Se asigno correctamente el Pedido");
+          toast.success("Se asignó correctamente el Pedido");
           const nuevoReceta = [...RecetasBaja];
           nuevoReceta.splice(RectaIndex, 1);
           setRecetasBaja(nuevoReceta);
           setDetalle(null);
           setModalOpen(false);
         } else {
-          toast.error("Hubo un problema en la asignacion del Pedido");
+          toast.error("Hubo un problema en la asignación del Pedido");
         }
       }
     }

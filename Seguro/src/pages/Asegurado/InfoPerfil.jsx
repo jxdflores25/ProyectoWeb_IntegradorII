@@ -88,7 +88,7 @@ const InfoPerfil = ({ Data }) => {
         window.location.href = "/Asegurado";
       }
     } else {
-      toast.warning("Ingrese un numero valido");
+      toast.warning("Ingrese un número válido");
     }
   };
 
@@ -97,7 +97,7 @@ const InfoPerfil = ({ Data }) => {
   return (
     <div className="flex-row p-4 h-full">
       {/* Contenedor para el contenido principal */}
-      <h1 className="text-center text-2xl font-bold">Informacion</h1>
+      <h1 className="text-center text-2xl font-bold">Información</h1>
       <div className="flex items-center justify-center">
         <IconPerfil />
       </div>
@@ -140,7 +140,7 @@ const InfoPerfil = ({ Data }) => {
               <label
                 htmlFor="Ubicacion"
                 className="block text-sm font-medium text-gray-700">
-                Ubicacion
+                Ubicación
               </label>
               <select
                 name="Ubicacion"
@@ -205,7 +205,7 @@ const InfoPerfil = ({ Data }) => {
               <label
                 htmlFor="Mapa"
                 className="block text-sm font-medium text-gray-700">
-                Ubicacion donde llegaran los medicamentos
+                Ubicación donde llegarán los medicamentos
               </label>
               <MapContainer
                 center={{ lat: Data.Latitud, lng: Data.Longitud }}
@@ -222,7 +222,7 @@ const InfoPerfil = ({ Data }) => {
             <Tooltip
               id="mapa"
               place="right"
-              html='<div class="w-60"><h5>Indicaciones:<h5><br><h6>1. Haga click y espere a que salga su ubicación actual</h6><br><h6>2. Haga click en icono de ubicacion para cambiarla manualmente</h6><br><h6>3. Haga click en el texto que aparece arriba del icono para activar la funcion de mover</h6></div>'
+              html='<div class="w-60"><h5>Indicaciones:<h5><br><h6>1. Haga click y espere a que salga su ubicación actual</h6><br><h6>2. Haga click en ícono de ubicación para cambiarla manualmente</h6><br><h6>3. Haga click en el texto que aparece arriba del ícono para activar la función de mover</h6></div>'
               variant="warning"
             />
 
