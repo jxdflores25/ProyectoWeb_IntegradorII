@@ -48,7 +48,7 @@ export default function Fecha() {
     } else {
       Dia = dia + 1;
     }
-    Corte = "Envios al dia siguiente";
+    Corte = "Envíos al dia siguiente";
     Envio = "Entregas para la tarde";
     horainicio = "12:00";
     horafin = "23:59";

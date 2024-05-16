@@ -222,7 +222,7 @@ const InfoPerfil = ({ Data }) => {
             <Tooltip
               id="mapa"
               place="right"
-              html='<div class="w-60"><h5>Indicaciones:<h5><br><h6>1. Haga click y espere a que salga su ubicación actual</h6><br><h6>2. Haga click en icono de ubicación para cambiarla manualmente</h6><br><h6>3. Haga click en el texto que aparece arriba del icono para activar la función de mover</h6></div>'
+              html='<div class="w-60"><h5>Indicaciones:<h5><br><h6>1. Haga click y espere a que salga su ubicación actual</h6><br><h6>2. Haga click en ícono de ubicación para cambiarla manualmente</h6><br><h6>3. Haga click en el texto que aparece arriba del ícono para activar la función de mover</h6></div>'
               variant="warning"
             />
 
