@@ -100,11 +100,11 @@ const Administrador = () => {
       return; // Evitar enviar el formulario si algún campo está vacío
     }
     if (dni.length !== 8) {
-      toast.warning("Ingrese un DNI valido");
+      toast.warning("Ingrese un DNI válido");
       return;
     }
-    if (document.getElementById("telefono").value.length !== 9) {
-      toast.warning("Ingrese un telefono valido");
+    if (document.getElementById("teléfono").value.length !== 9) {
+      toast.warning("Ingrese un teléfono válido");
       return;
     }
 
@@ -124,9 +124,9 @@ const Administrador = () => {
       asegurados[editIndex].dni = dni;
       const res = await PutAsegurado(dni, asegurados[editIndex]);
       if (res !== null) {
-        toast.success("Se actulizo correctamente");
+        toast.success("Se actualizó correctamente");
       } else {
-        toast.error("Ocurrio un problema al actualizar");
+        toast.error("Ocurrió un problema al actualizar");
       }
       setEditIndex(null);
     } else {
@@ -147,7 +147,7 @@ const Administrador = () => {
         toast.success("Se guardado correctamente");
         setAsegurados([...asegurados, nuevoAsegurado]);
       } else {
-        toast.error("Ocurrio un problema al guardar");
+        toast.error("Ocurrió un problema al guardar");
       }
     }
     setNombre("");
@@ -175,13 +175,13 @@ const Administrador = () => {
       setAsegurados(nuevosAsegurados);
       toggleModalEliminar();
     } else {
-      toast.error("Ocurrio un problema al eliminar");
+      toast.error("Ocurrió un problema al eliminar");
     }
   };
 
   const Filtros = () => {
     if (!filAseg) {
-      toast.warning("Ingrese un filtro por lo menos");
+      toast.warning("ingrese por lo menos un filtro");
       return;
     }
 
@@ -395,8 +395,8 @@ const Administrador = () => {
                   className="t-1 p-2 border border-gray-300 rounded-md w-full"
                   value={seguro}
                   onChange={(e) => setSeguro(e.target.value)}>
-                  <option value="Rimac">Rimac</option>
-                  <option value="Pacifico">Pacifico</option>
+                  <option value="Rimac">Rímac</option>
+                  <option value="Pacifico">Pacífico</option>
                   <option value="Mapfre">Mapfre</option>
                 </select>
               </div>

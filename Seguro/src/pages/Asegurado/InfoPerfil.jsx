@@ -88,7 +88,7 @@ const InfoPerfil = ({ Data }) => {
         window.location.href = "/Asegurado";
       }
     } else {
-      toast.warning("Ingrese un numero valido");
+      toast.warning("Ingrese un número válido");
     }
   };
 

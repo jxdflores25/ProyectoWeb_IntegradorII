@@ -88,7 +88,7 @@ const Administrador = () => {
       return; // Evitar enviar el formulario si algún campo está vacío
     }
     if (dni.length !== 8) {
-      toast.warning("Ingrese un DNI valido");
+      toast.warning("Ingrese un DNI válido");
       return;
     }
 
@@ -129,7 +129,7 @@ const Administrador = () => {
         toast.success("Se guardado correctamente");
         setConductores([...conductores, nuevoConductor]);
       } else {
-        toast.error("Ocurrio un problema al guardar");
+        toast.error("Ocurrió un problema al guardar");
       }
     }
     setNombre("");
@@ -154,13 +154,13 @@ const Administrador = () => {
       setConductores(nuevoConductores);
       toggleModalEliminar();
     } else {
-      toast.error("Ocurrio un problema al eliminar");
+      toast.error("Ocurrió un problema al eliminar");
     }
   };
 
   const Filtros = () => {
     if (!filCond) {
-      toast.warning("Ingrese un filtro por lo menos");
+      toast.warning("ingrese por lo menos un filtro");
       return;
     }
 
