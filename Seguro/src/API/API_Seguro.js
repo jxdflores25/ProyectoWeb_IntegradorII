@@ -154,6 +154,26 @@ export const GetMedicina = async (receta) => {
   }
 };
 
+export const GetMedicinasSeguro = async () => {
+  try {
+    return await axios.get(URLMedicinaNombre);
+  } catch (error) {
+    if (error.response.status === 404) {
+      return null;
+    }
+  }
+};
+
+export const GetMedicinaSeguro = async (id) => {
+  try {
+    return await axios.get(URLMedicinaNombre + id);
+  } catch (error) {
+    if (error.response.status === 404) {
+      return null;
+    }
+  }
+};
+
 export const PostMedicinaSeguro = async (ID_Receta, Medicina) => {
   for (let i = 0; i < Medicina.length; i++) {
     axios.post(URLMedicinaDetalleSeguro, {
@@ -198,6 +218,14 @@ export const GetKardex = async (id) => {
 export const PutKardex = async (id, data) => {
   try {
     return await axios.put(URLKardex + id + "/", data);
+  } catch (error) {
+    return null;
+  }
+};
+
+export const PostKardex = async (data) => {
+  try {
+    return await axios.post(URLKardex, data);
   } catch (error) {
     return null;
   }
