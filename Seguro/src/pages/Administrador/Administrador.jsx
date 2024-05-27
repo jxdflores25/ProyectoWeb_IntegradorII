@@ -22,9 +22,9 @@ const Administrador = () => {
     Administrador();
   }, []);
 
-  if (localStorage.getItem("tipo") !== "Administrador") {
-    return <Navigate to="/" />;
-  }
+  // if (localStorage.getItem("tipo") !== "Administrador") {
+  //   return <Navigate to="/" />;
+  // }
 
   return (
     <div className="h-full">
