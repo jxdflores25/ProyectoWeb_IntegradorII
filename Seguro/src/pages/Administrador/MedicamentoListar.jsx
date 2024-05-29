@@ -11,9 +11,13 @@ export default function MedicamentoListar() {
   const [Medicinas, setMedicinas] = useState([]);
   const [EstaticoMedicinas, setEstaticoMedicinas] = useState(null);
   const [MedicinaForm, setMedicinaForm] = useState(null);
+  const [AlertMedicina, setAlertMedicina] = useState([]);
+  const [Detalle, setDetalle] = useState(null);
   const [filCod, setfilCod] = useState("");
   const [filNom, setfilNom] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
+  const [detalleOpen, setdetalleOpen] = useState(false);
+  const [alertOpen, setalertOpen] = useState(false);
 
   const [CodForm, setCodForm] = useState("");
   const [LoteForm, setLoteForm] = useState("");
@@ -23,17 +27,64 @@ export default function MedicamentoListar() {
   useEffect(() => {
     const medicinas = async () => {
       const med = await GetMedicinasSeguro();
+      const alertMed = [];
       for (let index = 0; index < med.data.length; index++) {
         const kardex = await GetKardex(med.data[index].id);
+        var Alert = "";
+        var MovitoAlert = "";
         if (kardex.data.length > 1) {
           var Saldo = 0;
           for (let index = 0; index < kardex.data.length; index++) {
             Saldo += kardex.data[index].saldo;
+            const diffTime = Math.abs(
+              new Date(kardex.data[index].fec_venci) - new Date()
+            );
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            if (diffDays <= 30 || Saldo <= 100) {
+              if (diffDays <= 15 || Saldo <= 50) {
+                Alert = "bg-red-300";
+                MovitoAlert = "Medicamento por agotarse";
+                if (diffDays <= 15) {
+                  MovitoAlert = "Medicamento por Caducar";
+                }
+              } else {
+                Alert = "bg-yellow-300";
+                MovitoAlert = "Medicamento por agotarse";
+                if (diffDays <= 30) {
+                  MovitoAlert = "Medicamento por Caducar";
+                }
+              }
+              med.data[index].Alert = Alert;
+              med.data[index].MovitoAlert = MovitoAlert;
+              alertMed.push(med.data[index]);
+            }
           }
           med.data[index].Kardex = Saldo;
         } else {
           if (kardex.data.length === 1) {
             med.data[index].Kardex = kardex.data[0].saldo;
+            const diffTime = Math.abs(
+              new Date(kardex.data[0].fec_venci) - new Date()
+            );
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            if (diffDays <= 30 || kardex.data[0].saldo <= 100) {
+              if (diffDays <= 15 || kardex.data[0].saldo <= 50) {
+                Alert = "bg-red-300";
+                MovitoAlert = "Medicamento por agotarse";
+                if (diffDays <= 15) {
+                  MovitoAlert = "Medicamento por Caducar";
+                }
+              } else {
+                Alert = "bg-yellow-300";
+                MovitoAlert = "Medicamento por agotarse";
+                if (diffDays <= 30) {
+                  MovitoAlert = "Medicamento por Caducar";
+                }
+              }
+              med.data[index].Alert = Alert;
+              med.data[index].MovitoAlert = MovitoAlert;
+              alertMed.push(med.data[index]);
+            }
           } else {
             med.data[index].Kardex = 0;
           }
@@ -41,7 +92,10 @@ export default function MedicamentoListar() {
       }
       setMedicinas(med.data);
       setEstaticoMedicinas(med.data);
+      setAlertMedicina(alertMed);
+      setalertOpen(true);
     };
+
     medicinas();
   }, []);
 
@@ -121,7 +175,7 @@ export default function MedicamentoListar() {
 
   const BuscarMedicamento = async () => {
     if (!CodForm) {
-      toast.warning("ingrese por el codigo del Medicamento");
+      toast.warning("ingrese el codigo del Medicamento");
       return;
     }
 
@@ -155,7 +209,7 @@ export default function MedicamentoListar() {
   const GuardarLote = async () => {
     var fecha = document.getElementById("FechaVencimiento").value;
 
-    if (!CodForm && !LoteForm && !CantidadForm && !fecha) {
+    if (!CodForm || !LoteForm || !CantidadForm || !fecha) {
       toast.warning("ingrese todos los datos para registrar nuevo lote");
       return;
     } else {
@@ -183,17 +237,28 @@ export default function MedicamentoListar() {
     }
   };
 
+  const detalleMedicameto = async (medicina) => {
+    const kardex = await GetKardex(medicina.id);
+    medicina.kardex = kardex.data;
+    console.log(medicina);
+    setDetalle(medicina);
+    setdetalleOpen(true);
+  };
+
   const MostrarModal = () => {
     setModalOpen(true);
   };
 
+  const toggleAlert = () => {
+    setalertOpen(false);
+  };
   const soloNumerosRegex = /^[0-9]*$/; // Expresión regular para aceptar solo números
   const soloTextoRegex = /^[A-Za-z\s]+$/; // Expresión regular para aceptar solo letras
 
   return (
     <div className=" w-full ">
       {modalOpen && (
-        <div className="fixed inset-0 z-50 overflow-auto bg-gray-800 bg-opacity-75 flex justify-center items-center">
+        <div className="fixed  inset-0 z-50 overflow-auto bg-gray-800 bg-opacity-75 flex justify-center items-center">
           <div className="flex flex-col bg-white w-3/4 border rounded-md">
             <div className="flex flex-row p-5 justify-around">
               <div>
@@ -282,8 +347,93 @@ export default function MedicamentoListar() {
               <button
                 type="button"
                 onClick={GuardarLote}
-                className="bg-celeste hover:bg-celeste text-white font-bold py-2 px-4 rounded transition-transform transform hover:scale-110">
+                className="bg-celeste  hover:bg-celeste text-white font-bold py-2 px-4 rounded transition-transform transform hover:scale-110">
                 Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {detalleOpen && (
+        <div className="fixed inset-0 z-50 overflow-auto bg-gray-800 bg-opacity-75 flex justify-center items-center">
+          <div className="flex flex-col bg-white w-3/4 border rounded-md">
+            <div className="flex flex-row gap-1 justify-around my-5">
+              <div className=" flex flex-row gap-1">
+                <h3 className=" text-lg">ID: </h3>{" "}
+                <h3 className=" text-lg">{Detalle.id}</h3>
+              </div>
+              <div className=" flex flex-row gap-1">
+                <h3 className=" text-lg">Nombre: </h3>{" "}
+                <h3 className=" text-lg">{Detalle.nombre}</h3>
+              </div>
+              <div className=" flex flex-row gap-1">
+                <h3 className=" text-lg">Stock: </h3>{" "}
+                <h3 className=" text-lg">{Detalle.Kardex}</h3>
+              </div>
+            </div>
+            <div>
+              <table className="w-full text-center">
+                <thead>
+                  <tr>
+                    <th>Nro Lote</th>
+                    <th>Fecha Vencimiento</th>
+                    <th>Saldo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Detalle.kardex.map((kardex) => (
+                    <tr key={kardex.id} className={Detalle.Alert}>
+                      <td>{kardex.nro_lote}</td>
+                      <td>{kardex.fec_venci}</td>
+                      <td>{kardex.saldo}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="flex justify-end my-3 gap-3 px-5">
+              <button
+                type="button"
+                onClick={() => {
+                  setdetalleOpen(false);
+                }}
+                className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mr-2">
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {alertOpen && (
+        <div className="fixed  inset-0 z-50 overflow-auto bg-gray-800 bg-opacity-75 flex justify-center items-center">
+          <div className="flex flex-col bg-white w-3/4 border rounded-md p-5">
+            <h1 className="text-center text-3xl">
+              Medicamentos que presentan poca cantidad o estan por vencer
+            </h1>
+            <table className="w-full text-center">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Motivo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {AlertMedicina.map((alert) => (
+                  <tr key={alert.id}>
+                    <td>{alert.id}</td>
+                    <td>{alert.nombre}</td>
+                    <td className={alert.Alert}>{alert.MovitoAlert}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="flex justify-end my-3 gap-3 px-5">
+              <button
+                type="button"
+                onClick={toggleAlert}
+                className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mr-2">
+                Cerrar
               </button>
             </div>
           </div>
@@ -328,6 +478,13 @@ export default function MedicamentoListar() {
             className="bg-celeste hover:bg-celeste text-white font-bold py-2 px-4 rounded ">
             Limpiar
           </button>
+          <button
+            onClick={() => {
+              setalertOpen(true);
+            }}
+            className="bg-verde hover:bg-verde text-white font-bold py-2 px-4 rounded ">
+            Ver Alerta de Medicamentos
+          </button>
         </div>
         <div className=" w-4/5 ">
           <div className="flex justify-end my-5">
@@ -355,7 +512,11 @@ export default function MedicamentoListar() {
                     <td>{medicina.id}</td>
                     <td>{medicina.nombre}</td>
                     <td>{medicina.Kardex}</td>
-                    <td className=" cursor-pointer mx-auto">
+                    <td
+                      className=" cursor-pointer mx-auto"
+                      onClick={() => {
+                        detalleMedicameto(medicina);
+                      }}>
                       {<IconDetail />}
                     </td>
                   </tr>
