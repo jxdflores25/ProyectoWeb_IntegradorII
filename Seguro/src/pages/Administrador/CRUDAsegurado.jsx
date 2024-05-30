@@ -103,7 +103,8 @@ const Administrador = () => {
       toast.warning("Ingrese un DNI válido");
       return;
     }
-    if (document.getElementById("teléfono").value.length !== 9) {
+  
+    if (document.getElementById("telefono").value.length !== 9) {
       toast.warning("Ingrese un teléfono válido");
       return;
     }
@@ -112,7 +113,7 @@ const Administrador = () => {
     if (editIndex !== null) {
       asegurados[editIndex].nombre = nombre;
       asegurados[editIndex].apellido = apellido;
-      asegurados[editIndex].direccion = direccion;
+      asegurados[editIndex].direccion = null;
       asegurados[editIndex].telefono = telefono;
       asegurados[editIndex].ubicacion = sector;
       asegurados[editIndex].TipoSeguro = seguro;
@@ -146,6 +147,7 @@ const Administrador = () => {
       if (res !== null) {
         toast.success("Se guardado correctamente");
         setAsegurados([...asegurados, nuevoAsegurado]);
+        setEstaticoAsegurados([...EstaticoAsegurados, nuevoAsegurado]);
       } else {
         toast.error("Ocurrió un problema al guardar");
       }
@@ -173,6 +175,7 @@ const Administrador = () => {
       const nuevosAsegurados = [...asegurados];
       nuevosAsegurados.splice(editIndex, 1);
       setAsegurados(nuevosAsegurados);
+      setEstaticoAsegurados(nuevosAsegurados);
       toggleModalEliminar();
     } else {
       toast.error("Ocurrió un problema al eliminar");

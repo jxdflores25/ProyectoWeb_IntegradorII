@@ -128,6 +128,7 @@ const Administrador = () => {
       if (res !== null) {
         toast.success("Se guardado correctamente");
         setConductores([...conductores, nuevoConductor]);
+        setEstaticoConductoress([...EstaticoConductores, nuevoConductor]);
       } else {
         toast.error("Ocurrió un problema al guardar");
       }
@@ -152,6 +153,7 @@ const Administrador = () => {
       const nuevoConductores = [...conductores];
       nuevoConductores.splice(editIndex, 1);
       setConductores(nuevoConductores);
+      setEstaticoConductoress(nuevoConductores);
       toggleModalEliminar();
     } else {
       toast.error("Ocurrió un problema al eliminar");
