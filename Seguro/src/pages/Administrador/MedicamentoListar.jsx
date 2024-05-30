@@ -27,18 +27,18 @@ export default function MedicamentoListar() {
   useEffect(() => {
     const medicinas = async () => {
       var med = await GetMedicinasSeguro();
-      const alertMed = [];
+      const alertMedModal = [];
+
       for (let a = 0; a < med.data.length; a++) {
         const kardex = await GetKardex(med.data[a].id);
         var Alert = "";
         var MovitoAlert = "";
-        
+        const alertMed = [];
         if (kardex.data.length > 1) {
           var Saldo = 0;
-          var NroLote ="";
+          var NroLote = "";
           for (let index = 0; index < kardex.data.length; index++) {
             NroLote = kardex.data[index].nro_lote;
-            console.log(NroLote);
             Saldo += kardex.data[index].saldo;
             const diffTime = Math.abs(
               new Date(kardex.data[index].fec_venci) - new Date()
@@ -58,17 +58,23 @@ export default function MedicamentoListar() {
                   MovitoAlert = "Medicamento por Caducar";
                 }
               }
-              med.data[a].Alert = Alert;
-              med.data[a].MovitoAlert = MovitoAlert;
-              med.data[a].NroLote= NroLote;         
-              alertMed.push(med.data[a]);
+              var alert = {
+                Alert: Alert,
+                MovitoAlert: MovitoAlert,
+                NroLote: NroLote,
+                id: med.data[a].id,
+                nombre: med.data[a].nombre,
+              };
+              alertMedModal.push(alert);
+              alertMed.push(alert);
             }
           }
           med.data[a].Kardex = Saldo;
-          console.log(alertMed);
+          med.data[a].Alertas = alertMed;
         } else {
           if (kardex.data.length === 1) {
             med.data[a].Kardex = kardex.data[0].saldo;
+            NroLote = kardex.data[0].nro_lote;
             const diffTime = Math.abs(
               new Date(kardex.data[0].fec_venci) - new Date()
             );
@@ -87,19 +93,26 @@ export default function MedicamentoListar() {
                   MovitoAlert = "Medicamento por Caducar";
                 }
               }
-              med.data[a].Alert = Alert;
-              med.data[a].MovitoAlert = MovitoAlert;
-              med.data[a].NroLote= kardex.data[0].nro_lote;
-              alertMed.push(med.data[a]);
+              alert = {
+                Alert: Alert,
+                MovitoAlert: MovitoAlert,
+                NroLote: NroLote,
+                id: med.data[a].id,
+                nombre: med.data[a].nombre,
+              };
+              alertMedModal.push(alert);
+              alertMed.push(alert);
+              med.data[a].Alertas = alertMed;
             }
           } else {
             med.data[a].Kardex = 0;
+            med.data[a].Alertas = [];
           }
         }
       }
       setMedicinas(med.data);
       setEstaticoMedicinas(med.data);
-      setAlertMedicina(alertMed);
+      setAlertMedicina(alertMedModal);
       setalertOpen(true);
     };
 
@@ -247,7 +260,15 @@ export default function MedicamentoListar() {
   const detalleMedicameto = async (medicina) => {
     const kardex = await GetKardex(medicina.id);
     medicina.kardex = kardex.data;
-    console.log(medicina);
+    for (let index = 0; index < medicina.kardex.length; index++) {
+      if (medicina.Alertas) {
+        for (let a = 0; a < medicina.Alertas.length; a++) {
+          if (medicina.kardex[index].nro_lote === medicina.Alertas[a].NroLote) {
+            medicina.kardex[index].Alert = medicina.Alertas[a].Alert;
+          }
+        }
+      }
+    }
     setDetalle(medicina);
     setdetalleOpen(true);
   };
@@ -389,7 +410,7 @@ export default function MedicamentoListar() {
                 </thead>
                 <tbody>
                   {Detalle.kardex.map((kardex) => (
-                    <tr key={kardex.id} className={Detalle.Alert}>
+                    <tr key={kardex.id} className={kardex.Alert}>
                       <td>{kardex.nro_lote}</td>
                       <td>{kardex.fec_venci}</td>
                       <td>{kardex.saldo}</td>
