@@ -6,6 +6,7 @@ import AsignarReceta from "./AsignarReceta";
 import Asegurado from "./CRUDAsegurado";
 import Conductor from "./CRUDConductor";
 import PedidosListar from "./PedidosListar";
+import MedicamentoListar from "./MedicamentoListar";
 
 const Administrador = () => {
   const [Administrador, setAdministrador] = useState({
@@ -42,6 +43,7 @@ const Administrador = () => {
         <Route path="Asegurado" element={<Asegurado />} />
         <Route path="Conductor" element={<Conductor />} />
         <Route path="Pedidos" element={<PedidosListar />} />
+        <Route path="Medicinas" element={<MedicamentoListar />} />
       </Routes>
     </div>
   );

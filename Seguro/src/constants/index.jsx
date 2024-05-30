@@ -9,4 +9,5 @@ export const navItemsAdmin = [
   { label: "Pedidos", href: "Pedidos" },
   { label: "Asegurado", href: "Asegurado" },
   { label: "Distribuidores", href: "Conductor" },
+  { label: "Medicinas", href: "Medicinas" },
 ];

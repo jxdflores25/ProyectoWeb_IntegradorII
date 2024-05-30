@@ -226,8 +226,45 @@ const Administrador = () => {
     setfilAseg("");
     setAsegurados(EstaticoAsegurados);
   };
-  const soloTextoRegex = /^[A-Za-z\s]+$/; // Expresión regular para aceptar solo letras y espacios
-  const soloNumerosRegex = /^[0-9]*$/; // Expresión regular para aceptar solo números
+  
+  
+    const soloNumerosRegex = /^9[0-9]*$/; // Expresión regular para aceptar solo números y que empiece con 9 sin espacios
+    const soloNumerosDNI = /^[0-9]*$/; // Expresión regular para aceptar solo números 
+
+
+  const manejarCambioNombre = (e) => {
+    const inputValue = e.target.value;
+    
+    // Expresión regular para letras y espacios
+    const soloTextoRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+    
+    // Contar los espacios en el input
+    const espacios = (inputValue.match(/ /g) || []).length;
+    
+    // Validar el input solo si tiene un solo espacio o menos
+    if (soloTextoRegex.test(inputValue) && espacios <= 1) {
+        setNombre(inputValue);
+    }
+  };
+  
+  const manejarCambioapellido = (e) => {
+    const inputValue = e.target.value;
+    
+    // Expresión regular para letras y espacios
+    const soloTextoRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
+    
+    // Contar los espacios en el input
+    const espacios = (inputValue.match(/ /g) || []).length;
+    
+    // Validar el input solo si tiene un solo espacio o menos
+    if (soloTextoRegex.test(inputValue) && espacios <= 1) {
+        setApellido(inputValue);
+    }
+  };
+
+
+
+  
 
   return (
     <div>
@@ -263,9 +300,9 @@ const Administrador = () => {
       )}
 
       {modalOpen && (
-        <div className="fixed inset-0 z-50 overflow-auto bg-gray-800 bg-opacity-75 flex justify-center items-center">
+        <div className="fixed inset-0 z-50 overflow-auto bg-gray-800 bg-opacity-75 flex justify-center items-center ">
           <motion.div
-            className="bg-white p-8 max-w-md rounded-lg"
+            className="bg-white p-8 max-w-md rounded-lg border-4 border-animation "
             initial={{ opacity: 0, y: "-50%" }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: "-50%" }}
@@ -289,7 +326,7 @@ const Administrador = () => {
                   onChange={(e) => {
                     const inputValue = e.target.value;
                     if (
-                      soloNumerosRegex.test(inputValue) &&
+                      soloNumerosDNI.test(inputValue) &&
                       inputValue.length <= 8
                     ) {
                       setDni(inputValue);
@@ -308,12 +345,8 @@ const Administrador = () => {
                   id="nombre"
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:border-celeste"
                   value={nombre}
-                  onChange={(e) => {
-                    const inputValue = e.target.value;
-                    if (soloTextoRegex.test(inputValue) || inputValue === "") {
-                      setNombre(inputValue);
-                    }
-                  }}
+                  onChange={manejarCambioNombre}
+                  placeholder="Ej: Johann José"
                 />
               </div>
               <div className="mb-4">
@@ -327,12 +360,8 @@ const Administrador = () => {
                   id="apellido"
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:border-celeste"
                   value={apellido}
-                  onChange={(e) => {
-                    const inputValue = e.target.value;
-                    if (soloTextoRegex.test(inputValue) || inputValue === "") {
-                      setApellido(inputValue);
-                    }
-                  }}
+                  onChange={manejarCambioapellido}
+                  placeholder="Ej: Roldan Flores"
                 />
               </div>
               <div className="mb-4">
@@ -468,7 +497,7 @@ const Administrador = () => {
                       onChange={(e) => {
                         const inputValue = e.target.value;
                         if (
-                          soloNumerosRegex.test(inputValue) &&
+                          soloNumerosDNI.test(inputValue) &&
                           inputValue.length <= 8
                         ) {
                           setfilAseg(inputValue);
