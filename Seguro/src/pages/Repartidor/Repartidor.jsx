@@ -9,6 +9,7 @@ import IconSalir from "../../assets/Icons/IconSalir";
 import InfoPerfil from "../Repartidor/InfoPerfil";
 import PrincipalMenu from "../Repartidor/PrincipalMenu";
 import SideBarRepartidor from "../../components/Repartidor/SideBarRepartidor";
+import RutasPedidos from "./RutasPedidos";
 
 const Repartidor = () => {
   const [Repartidor, setRepartidor] = useState({
@@ -63,6 +64,13 @@ const Repartidor = () => {
               />
             </div>
             <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-gradient-to-r hover:from-verde hover:to-celeste text-white">
+              <NavLink to="">
+                <span className="text-[15px] ml-4 text-gray-700">
+                  Principal
+                </span>
+              </NavLink>
+            </div>
+            <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-gradient-to-r hover:from-verde hover:to-celeste text-white">
               <NavLink to="InfoPerfil">
                 <i className="bi bi-person-circle"></i>
                 <span className="text-[15px] ml-4 text-gray-700">
@@ -88,6 +96,7 @@ const Repartidor = () => {
               path="InfoPerfil"
               element={<InfoPerfil Data={Repartidor} />}
             />
+            <Route path="RutasPedidos" element={<RutasPedidos />} />
             <Route path="" element={<PrincipalMenu Data={Repartidor} />} />
           </Routes>
         </div>

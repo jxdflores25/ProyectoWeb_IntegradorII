@@ -74,7 +74,8 @@ export default function PrincipalMenu({ Data }) {
             <h6
               className="flex justify-evenly w-1/3  pb-5 text-xl text-center font-bold cursor-pointer"
               onClick={() => {
-                IniciarDelivery("Alta");
+                localStorage.setItem("PrioridadPedidos", "Alta");
+                window.location.href = "/Repartidor/RutasPedidos";
               }}>
               Iniciar delivery
               <IconMoto />
