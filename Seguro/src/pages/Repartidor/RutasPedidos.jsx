@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import {
   GetAsegurado,
   GetPedidoPrioridad,
@@ -24,8 +24,10 @@ export default function RutasPedidos() {
       const receta = [];
       const asegurado = [];
       for (let index = 0; index < pedidos.data.length; index++) {
-        receta[index] = await GetRecetaSeguro(pedidos.data[index].id_receta);
-        asegurado[index] = await GetAsegurado(receta[index].data.dni_asegurado);
+        var rec = await GetRecetaSeguro(pedidos.data[index].id_receta);
+        var ase = await GetAsegurado(rec.data.dni_asegurado);
+        receta.push(rec.data);
+        asegurado.push(ase.data);
       }
       setPedidos(pedidos.data);
       setReceta(receta);
@@ -46,7 +48,7 @@ export default function RutasPedidos() {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <RoutesMarker Data={Pedidos} />
+          <RoutesMarker Asegurado={Asegurado} Receta={Receta} />
         </MapContainer>
       </div>
     </div>

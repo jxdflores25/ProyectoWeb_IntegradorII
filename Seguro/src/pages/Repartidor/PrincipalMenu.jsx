@@ -1,6 +1,10 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { GetPedidoPrioridad } from "../../API/API_Seguro";
+import {
+  GetAsegurado,
+  GetPedidoPrioridad,
+  GetRecetaSeguro,
+} from "../../API/API_Seguro";
 import IconMoto from "../../assets/Icons/IconMoto";
 import { Slide, ToastContainer, toast } from "react-toastify";
 import Fecha from "../../constants/FechaTime";
@@ -8,13 +12,19 @@ import Fecha from "../../constants/FechaTime";
 export default function PrincipalMenu({ Data }) {
   const [PedidoAlta, setPedidoAlta] = useState(null);
   const [PedidoBaja, setPedidoBaja] = useState(null);
+  const [Receta, setReceta] = useState(null);
+  const [Asegurado, setAsegurado] = useState(null);
   const { envios, fechaHoy } = Fecha();
 
   useEffect(() => {
     const { fechaConsulta } = Fecha();
+    navigator.geolocation.getCurrentPosition((position) => {
+      localStorage.setItem("lat", position.coords.latitude);
+      localStorage.setItem("log", position.coords.longitude);
+    });
     const pedidos = async () => {
       const pedAlta = await GetPedidoPrioridad(
-        fechaConsulta,
+        "2024-05-16",
         "Alta",
         localStorage.getItem("usuario")
       );
@@ -24,6 +34,16 @@ export default function PrincipalMenu({ Data }) {
         localStorage.getItem("usuario")
       );
       if (pedAlta.data.length > 0) {
+        const receta = [];
+        const asegurado = [];
+        for (let index = 0; index < pedAlta.data.length; index++) {
+          var rec = await GetRecetaSeguro(pedAlta.data[index].id_receta);
+          var ase = await GetAsegurado(rec.data.dni_asegurado);
+          receta.push(rec.data);
+          asegurado.push(ase.data);
+        }
+        setReceta(receta);
+        setAsegurado(asegurado);
         setPedidoAlta(pedAlta.data);
       }
       if (pedBaja.data.length > 0) {
@@ -53,6 +73,12 @@ export default function PrincipalMenu({ Data }) {
     }
   };
 
+  const EnviarPedidosAlta = async () => {
+    localStorage.setItem("PrioridadPedidos", "Alta");
+
+    window.location.href = "/Repartidor/RutasPedidos";
+  };
+
   return (
     <div className="flex-1 p-4 flex flex-col justify-center items-center">
       <h1 className=" text-3xl text-center tracking-wide">
@@ -74,8 +100,7 @@ export default function PrincipalMenu({ Data }) {
             <h6
               className="flex justify-evenly w-1/3  pb-5 text-xl text-center font-bold cursor-pointer"
               onClick={() => {
-                localStorage.setItem("PrioridadPedidos", "Alta");
-                window.location.href = "/Repartidor/RutasPedidos";
+                EnviarPedidosAlta();
               }}>
               Iniciar delivery
               <IconMoto />
