@@ -252,8 +252,11 @@ export default function MedicamentoListar() {
   const toggleAlert = () => {
     setalertOpen(false);
   };
-  const soloNumerosRegex = /^[0-9]*$/; // Expresión regular para aceptar solo números
-  const soloTextoRegex = /^[A-Za-z\s]+$/; // Expresión regular para aceptar solo letras
+  const soloNumerosRegex = /^[0-9]{0,3}$/; // Expresión regular para aceptar solo números
+  const soloTextoRegex = /^[A-Za-zñÑáéíóúÁÉÍÓÚ]{0,15}$/;
+  const soloNumerosLote = /^[0-9]{0,5}$/; // Expresión regular para aceptar solo letras
+
+  
 
   return (
     <div className=" w-full ">
@@ -322,7 +325,7 @@ export default function MedicamentoListar() {
                     className=" mx-2 p-1 rounded border border-black"
                     onChange={(e) => {
                       const inputValue = e.target.value;
-                      if (soloNumerosRegex.test(inputValue)) {
+                      if (soloNumerosLote.test(inputValue)) {
                         setCantidadForm(inputValue);
                         var NuevaCantidad =
                           Number(inputValue) + MedicinaForm.Kardex;
