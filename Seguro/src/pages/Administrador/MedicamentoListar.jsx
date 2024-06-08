@@ -26,15 +26,19 @@ export default function MedicamentoListar() {
 
   useEffect(() => {
     const medicinas = async () => {
-      const med = await GetMedicinasSeguro();
-      const alertMed = [];
-      for (let index = 0; index < med.data.length; index++) {
-        const kardex = await GetKardex(med.data[index].id);
+      var med = await GetMedicinasSeguro();
+      const alertMedModal = [];
+
+      for (let a = 0; a < med.data.length; a++) {
+        const kardex = await GetKardex(med.data[a].id);
         var Alert = "";
         var MovitoAlert = "";
+        const alertMed = [];
         if (kardex.data.length > 1) {
           var Saldo = 0;
+          var NroLote = "";
           for (let index = 0; index < kardex.data.length; index++) {
+            NroLote = kardex.data[index].nro_lote;
             Saldo += kardex.data[index].saldo;
             const diffTime = Math.abs(
               new Date(kardex.data[index].fec_venci) - new Date()
@@ -54,15 +58,23 @@ export default function MedicamentoListar() {
                   MovitoAlert = "Medicamento por Caducar";
                 }
               }
-              med.data[index].Alert = Alert;
-              med.data[index].MovitoAlert = MovitoAlert;
-              alertMed.push(med.data[index]);
+              var alert = {
+                Alert: Alert,
+                MovitoAlert: MovitoAlert,
+                NroLote: NroLote,
+                id: med.data[a].id,
+                nombre: med.data[a].nombre,
+              };
+              alertMedModal.push(alert);
+              alertMed.push(alert);
             }
           }
-          med.data[index].Kardex = Saldo;
+          med.data[a].Kardex = Saldo;
+          med.data[a].Alertas = alertMed;
         } else {
           if (kardex.data.length === 1) {
-            med.data[index].Kardex = kardex.data[0].saldo;
+            med.data[a].Kardex = kardex.data[0].saldo;
+            NroLote = kardex.data[0].nro_lote;
             const diffTime = Math.abs(
               new Date(kardex.data[0].fec_venci) - new Date()
             );
@@ -81,18 +93,26 @@ export default function MedicamentoListar() {
                   MovitoAlert = "Medicamento por Caducar";
                 }
               }
-              med.data[index].Alert = Alert;
-              med.data[index].MovitoAlert = MovitoAlert;
-              alertMed.push(med.data[index]);
+              alert = {
+                Alert: Alert,
+                MovitoAlert: MovitoAlert,
+                NroLote: NroLote,
+                id: med.data[a].id,
+                nombre: med.data[a].nombre,
+              };
+              alertMedModal.push(alert);
+              alertMed.push(alert);
+              med.data[a].Alertas = alertMed;
             }
           } else {
-            med.data[index].Kardex = 0;
+            med.data[a].Kardex = 0;
+            med.data[a].Alertas = [];
           }
         }
       }
       setMedicinas(med.data);
       setEstaticoMedicinas(med.data);
-      setAlertMedicina(alertMed);
+      setAlertMedicina(alertMedModal);
       setalertOpen(true);
     };
 
@@ -240,7 +260,15 @@ export default function MedicamentoListar() {
   const detalleMedicameto = async (medicina) => {
     const kardex = await GetKardex(medicina.id);
     medicina.kardex = kardex.data;
-    console.log(medicina);
+    for (let index = 0; index < medicina.kardex.length; index++) {
+      if (medicina.Alertas) {
+        for (let a = 0; a < medicina.Alertas.length; a++) {
+          if (medicina.kardex[index].nro_lote === medicina.Alertas[a].NroLote) {
+            medicina.kardex[index].Alert = medicina.Alertas[a].Alert;
+          }
+        }
+      }
+    }
     setDetalle(medicina);
     setdetalleOpen(true);
   };
@@ -385,7 +413,7 @@ export default function MedicamentoListar() {
                 </thead>
                 <tbody>
                   {Detalle.kardex.map((kardex) => (
-                    <tr key={kardex.id} className={Detalle.Alert}>
+                    <tr key={kardex.id} className={kardex.Alert}>
                       <td>{kardex.nro_lote}</td>
                       <td>{kardex.fec_venci}</td>
                       <td>{kardex.saldo}</td>
@@ -418,14 +446,16 @@ export default function MedicamentoListar() {
                 <tr>
                   <th>ID</th>
                   <th>Nombre</th>
+                  <th>Nro Lote</th>
                   <th>Motivo</th>
                 </tr>
               </thead>
               <tbody>
                 {AlertMedicina.map((alert) => (
-                  <tr key={alert.id}>
+                  <tr key={alert.NroLote}>
                     <td>{alert.id}</td>
                     <td>{alert.nombre}</td>
+                    <td>{alert.NroLote}</td>
                     <td className={alert.Alert}>{alert.MovitoAlert}</td>
                   </tr>
                 ))}
