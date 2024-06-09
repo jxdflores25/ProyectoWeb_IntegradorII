@@ -42,6 +42,7 @@ const LeafletGeocoder = ({ Asegurado, Receta }) => {
         fitSelectedRoutes: true,
         showAlternatives: true,
         addWaypoints: false,
+        language: "es",
       }).addTo(map);
     };
     Marcador();
