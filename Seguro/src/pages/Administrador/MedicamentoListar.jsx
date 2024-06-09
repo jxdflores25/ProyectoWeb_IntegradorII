@@ -280,8 +280,17 @@ export default function MedicamentoListar() {
   const toggleAlert = () => {
     setalertOpen(false);
   };
-  const soloNumerosRegex = /^[0-9]*$/; // Expresión regular para aceptar solo números
-  const soloTextoRegex = /^[A-Za-z\s]+$/; // Expresión regular para aceptar solo letras
+  const soloNumerosRegex = /^[0-9]{0,3}$/; // Expresión regular para aceptar solo números
+  const soloTextoRegex = /^[A-Za-zñÑáéíóúÁÉÍÓÚ]{0,15}$/;
+  const soloNumerosLote = /^[0-9]{0,5}$/; // Expresión regular para aceptar solo letras
+
+  const [currentPage, setCurrentPage] = useState(1);
+const [rowsPerPage, setRowsPerPage] = useState(10);
+const indexOfLastRow = currentPage * rowsPerPage;
+const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+const currentRows = Medicinas.slice(indexOfFirstRow, indexOfLastRow);
+
+const paginate = pageNumber => setCurrentPage(pageNumber);
 
   return (
     <div className=" w-full ">
@@ -350,7 +359,7 @@ export default function MedicamentoListar() {
                     className=" mx-2 p-1 rounded border border-black"
                     onChange={(e) => {
                       const inputValue = e.target.value;
-                      if (soloNumerosRegex.test(inputValue)) {
+                      if (soloNumerosLote.test(inputValue)) {
                         setCantidadForm(inputValue);
                         var NuevaCantidad =
                           Number(inputValue) + MedicinaForm.Kardex;
@@ -524,33 +533,37 @@ export default function MedicamentoListar() {
               Nuevo Lote
             </button>
           </div>
-          <table className=" w-full">
+          <table className=" w-full text-center shadow-md">
             <thead>
-              <tr>
+              <tr className="bg-gray-100">
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Stock Total</th>
                 <th>Detalle</th>
               </tr>
             </thead>
-            <tbody className=" text-lg text-center ">
-              {Medicinas &&
-                Medicinas.map((medicina) => (
-                  <tr
-                    key={medicina.id}
-                    className=" my-2 border-y-2 border-black ">
-                    <td>{medicina.id}</td>
-                    <td>{medicina.nombre}</td>
-                    <td>{medicina.Kardex}</td>
-                    <td
-                      className=" cursor-pointer mx-auto"
-                      onClick={() => {
-                        detalleMedicameto(medicina);
-                      }}>
-                      {<IconDetail />}
-                    </td>
-                  </tr>
-                ))}
+            <tbody className=" text-lg text-center bg-white ">
+            {currentRows.map((medicina) => (
+    <tr key={medicina.id} className="border-b hover:bg-gray-50">
+      <td>{medicina.id}</td>
+      <td>{medicina.nombre}</td>
+      <td>{medicina.Kardex}</td>
+      <td className="cursor-pointer" onClick={() => detalleMedicameto(medicina)}>
+        {<IconDetail />}
+      </td>
+    </tr>
+  ))}
+  <div className="flex justify-center space-x-1">
+  {Array.from({ length: Math.ceil(Medicinas.length / rowsPerPage) }, (_, i) => (
+    <button
+      key={i + 1}
+      onClick={() => paginate(i + 1)}
+      className={`px-4 py-2 rounded ${currentPage === i + 1 ? 'bg-blue-500 text-white' : 'bg-white text-black'}`}
+    >
+      {i + 1}
+    </button>
+  ))}
+</div>
             </tbody>
           </table>
         </div>

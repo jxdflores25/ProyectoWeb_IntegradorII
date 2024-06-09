@@ -92,7 +92,9 @@ const InfoPerfil = ({ Data }) => {
     }
   };
 
-  const soloNumerosRegex = /^[0-9]*$/;
+  const soloNumerosRegex = /^9[0-9]*$/;
+
+  
 
   return (
     <div className="flex-row p-4 h-full">
@@ -114,7 +116,7 @@ const InfoPerfil = ({ Data }) => {
                 type="text"
                 id="FirstName"
                 name="first_name"
-                className="mt-1 w-full rounded-md bg-slate-300  border border-celeste  text-sm text-gray-700 shadow-sm"
+                className="mt-1 w-full rounded-md bg-slate-300  border border-celeste  text-base p-2 text-gray-700 shadow-sm"
                 defaultValue={Data.nombre}
                 disabled
               />
@@ -131,7 +133,7 @@ const InfoPerfil = ({ Data }) => {
                 id="LastName"
                 name="last_name"
                 defaultValue={Data.apellido}
-                className="mt-1 w-full rounded-md bg-slate-300  border border-celeste  text-sm text-gray-700 shadow-sm"
+                className="mt-1 w-full rounded-md bg-slate-300  border border-celeste  text-base p-2  text-gray-700 shadow-sm"
                 disabled
               />
             </div>
@@ -145,7 +147,7 @@ const InfoPerfil = ({ Data }) => {
               <select
                 name="Ubicacion"
                 id="Ubicacion"
-                className="mt-1 w-full rounded-md border border-celeste   text-sm text-gray-700 shadow-sm"
+                className="mt-1 w-full rounded-md border border-celeste   text-base p-2  text-gray-700 shadow-sm"
                 defaultValue={Data.ubicacion}>
                 <option value="Lima Sur">Lima Sur</option>
                 <option value="Lima Norte">Lima Norte</option>
@@ -164,7 +166,7 @@ const InfoPerfil = ({ Data }) => {
                 id="TipoSeguro"
                 name="TipoSeguro"
                 defaultValue={Data.TipoSeguro}
-                className="mt-1 w-full rounded-md bg-slate-300  border border-celeste  text-sm text-gray-700 shadow-sm"
+                className="mt-1 w-full rounded-md bg-slate-300  border border-celeste  text-base p-2  text-gray-700 shadow-sm"
                 disabled
               />
             </div>

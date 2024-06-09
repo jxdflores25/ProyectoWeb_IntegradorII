@@ -30,7 +30,8 @@ export default function RutasPedidos() {
     const { fechaConsulta } = Fecha();
     const pedidos = async () => {
       const pedidos = await GetPedidoPrioridad(
-        "2024-05-16",
+        // "2024-05-16",
+        fechaConsulta,
         localStorage.getItem("PrioridadPedidos"),
         localStorage.getItem("usuario")
       );

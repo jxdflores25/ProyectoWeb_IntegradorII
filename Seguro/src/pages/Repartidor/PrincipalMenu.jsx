@@ -24,7 +24,8 @@ export default function PrincipalMenu({ Data }) {
     });
     const pedidos = async () => {
       const pedAlta = await GetPedidoPrioridad(
-        "2024-05-16",
+        //"2024-05-16",
+        fechaConsulta,
         "Alta",
         localStorage.getItem("usuario")
       );
@@ -80,99 +81,105 @@ export default function PrincipalMenu({ Data }) {
   };
 
   return (
-    <div className="flex-1 p-4 flex flex-col justify-center items-center">
-      <h1 className=" text-3xl text-center tracking-wide">
+    <div className="flex-1 p-4 flex flex-col justify-center items-center bg-gray-50 min-h-screen">
+      <h1 className="text-3xl text-center tracking-wide mb-8">
         Bienvenido Repartidor: &nbsp;
         <span className="bg-gradient-to-r from-verde to-celeste text-transparent bg-clip-text">
           {Data.nombre + " " + Data.apellido}
         </span>
       </h1>
-      <div className="flex flex-col items-center w-full">
-        <div className=" text-start w-full px-4 mt-8">
-          <div className=" flex justify-between my-5 border-b-2 border-verde">
-            <h2 className=" text-xl">{fechaHoy}</h2>
-            <h2 className=" text-xl">{envios}</h2>
+      <div className="flex flex-col items-center w-full max-w-4xl">
+        <div className="text-start w-full px-4 mt-8">
+          <div className="flex justify-between my-5 border-b-2 border-verde">
+            <h2 className="text-xl">{fechaHoy}</h2>
+            <h2 className="text-xl">{envios}</h2>
           </div>
           <div className="flex w-full mt-10">
-            <h4 className=" w-2/3 pb-5 text-xl text-center font-bold">
+            <h4 className="w-2/3 pb-5 text-xl text-center font-bold">
               Prioridad Alta
             </h4>
             <h6
-              className="flex justify-evenly w-1/3  pb-5 text-xl text-center font-bold cursor-pointer"
+              className="flex justify-evenly w-1/3 pb-5 text-xl text-center font-bold cursor-pointer hover:text-verde"
               onClick={() => {
                 EnviarPedidosAlta();
-              }}>
+              }}
+            >
               Iniciar delivery
               <IconMoto />
             </h6>
           </div>
 
-          <table className="w-full text-center ">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>ID Receta</th>
-                <th>Estado</th>
-              </tr>
-            </thead>
-            <tbody>
-              {PedidoAlta ? (
-                PedidoAlta.map((Pedido) => (
-                  <tr key={Pedido.id} className=" my-2 border-y-2 border-black">
-                    <td>{Pedido.id}</td>
-                    <td>{Pedido.id_receta}</td>
-                    <td>{Pedido.estatus}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr className=" h-24 border-2 border-[#9ca3af] border-dashed ">
-                  <td colSpan="3" className="text-lg text-[#9ca3af]">
-                    Aquí se mostrarán sus pedidos de prioridad alta
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full text-center border-collapse">
+              <thead>
+                <tr>
+                  <th className="border-b-2 border-gray-300 py-2">ID</th>
+                  <th className="border-b-2 border-gray-300 py-2">ID Receta</th>
+                  <th className="border-b-2 border-gray-300 py-2">Estado</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {PedidoAlta ? (
+                  PedidoAlta.map((Pedido) => (
+                    <tr key={Pedido.id} className="border-b border-gray-200">
+                      <td className="py-2">{Pedido.id}</td>
+                      <td className="py-2">{Pedido.id_receta}</td>
+                      <td className="py-2">{Pedido.estatus}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr className="h-24 border-2 border-[#9ca3af] border-dashed ">
+                    <td colSpan="3" className="text-lg text-[#9ca3af]">
+                      Aquí se mostrarán sus pedidos de prioridad alta
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
 
           <div className="flex w-full mt-5">
-            <h4 className=" w-2/3 pb-5 text-xl text-center font-bold">
+            <h4 className="w-2/3 pb-5 text-xl text-center font-bold">
               Prioridad Baja
             </h4>
             <h6
-              className="flex justify-evenly w-1/3  pb-5 text-xl text-center font-bold cursor-pointer"
+              className="flex justify-evenly w-1/3 pb-5 text-xl text-center font-bold cursor-pointer hover:text-verde"
               onClick={() => {
                 IniciarDelivery("Baja");
-              }}>
+              }}
+            >
               Iniciar delivery
               <IconMoto />
             </h6>
           </div>
-          <table className="w-full text-center">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>ID Receta</th>
-                <th>Estado</th>
-              </tr>
-            </thead>
-            <tbody>
-              {PedidoBaja ? (
-                PedidoBaja.map((Pedido) => (
-                  <tr key={Pedido.id} className=" my-2 border-y-2 border-black">
-                    <td>{Pedido.id}</td>
-                    <td>{Pedido.id_receta}</td>
-                    <td>{Pedido.estatus}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr className=" h-24 border-2 border-[#9ca3af] border-dashed ">
-                  <td colSpan="3" className="text-lg text-[#9ca3af]">
-                    Aquí se mostrarán sus pedidos de prioridad baja
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full text-center border-collapse">
+              <thead>
+                <tr>
+                  <th className="border-b-2 border-gray-300 py-2">ID</th>
+                  <th className="border-b-2 border-gray-300 py-2">ID Receta</th>
+                  <th className="border-b-2 border-gray-300 py-2">Estado</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {PedidoBaja ? (
+                  PedidoBaja.map((Pedido) => (
+                    <tr key={Pedido.id} className="border-b border-gray-200">
+                      <td className="py-2">{Pedido.id}</td>
+                      <td className="py-2">{Pedido.id_receta}</td>
+                      <td className="py-2">{Pedido.estatus}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr className="h-24 border-2 border-[#9ca3af] border-dashed ">
+                    <td colSpan="3" className="text-lg text-[#9ca3af]">
+                      Aquí se mostrarán sus pedidos de prioridad baja
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       <ToastContainer

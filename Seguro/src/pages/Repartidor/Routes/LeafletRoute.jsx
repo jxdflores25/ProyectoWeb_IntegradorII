@@ -59,7 +59,7 @@ const LeafletGeocoder = ({ Asegurado, Receta, Pedido, mostrarinfo }) => {
         fitSelectedRoutes: true,
         showAlternatives: true,
         addWaypoints: false,
-
+        language: "es",
         createMarker: function (i, waypoint, n) {
           // Usar el icono personalizado y agregar un popup con el nombre
           const marker = L.marker(waypoint.latLng, {
