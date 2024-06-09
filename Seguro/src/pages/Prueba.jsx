@@ -1,56 +1,121 @@
-import { MapContainer, TileLayer } from "react-leaflet";
-import { GetKardex } from "../API/API_Seguro";
-import "leaflet-routing-machine";
-import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
-import "leaflet/dist/leaflet.css";
-import L from "leaflet";
-import { useMap } from "react-leaflet";
+import { useRef, useState } from "react";
+import SignatureCanvas from "react-signature-canvas";
+import axios from "axios";
 
 export default function Prueba() {
-  const position = [-12.20237464, -76.9427];
-  const RoutesMarker = () => {
-    let DefaultIcon = L.icon({
-      iconUrl: "/motorcycle-riding.gif",
-      iconSize: [50, 50],
-    });
-    const map = useMap();
-    L.marker([-12.192539, -76.9534792], {
-      icon: DefaultIcon,
-    }).addTo(map);
-    L.Routing.control({
-      waypoints: [
-        L.latLng(-12.192539, -76.9534792),
-        L.latLng(-12.1928851, -76.9482086),
-        L.latLng(-12.1728851, -76.9482086),
-        L.latLng(-12.1728851, -76.9282086),
-      ],
-      lineOptions: {
-        styles: [
-          {
-            color: "blue",
-            weight: 4,
-            opacity: 0.7,
-          },
-        ],
-      },
-      routeWhileDragging: true,
-      draggableWaypoints: false,
-      fitSelectedRoutes: true,
-      showAlternatives: true,
-      addWaypoints: false,
-    }).addTo(map);
+  const sigCanvas = useRef();
+  const [imageURL, setImageURL] = useState(null);
+  const create = () => {
+    const URL = sigCanvas.current.getTrimmedCanvas().toDataURL("image/png");
+    console.log(URL);
+    setImageURL(URL);
   };
+
+  const download = async () => {
+    const formData = new FormData();
+    formData.append("file", imageURL);
+    formData.append("upload_preset", "IntegradorProyector");
+
+    try {
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dauazz3dm/image/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setImageUrl(response.data.secure_url);
+      setUploading(false);
+      console.log(response.data);
+      alert("Imagen subida con éxito");
+    } catch (error) {
+      console.error("Error al subir la imagen:", error);
+      setUploading(false);
+      alert("Error al subir la imagen");
+    }
+  };
+
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  const handleUpload = async () => {
+    if (!selectedFile) return;
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("upload_preset", "IntegradorProyector");
+
+    try {
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dauazz3dm/image/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setImageUrl(response.data.secure_url);
+      setUploading(false);
+      console.log(response.data);
+      alert("Imagen subida con éxito");
+    } catch (error) {
+      console.error("Error al subir la imagen:", error);
+      setUploading(false);
+      alert("Error al subir la imagen");
+    }
+  };
+
   return (
-    <div className="h-full w-full">
-      Pruebas
-      <div className="h-full">
-        <MapContainer center={position} zoom={13} scrollWheelZoom={true}>
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <RoutesMarker />
-        </MapContainer>
+    <div className=" border-2 ">
+      <SignatureCanvas
+        penColor="black"
+        canvasProps={{
+          width: 500,
+          height: 200,
+          className: "sigCanvas border-2",
+        }}
+        ref={sigCanvas}
+      />
+      <hr />
+      <button onClick={() => sigCanvas.current.clear()}>Clear</button>
+      <button className="create" onClick={create}>
+        Create
+      </button>
+      <br />
+      {imageURL && (
+        <div>
+          <img src={imageURL} alt="signature" className="signature" />
+          <button
+            onClick={download}
+            style={{ padding: "5px", marginTop: "5px" }}>
+            Download
+          </button>
+        </div>
+      )}
+      <div>
+        <input type="file" onChange={handleFileChange} />
+        <button onClick={handleUpload} disabled={uploading}>
+          {uploading ? "Subiendo..." : "Subir a Cloudinary"}
+        </button>
+        {imageUrl && (
+          <div>
+            <h2>Imagen Subida:</h2>
+            <img
+              src={imageUrl}
+              alt="Imagen subida"
+              style={{ width: "300px" }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
