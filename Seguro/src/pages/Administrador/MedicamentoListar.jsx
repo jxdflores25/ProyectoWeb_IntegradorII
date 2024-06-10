@@ -285,12 +285,12 @@ export default function MedicamentoListar() {
   const soloNumerosLote = /^[0-9]{0,5}$/; // Expresión regular para aceptar solo letras
 
   const [currentPage, setCurrentPage] = useState(1);
-const [rowsPerPage, setRowsPerPage] = useState(10);
-const indexOfLastRow = currentPage * rowsPerPage;
-const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-const currentRows = Medicinas.slice(indexOfFirstRow, indexOfLastRow);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentRows = Medicinas.slice(indexOfFirstRow, indexOfLastRow);
 
-const paginate = pageNumber => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className=" w-full ">
@@ -543,27 +543,35 @@ const paginate = pageNumber => setCurrentPage(pageNumber);
               </tr>
             </thead>
             <tbody className=" text-lg text-center bg-white ">
-            {currentRows.map((medicina) => (
-    <tr key={medicina.id} className="border-b hover:bg-gray-50">
-      <td>{medicina.id}</td>
-      <td>{medicina.nombre}</td>
-      <td>{medicina.Kardex}</td>
-      <td className="cursor-pointer" onClick={() => detalleMedicameto(medicina)}>
-        {<IconDetail />}
-      </td>
-    </tr>
-  ))}
-  <div className="flex justify-center space-x-1">
-  {Array.from({ length: Math.ceil(Medicinas.length / rowsPerPage) }, (_, i) => (
-    <button
-      key={i + 1}
-      onClick={() => paginate(i + 1)}
-      className={`px-4 py-2 rounded ${currentPage === i + 1 ? 'bg-blue-500 text-white' : 'bg-white text-black'}`}
-    >
-      {i + 1}
-    </button>
-  ))}
-</div>
+              {currentRows.map((medicina) => (
+                <tr key={medicina.id} className="border-b hover:bg-gray-50">
+                  <td>{medicina.id}</td>
+                  <td>{medicina.nombre}</td>
+                  <td>{medicina.Kardex}</td>
+                  <td
+                    className="cursor-pointer"
+                    onClick={() => detalleMedicameto(medicina)}>
+                    {<IconDetail />}
+                  </td>
+                </tr>
+              ))}
+              <div className="flex justify-center space-x-1">
+                {Array.from(
+                  { length: Math.ceil(Medicinas.length / rowsPerPage) },
+                  (_, i) => (
+                    <button
+                      key={i + 1}
+                      onClick={() => paginate(i + 1)}
+                      className={`px-4 py-2 rounded ${
+                        currentPage === i + 1
+                          ? "bg-blue-500 text-white"
+                          : "bg-white text-black"
+                      }`}>
+                      {i + 1}
+                    </button>
+                  )
+                )}
+              </div>
             </tbody>
           </table>
         </div>

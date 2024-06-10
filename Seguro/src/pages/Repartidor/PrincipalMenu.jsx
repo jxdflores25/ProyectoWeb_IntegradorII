@@ -24,8 +24,8 @@ export default function PrincipalMenu({ Data }) {
     });
     const pedidos = async () => {
       const pedAlta = await GetPedidoPrioridad(
-        //"2024-05-16",
-        fechaConsulta,
+        "2024-05-16",
+        //fechaConsulta,
         "Alta",
         localStorage.getItem("usuario")
       );
@@ -102,8 +102,7 @@ export default function PrincipalMenu({ Data }) {
               className="flex justify-evenly w-1/3 pb-5 text-xl text-center font-bold cursor-pointer hover:text-verde"
               onClick={() => {
                 EnviarPedidosAlta();
-              }}
-            >
+              }}>
               Iniciar delivery
               <IconMoto />
             </h6>
@@ -146,8 +145,7 @@ export default function PrincipalMenu({ Data }) {
               className="flex justify-evenly w-1/3 pb-5 text-xl text-center font-bold cursor-pointer hover:text-verde"
               onClick={() => {
                 IniciarDelivery("Baja");
-              }}
-            >
+              }}>
               Iniciar delivery
               <IconMoto />
             </h6>

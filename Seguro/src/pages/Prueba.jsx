@@ -74,6 +74,14 @@ export default function Prueba() {
     }
   };
 
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setSelectedImage(URL.createObjectURL(e.target.files[0]));
+    }
+  };
+
   return (
     <div className=" border-2 ">
       <SignatureCanvas
@@ -114,6 +122,16 @@ export default function Prueba() {
               alt="Imagen subida"
               style={{ width: "300px" }}
             />
+          </div>
+        )}
+      </div>
+      <div>
+        <h1>Subir y mostrar una foto</h1>
+        <input type="file" onChange={handleImageChange} />
+        {selectedImage && (
+          <div>
+            <h2>Foto seleccionada:</h2>
+            <img src={selectedImage} alt="Selected" className=" w-1/2" />
           </div>
         )}
       </div>
