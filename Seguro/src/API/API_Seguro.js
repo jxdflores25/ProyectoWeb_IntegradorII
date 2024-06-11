@@ -286,3 +286,11 @@ export const PostPedido = async (data) => {
     return null;
   }
 };
+
+export const PutPedido = async (id, data) => {
+  try {
+    return await axios.put(URLPedido + id + "/", data);
+  } catch (error) {
+    return null;
+  }
+};

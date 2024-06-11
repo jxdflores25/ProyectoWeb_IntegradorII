@@ -56,30 +56,28 @@ export default function PrincipalMenu({ Data }) {
 
   const IniciarDelivery = (prioridad) => {
     if (prioridad === "Alta") {
-      if (PedidoAlta.length > 0) {
-        toast.success("Iniciando delivery");
-      } else {
+      if (PedidoAlta === null) {
         toast.warning("Se completaron todas las tareas de prioridad Alta");
+        return;
+      }
+      if (PedidoAlta.length > 0) {
+        localStorage.setItem("PrioridadPedidos", "Alta");
+        window.location.href = "/Repartidor/RutasPedidos";
       }
     } else {
       if (PedidoAlta.length > 0) {
         toast.warning("Primero complete los pedidos de prioridad Alta");
       } else {
+        if (PedidoBaja === null) {
+          toast.warning("Se completaron todas las tareas de prioridad Baja");
+          return;
+        }
         if (PedidoBaja.length > 0) {
           toast.success("Iniciando delivery");
-        } else {
-          toast.warning("Se completaron todas las tareas de prioridad Baja");
         }
       }
     }
   };
-
-  const EnviarPedidosAlta = async () => {
-    localStorage.setItem("PrioridadPedidos", "Alta");
-
-    window.location.href = "/Repartidor/RutasPedidos";
-  };
-
   return (
     <div className="flex-1 p-4 flex flex-col justify-center items-center bg-gray-50 min-h-screen">
       <h1 className="text-3xl text-center tracking-wide mb-8">
@@ -101,7 +99,7 @@ export default function PrincipalMenu({ Data }) {
             <h6
               className="flex justify-evenly w-1/3 pb-5 text-xl text-center font-bold cursor-pointer hover:text-verde"
               onClick={() => {
-                EnviarPedidosAlta();
+                IniciarDelivery("Alta");
               }}>
               Iniciar delivery
               <IconMoto />

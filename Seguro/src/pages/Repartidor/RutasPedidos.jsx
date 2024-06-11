@@ -6,6 +6,7 @@ import {
   GetPedidoPrioridad,
   GetRecetaSeguro,
   PostPedido,
+  PutPedido,
 } from "../../API/API_Seguro";
 import Fecha from "../../constants/FechaTime";
 import RoutesMarker from "./Routes/LeafletRoute";
@@ -167,7 +168,7 @@ export default function RutasPedidos() {
     Pedidos[InfoPedido[6]].dni_img = SubirDNI;
     Pedidos[InfoPedido[6]].firma_digital = SubirFirma;
 
-    const resp = await PostPedido(Pedidos[InfoPedido[6]]);
+    const resp = await PutPedido(InfoPedido[0], Pedidos[InfoPedido[6]]);
 
     console.log(resp);
   };
@@ -421,7 +422,7 @@ export default function RutasPedidos() {
                 <button
                   className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mr-2"
                   onClick={() => sigCanvas.current.clear()}>
-                  Clear
+                  Borrar
                 </button>
                 <button
                   type="button"
