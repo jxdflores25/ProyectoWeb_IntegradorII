@@ -35,13 +35,18 @@ export default function RutasPedidos() {
   const sigCanvas = useRef();
 
   useEffect(() => {
+    if (localStorage.getItem("PedidoEntregado")) {
+      toast.success("Se entrego correctamente el pedido");
+      localStorage.removeItem("PedidoEntregado");
+    }
     const { fechaConsulta } = Fecha();
     const pedidos = async () => {
       const pedidos = await GetPedidoPrioridad(
         "2024-05-16",
         //fechaConsulta,
         localStorage.getItem("PrioridadPedidos"),
-        localStorage.getItem("usuario")
+        localStorage.getItem("usuario"),
+        "EnCurso"
       );
 
       const receta = [];
@@ -63,6 +68,11 @@ export default function RutasPedidos() {
   const position = [-12.192539, -76.9534792];
 
   const MostrarInfo = (id) => {
+    if (id !== 1) {
+      toast.warning("Complete la primera entrega primero");
+      return;
+    }
+
     setModalInfo(true);
     var Info = [];
     Info.push(Pedidos[id - 1].id);
@@ -165,12 +175,21 @@ export default function RutasPedidos() {
 
     console.log(Pedidos[InfoPedido[6]]);
 
-    Pedidos[InfoPedido[6]].dni_img = SubirDNI;
-    Pedidos[InfoPedido[6]].firma_digital = SubirFirma;
+    Pedidos[InfoPedido[6]].dni_img = "SubirDNI";
+    Pedidos[InfoPedido[6]].firma_digital = "SubirFirma";
+    Pedidos[InfoPedido[6]].estatus = "Finalizado";
 
     const resp = await PutPedido(InfoPedido[0], Pedidos[InfoPedido[6]]);
 
-    console.log(resp);
+    if (resp !== null) {
+      localStorage.setItem("PedidoEntregado", true);
+      localStorage.setItem("lat", Asegurado[InfoPedido[6].Latitud]);
+      localStorage.setItem("log", Asegurado[InfoPedido[6]].Longitud);
+      setModalEntrega(false);
+      window.location.reload();
+    } else {
+      toast.warning("Hubo algun error al completar el pedido");
+    }
   };
 
   const SubirImagenes = async (file) => {

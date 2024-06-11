@@ -15,6 +15,8 @@ const LeafletGeocoder = ({ Asegurado, Receta, Pedido, mostrarinfo }) => {
         iconSize: [50, 50],
       }),
     ];
+    console.log(Asegurado);
+    console.log(Pedido);
     var waypoints = [
       { lat: localStorage.getItem("lat"), lng: localStorage.getItem("log") },
     ];

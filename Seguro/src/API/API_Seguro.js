@@ -231,10 +231,22 @@ export const PostKardex = async (data) => {
   }
 };
 
-export const GetPedidoPrioridad = async (fecha, prioridad, conductor) => {
+export const GetPedidoPrioridad = async (
+  fecha,
+  prioridad,
+  conductor,
+  status
+) => {
   try {
     return await axios.get(
-      URLPedidosPrioridad + fecha + "/" + prioridad + "/" + conductor
+      URLPedidosPrioridad +
+        fecha +
+        "/" +
+        prioridad +
+        "/" +
+        conductor +
+        "/" +
+        status
     );
   } catch (error) {
     if (error.response.status === 404) {

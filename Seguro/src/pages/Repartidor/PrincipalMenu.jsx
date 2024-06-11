@@ -4,6 +4,7 @@ import {
   GetAsegurado,
   GetPedidoPrioridad,
   GetRecetaSeguro,
+  PutPedido,
 } from "../../API/API_Seguro";
 import IconMoto from "../../assets/Icons/IconMoto";
 import { Slide, ToastContainer, toast } from "react-toastify";
@@ -27,12 +28,14 @@ export default function PrincipalMenu({ Data }) {
         "2024-05-16",
         //fechaConsulta,
         "Alta",
-        localStorage.getItem("usuario")
+        localStorage.getItem("usuario"),
+        "Pendiente"
       );
       const pedBaja = await GetPedidoPrioridad(
         fechaConsulta,
         "Baja",
-        localStorage.getItem("usuario")
+        localStorage.getItem("usuario"),
+        "Pendiente"
       );
       if (pedAlta.data.length > 0) {
         const receta = [];
@@ -54,13 +57,18 @@ export default function PrincipalMenu({ Data }) {
     pedidos();
   }, []);
 
-  const IniciarDelivery = (prioridad) => {
+  const IniciarDelivery = async (prioridad) => {
     if (prioridad === "Alta") {
       if (PedidoAlta === null) {
         toast.warning("Se completaron todas las tareas de prioridad Alta");
         return;
       }
       if (PedidoAlta.length > 0) {
+        for (let index = 0; index < PedidoAlta.length; index++) {
+          PedidoAlta[index].estatus = "EnCurso";
+          const resp = await PutPedido(PedidoAlta[index].id, PedidoAlta[index]);
+        }
+
         localStorage.setItem("PrioridadPedidos", "Alta");
         window.location.href = "/Repartidor/RutasPedidos";
       }
