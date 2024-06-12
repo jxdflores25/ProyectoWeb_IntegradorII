@@ -24,7 +24,7 @@ export default function PrincipalMenu({ Data }) {
     });
     const pedidos = async () => {
       const pedAlta = await GetPedidoPrioridad(
-        "2024-05-16",
+        fechaConsulta,
         "Alta",
         localStorage.getItem("usuario")
       );

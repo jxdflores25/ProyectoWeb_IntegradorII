@@ -8,6 +8,7 @@ import Fecha from "../../constants/FechaTime";
 import RoutesMarker from "./Routes/LeafletRoute";
 import { MapContainer, TileLayer } from "react-leaflet";
 
+
 export default function RutasPedidos() {
   const [Pedidos, setPedidos] = useState([]);
   const [Receta, setReceta] = useState([]);
@@ -16,7 +17,7 @@ export default function RutasPedidos() {
     const { fechaConsulta } = Fecha();
     const pedidos = async () => {
       const pedidos = await GetPedidoPrioridad(
-        "2024-05-16",
+        fechaConsulta,
         localStorage.getItem("PrioridadPedidos"),
         localStorage.getItem("usuario")
       );

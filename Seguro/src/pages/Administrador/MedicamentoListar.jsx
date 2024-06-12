@@ -4,6 +4,7 @@ import {
   GetMedicinasSeguro,
   PostKardex,
 } from "../../API/API_Seguro";
+import Fecha from "../../constants/FechaTime";
 import IconDetail from "../../assets/Icons/IconDetail";
 import { Slide, ToastContainer, toast } from "react-toastify";
 
@@ -23,7 +24,7 @@ export default function MedicamentoListar() {
   const [LoteForm, setLoteForm] = useState("");
   const [CantidadForm, setCantidadForm] = useState("");
   const [StockForm, setStockForm] = useState("");
-
+  const { fechaConsulta } = Fecha();
   useEffect(() => {
     const medicinas = async () => {
       var med = await GetMedicinasSeguro();
@@ -341,6 +342,7 @@ export default function MedicamentoListar() {
                     type="date"
                     id="FechaVencimiento"
                     className=" mx-2 p-1 rounded border border-black"
+                    min={fechaConsulta}
                   />
                   <label htmlFor="">Cantidad:</label>
                   <input
