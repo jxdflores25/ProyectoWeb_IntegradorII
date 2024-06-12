@@ -332,6 +332,7 @@ export default function RutasPedidos() {
                   <tr>
                     <th>Medicina</th>
                     <th>Cantidad</th>
+                    <th>P. Uni.</th>
                     <th>Precio</th>
                   </tr>
                 </thead>
@@ -341,7 +342,9 @@ export default function RutasPedidos() {
                       <tr key={detalle.id} className="text-center">
                         <td>{detalle.nombreMedicina}</td>
                         <td>{detalle.cantidad}</td>
+                        <td>S/.{detalle.precioMedicina}</td>
                         <td>
+                          S/.
                           {(
                             Number(detalle.precioMedicina) * detalle.cantidad
                           ).toFixed(2)}
@@ -349,16 +352,16 @@ export default function RutasPedidos() {
                       </tr>
                     ))}
                   <tr className="text-center font-bold">
-                    <td colSpan="2">Total a Pagar</td>
+                    <td colSpan="3">Total a Pagar</td>
                     <td> S/.{InfoPedido[8]}</td>
                   </tr>
                   <tr className="text-center font-bold">
-                    <td colSpan="2">CoPago</td>
+                    <td colSpan="3">CoPago</td>
                     <td> S/.{InfoPedido[9]}</td>
                   </tr>
                   {FirmaDigital && (
                     <tr>
-                      <td colSpan="3" className="text-center py-3">
+                      <td colSpan="4" className="text-center py-3">
                         <div className=" w-full flex justify-center">
                           <img
                             src={FirmaDigital}
@@ -371,7 +374,7 @@ export default function RutasPedidos() {
                   )}
 
                   <tr>
-                    <td colSpan="3" className="text-center py-3">
+                    <td colSpan="4" className="text-center py-3">
                       <button
                         className="bg-celeste  hover:bg-celeste text-white font-bold py-1 px-2 rounded "
                         onClick={() => {
@@ -384,7 +387,7 @@ export default function RutasPedidos() {
                   </tr>
                   {DNImagen && (
                     <tr>
-                      <td colSpan="3" className="text-center py-3">
+                      <td colSpan="4" className="text-center py-3">
                         <div className=" w-full flex justify-center">
                           <img
                             src={DNImagen}
@@ -396,7 +399,7 @@ export default function RutasPedidos() {
                     </tr>
                   )}
                   <tr>
-                    <td colSpan="3" className="text-center py-3">
+                    <td colSpan="4" className="text-center py-3">
                       <button
                         className="bg-celeste  hover:bg-celeste text-white font-bold py-1 px-2 rounded "
                         onClick={SubirDni}>

@@ -29,10 +29,11 @@ export default function PrincipalMenu({ Data }) {
         //fechaConsulta,
         "Alta",
         localStorage.getItem("usuario"),
-        "EnCurso"
+        "Pendiente"
       );
       const pedBaja = await GetPedidoPrioridad(
-        fechaConsulta,
+        "2024-05-16",
+        //fechaConsulta,
         "Baja",
         localStorage.getItem("usuario"),
         "Pendiente"
@@ -66,23 +67,29 @@ export default function PrincipalMenu({ Data }) {
       if (PedidoAlta.length > 0) {
         for (let index = 0; index < PedidoAlta.length; index++) {
           PedidoAlta[index].estatus = "EnCurso";
-          const resp = await PutPedido(PedidoAlta[index].id, PedidoAlta[index]);
+          await PutPedido(PedidoAlta[index].id, PedidoAlta[index]);
         }
 
         localStorage.setItem("PrioridadPedidos", "Alta");
         window.location.href = "/Repartidor/RutasPedidos";
       }
     } else {
-      if (PedidoAlta.length > 0) {
-        toast.warning("Primero complete los pedidos de prioridad Alta");
-      } else {
+      if (PedidoAlta === null) {
         if (PedidoBaja === null) {
           toast.warning("Se completaron todas las tareas de prioridad Baja");
           return;
         }
         if (PedidoBaja.length > 0) {
-          toast.success("Iniciando delivery");
+          for (let index = 0; index < PedidoBaja.length; index++) {
+            PedidoBaja[index].estatus = "EnCurso";
+            await PutPedido(PedidoBaja[index].id, PedidoBaja[index]);
+          }
+
+          localStorage.setItem("PrioridadPedidos", "Baja");
+          window.location.href = "/Repartidor/RutasPedidos";
         }
+      } else {
+        toast.warning("Primero complete los pedidos de prioridad Alta");
       }
     }
   };
