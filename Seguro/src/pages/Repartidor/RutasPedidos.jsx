@@ -3,6 +3,7 @@ import {
   GetAsegurado,
   GetMedicinaIDReceta,
   GetMedicinaNombre,
+  GetPedidoConductor,
   GetPedidoPrioridad,
   GetRecetaSeguro,
   PostPedido,
@@ -15,16 +16,19 @@ import IconWaze from "../../assets/Icons/IconWaze";
 import SignatureCanvas from "react-signature-canvas";
 import { Slide, ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import IconDetail from "../../assets/Icons/IconDetail";
 
 export default function RutasPedidos() {
   const [Pedidos, setPedidos] = useState([]);
   const [Receta, setReceta] = useState([]);
   const [Asegurado, setAsegurado] = useState([]);
   const [DetalleEntrega, setDetalleEntrega] = useState([]);
+  const [PedidosInfo, setPedidosInfo] = useState([]);
 
   const [ModalInfo, setModalInfo] = useState(false);
   const [ModalEntrega, setModalEntrega] = useState(false);
   const [ModalFirma, setModalFirma] = useState(false);
+  const [ModalPedidos, setModalPedidos] = useState(false);
   const [InfoPedido, setInfoPedido] = useState([]);
   const [FirmaDigital, setFirmaDigital] = useState(null);
 
@@ -66,6 +70,25 @@ export default function RutasPedidos() {
   }, []);
 
   const position = [-12.192539, -76.9534792];
+
+  const MostrarPedidos = async () => {
+    const pedi = await GetPedidoConductor(
+      "2024-05-16",
+      //fechaConsulta,
+      localStorage.getItem("PrioridadPedidos"),
+      localStorage.getItem("usuario")
+    );
+
+    for (let index = 0; index < pedi.data.length; index++) {
+      if (pedi.data[index].estatus === "EnCurso") {
+        pedi.data[index].estatus = "En Curso";
+      }
+    }
+
+    setPedidosInfo(pedi.data);
+    setModalPedidos(true);
+    console.log(pedi.data);
+  };
 
   const MostrarInfo = (id) => {
     if (id !== 1) {
@@ -458,7 +481,53 @@ export default function RutasPedidos() {
         </div>
       )}
 
-      <h1 className="text-center text-3xl">Rutas para los Pedidos</h1>
+      {ModalPedidos && (
+        <div className="fixed  inset-0 z-50 overflow-auto bg-gray-800 bg-opacity-75 flex justify-center items-center">
+          <div className="flex flex-col bg-white w-11/12 border rounded-md">
+            <h3 className="text-center text-2xl my-2">
+              Informacion del Estado de los Pedidos
+            </h3>
+            <table>
+              <thead>
+                <tr className="border-b-2 border-gray-300">
+                  <th>Nro Pedido</th>
+                  <th>Nro Receta</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                {PedidosInfo &&
+                  PedidosInfo.map((pedido) => (
+                    <tr
+                      key={pedido.id}
+                      className="text-center border-b border-gray-200">
+                      <td>{pedido.id}</td>
+                      <td>{pedido.id_receta}</td>
+                      <td>{pedido.estatus}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+            <div className="flex flex-row justify-center gap-2 my-5">
+              <button
+                type="button"
+                onClick={() => {
+                  setModalPedidos(false);
+                }}
+                className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mr-2">
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className=" flex gap-3 justify-center">
+        <h1 className="text-center text-3xl">Rutas para los Pedidos</h1>
+        <div onClick={MostrarPedidos}>
+          <IconDetail />
+        </div>
+      </div>
       <div className=" h-full z-10">
         <MapContainer center={position} zoom={20} scrollWheelZoom={true}>
           <TileLayer

@@ -17,6 +17,7 @@ const URLMedicinaIDReceta = "http://localhost:8000/Seguro/RecetaIDMedicina/";
 
 const URLPedidosPrioridad = "http://localhost:8000/Seguro/PedidoPrioridad/";
 const URLPedido = "http://localhost:8000/Seguro/Pedido/";
+const URLPedidoConductor = "http://localhost:8000/Seguro/PedidoConductor/";
 
 const URLKardexMedicina = "http://localhost:8000/Seguro/KardexMedicina/";
 const URLKardex = "http://localhost:8000/Seguro/Kardex/";
@@ -247,6 +248,18 @@ export const GetPedidoPrioridad = async (
         conductor +
         "/" +
         status
+    );
+  } catch (error) {
+    if (error.response.status === 404) {
+      return null;
+    }
+  }
+};
+
+export const GetPedidoConductor = async (fecha, prioridad, conductor) => {
+  try {
+    return await axios.get(
+      URLPedidoConductor + fecha + "/" + prioridad + "/" + conductor
     );
   } catch (error) {
     if (error.response.status === 404) {

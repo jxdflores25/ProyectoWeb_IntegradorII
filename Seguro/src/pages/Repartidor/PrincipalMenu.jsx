@@ -29,7 +29,7 @@ export default function PrincipalMenu({ Data }) {
         //fechaConsulta,
         "Alta",
         localStorage.getItem("usuario"),
-        "Pendiente"
+        "EnCurso"
       );
       const pedBaja = await GetPedidoPrioridad(
         fechaConsulta,
