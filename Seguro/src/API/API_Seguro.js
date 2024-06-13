@@ -17,6 +17,7 @@ const URLMedicinaIDReceta = "http://localhost:8000/Seguro/RecetaIDMedicina/";
 
 const URLPedidosPrioridad = "http://localhost:8000/Seguro/PedidoPrioridad/";
 const URLPedido = "http://localhost:8000/Seguro/Pedido/";
+const URLPedidoConductor = "http://localhost:8000/Seguro/PedidoConductor/";
 
 const URLKardexMedicina = "http://localhost:8000/Seguro/KardexMedicina/";
 const URLKardex = "http://localhost:8000/Seguro/Kardex/";
@@ -231,10 +232,34 @@ export const PostKardex = async (data) => {
   }
 };
 
-export const GetPedidoPrioridad = async (fecha, prioridad, conductor) => {
+export const GetPedidoPrioridad = async (
+  fecha,
+  prioridad,
+  conductor,
+  status
+) => {
   try {
     return await axios.get(
-      URLPedidosPrioridad + fecha + "/" + prioridad + "/" + conductor
+      URLPedidosPrioridad +
+        fecha +
+        "/" +
+        prioridad +
+        "/" +
+        conductor +
+        "/" +
+        status
+    );
+  } catch (error) {
+    if (error.response.status === 404) {
+      return null;
+    }
+  }
+};
+
+export const GetPedidoConductor = async (fecha, prioridad, conductor) => {
+  try {
+    return await axios.get(
+      URLPedidoConductor + fecha + "/" + prioridad + "/" + conductor
     );
   } catch (error) {
     if (error.response.status === 404) {
@@ -282,6 +307,14 @@ export const GetPedido = async () => {
 export const PostPedido = async (data) => {
   try {
     return await axios.post(URLPedido, data);
+  } catch (error) {
+    return null;
+  }
+};
+
+export const PutPedido = async (id, data) => {
+  try {
+    return await axios.put(URLPedido + id + "/", data);
   } catch (error) {
     return null;
   }
