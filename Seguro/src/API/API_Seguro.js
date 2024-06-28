@@ -18,11 +18,13 @@ const URLMedicinaIDReceta = "http://localhost:8000/Seguro/RecetaIDMedicina/";
 const URLPedidosPrioridad = "http://localhost:8000/Seguro/PedidoPrioridad/";
 const URLPedido = "http://localhost:8000/Seguro/Pedido/";
 const URLPedidoConductor = "http://localhost:8000/Seguro/PedidoConductor/";
+const URLPedidoReceta = "http://localhost:8000/Seguro/PedidoReceta/";
 
 const URLKardexMedicina = "http://localhost:8000/Seguro/KardexMedicina/";
 const URLKardex = "http://localhost:8000/Seguro/Kardex/";
 
 const URLRecetaSeguro = "http://localhost:8000/Seguro/Receta/";
+const URLRecetaPaciente = "http://localhost:8000/Seguro/RecetaPaciente/";
 const URLRecetaIDHospital = "http://localhost:8000/Seguro/RecetaIDHospital/";
 
 export const GetAsegurado = async (DNI) => {
@@ -268,6 +270,16 @@ export const GetPedidoConductor = async (fecha, prioridad, conductor) => {
   }
 };
 
+export const GetPedidoReceta = async (estatus, receta) => {
+  try {
+    return await axios.get(URLPedidoReceta + estatus + "/" + receta);
+  } catch (error) {
+    if (error.response.status === 404) {
+      return null;
+    }
+  }
+};
+
 export const GetRecetaSeguroID = async (id) => {
   try {
     return await axios.get(URLRecetaIDHospital + id);
@@ -296,9 +308,25 @@ export const PostRecetaSeguro = async (data) => {
   }
 };
 
+export const GetRecetaPaciente = async (dni) => {
+  try {
+    return await axios.get(URLRecetaPaciente + dni);
+  } catch (error) {
+    return null;
+  }
+};
+
 export const GetPedido = async () => {
   try {
     return await axios.get(URLPedido);
+  } catch (error) {
+    return null;
+  }
+};
+
+export const GetOnePedido = async (id) => {
+  try {
+    return await axios.get(URLPedido + id);
   } catch (error) {
     return null;
   }

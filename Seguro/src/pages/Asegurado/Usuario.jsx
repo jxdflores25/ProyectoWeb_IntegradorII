@@ -9,6 +9,7 @@ import IconSalir from "../../assets/Icons/IconSalir";
 import PrincipalMenu from "./PrincipalMenu";
 import { Navigate } from "react-router-dom";
 import IconLogo from "../../assets/Icons/IconLogo";
+import { Seguimiento } from "./Seguimiento";
 
 const Usuario = () => {
   const [Asegurado, setAsegurado] = useState({
@@ -36,11 +37,12 @@ const Usuario = () => {
 
   function open() {
     document.querySelector(".sidebar").className =
-      "sidebar block lg:hidden bg-amber-600 font-[Poppins] w-full";
+      "sidebar block lg:hidden bg-amber-600 font-[Poppins] w-full z-20";
   }
 
   return (
     <div className="flex flex-col w-full h-full">
+      <SidebarAsegurado />
       <div className="flex justify-between lg:justify-center items-center bg-white p-2 border-b-2 border-verde">
         <span
           className="text-verde text-4xl cursor-pointer block lg:hidden"
@@ -95,10 +97,10 @@ const Usuario = () => {
               element={<InfoPerfil Data={Asegurado} />}
             />
             <Route path="" element={<PrincipalMenu Data={Asegurado} />} />
+            <Route path="Seguimiento" element={<Seguimiento />} />
           </Routes>
         </div>
       </div>
-      <SidebarAsegurado />
     </div>
   );
 };

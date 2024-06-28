@@ -7,7 +7,7 @@ import { NavLink } from "react-router-dom";
 export default function SidebarAsegurado() {
   function close() {
     document.querySelector(".sidebar").className =
-      "sidebar hidden bg-amber-600 font-[Poppins] w-full";
+      "sidebar hidden bg-amber-600 font-[Poppins] w-full z-20";
   }
   const deleteStorage = () => {
     localStorage.removeItem("usuario");
@@ -15,13 +15,13 @@ export default function SidebarAsegurado() {
     window.location.href = "/";
   };
   return (
-    <div className="sidebar lg:hidden bg-celeste font-[Poppins] w-full z-20">
+    <div className="sidebar lg:hidden bg-celeste font-[Poppins] w-full ">
       <div className="fixed top-0 bottom-0 left-0 p-2 w-[300px]  text-center bg-white border-r-2 border-verde">
         <div className="text-gray-100 text-xl">
           <div className="p-2.5 mt-1 flex items-center border-b-2 border-verde">
             <i className="bi bi-hospital px-2 py-1 bg-white-300 rounded-md"></i>
             <h1 className="font-bold text-[px] ml-1 text-start text-celeste">
-            Helth<span className="text-verde">Express</span>
+              Helth<span className="text-verde">Express</span>
             </h1>
             <span className="text-black" onClick={close}>
               <IconClose />

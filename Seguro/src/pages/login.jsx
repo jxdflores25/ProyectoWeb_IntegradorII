@@ -69,9 +69,9 @@ export default function Login() {
   };
 
   return (
-    <div className="flex w full h-screen bg-white px-10 py-20 rounded-3xl border-2 border-gray-200">
+    <div className="flex w-full h-screen bg-cyan-200 px-4 py-10 sm:px-10 sm:py-20">
       <div className="w-full flex items-center justify-center lg:w-1/2">
-        <div className="mt-8">
+        <div className="bg-white p-10 rounded-3xl shadow-xl w-full max-w-lg lg:max-w-2xl lg:bg-gray-50 lg:border lg:border-gray-200 lg:p-12">
           <h1 className="text-5xl font-semibold text-center text-celeste">
             Health <span className="text-verde">Express</span>{" "}
           </h1>

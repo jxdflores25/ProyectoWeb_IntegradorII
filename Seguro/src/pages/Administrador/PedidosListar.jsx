@@ -43,6 +43,7 @@ export default function PedidosListar() {
 
   const DetallePedido = async (pedido) => {
     setPedido(pedido);
+    console.log(pedido);
     const con = await GetConductor(pedido.id_conductor);
     const med = await GetMedicinaIDReceta(pedido.receta);
     const pac = await GetAsegurado(pedido.asegurado);
@@ -182,7 +183,13 @@ export default function PedidosListar() {
       {modalOpen && (
         <div className="fixed inset-0 z-50 overflow-auto bg-gray-800 bg-opacity-75 flex justify-center items-center">
           <div className=" bg-white w-1/2 border rounded-md p-4">
-            <h2 className=" text-3xl text-center ">Pedido: {Pedido.id} </h2>
+            <div className=" flex justify-between">
+              <h2 className=" text-3xl text-center ">Pedido: {Pedido.id}</h2>
+              <h2 className=" text-3xl text-center ">
+                Estado: {Pedido.estatus}
+              </h2>
+            </div>
+
             <div className="flex flex-row border-b-2 border-black my-3">
               <h3 className=" text-xl text-start w-1/2 ">
                 Conductor: {Conductor.dni}
@@ -202,7 +209,7 @@ export default function PedidosListar() {
               </h3>
             </div>
             <h3 className=" text-xl text-start   w-1/2">Detalle del Pedido:</h3>
-            <table className=" text-lg w-full my-3">
+            <table className=" text-lg w-full my-3 border-b-2 border-black">
               <thead>
                 <tr>
                   <th>Medicina</th>
@@ -219,6 +226,27 @@ export default function PedidosListar() {
                   ))}
               </tbody>
             </table>
+            {Pedido.dni_img && (
+              <div className="flex gap-5 justify-center">
+                <div>
+                  <h2 className="text-center font-semibold">DNI</h2>
+                  <img
+                    src={Pedido.dni_img}
+                    alt=""
+                    className=" h-52 rounded-lg border-2"
+                  />
+                </div>
+                <div>
+                  <h2 className="text-center font-semibold">FIRMA</h2>
+                  <img
+                    src={Pedido.firma_digital}
+                    alt=""
+                    className=" h-52 rounded-lg border-2"
+                  />
+                </div>
+              </div>
+            )}
+
             <div className="flex justify-end my-3">
               <button
                 type="button"
