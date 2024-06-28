@@ -24,32 +24,48 @@ export default function PrincipalMenu({ Data }) {
       localStorage.setItem("log", position.coords.longitude);
     });
     const pedidos = async () => {
-      const pedAlta = await GetPedidoPrioridad(
-        "2024-05-16",
-        //fechaConsulta,
+      const pedAltaPend = await GetPedidoPrioridad(
+        //"2024-05-30",
+        fechaConsulta,
         "Alta",
         localStorage.getItem("usuario"),
         "Pendiente"
       );
+      const pedAltaEnCur = await GetPedidoPrioridad(
+        //"2024-05-30",
+        fechaConsulta,
+        "Alta",
+        localStorage.getItem("usuario"),
+        "EnCurso"
+      );
       const pedBaja = await GetPedidoPrioridad(
-        "2024-05-16",
-        //fechaConsulta,
+        //"2024-05-30",
+        fechaConsulta,
         "Baja",
         localStorage.getItem("usuario"),
         "Pendiente"
       );
-      if (pedAlta.data.length > 0) {
+      if (pedAltaPend.data.length > 0 ||pedAltaEnCur.data.length > 0 ) {
         const receta = [];
         const asegurado = [];
-        for (let index = 0; index < pedAlta.data.length; index++) {
-          var rec = await GetRecetaSeguro(pedAlta.data[index].id_receta);
+        for (let index = 0; index < pedAltaPend.data.length; index++) {
+          var rec = await GetRecetaSeguro(pedAltaPend.data[index].id_receta);
           var ase = await GetAsegurado(rec.data.dni_asegurado);
           receta.push(rec.data);
           asegurado.push(ase.data);
         }
+        for (let index = 0; index < pedAltaEnCur.data.length; index++) {
+          var rec = await GetRecetaSeguro(pedAltaEnCur.data[index].id_receta);
+          var ase = await GetAsegurado(rec.data.dni_asegurado);
+          receta.push(rec.data);
+          asegurado.push(ase.data);
+        }
+
+        const Pedi = pedAltaPend.data.concat(pedAltaEnCur.data);
+
         setReceta(receta);
         setAsegurado(asegurado);
-        setPedidoAlta(pedAlta.data);
+        setPedidoAlta(Pedi);
       }
       if (pedBaja.data.length > 0) {
         setPedidoBaja(pedBaja.data);
@@ -105,7 +121,7 @@ export default function PrincipalMenu({ Data }) {
         <div className="text-start w-full px-4 mt-8">
           <div className="flex justify-between my-5 border-b-2 border-verde">
             <h2 className="text-xl">{fechaHoy}</h2>
-            <h2 className="text-xl">{envios}</h2>
+            <h2 className="text-xl text-end">{envios}</h2>
           </div>
           <div className="flex w-full mt-10">
             <h4 className="w-2/3 pb-5 text-xl text-center font-bold">
