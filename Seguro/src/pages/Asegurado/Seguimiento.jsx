@@ -57,7 +57,7 @@ export function Seguimiento() {
     const [routingControl, setRoutingControl] = useState(null);
 
     useEffect(() => {
-      var icons = [
+      let icons = [
         L.icon({
           iconUrl: "/motorcycle-riding.gif",
           iconSize: [50, 50],
@@ -103,8 +103,8 @@ export function Seguimiento() {
       }).addTo(map);
 
       newRoutingControl.on("routesfound", function (e) {
-        var routes = e.routes;
-        var summary = routes[0].summary;
+        let routes = e.routes;
+        let summary = routes[0].summary;
 
         setDistancia((summary.totalDistance / 1000).toFixed(2));
         setTiempoEspera((summary.totalTime / 60).toFixed(2));
@@ -169,8 +169,8 @@ export function Seguimiento() {
             <IconDistance /> Distancia aproximada de {Distancia} km
           </h2>
           <h2>
-            Conductor: {Conductor && Conductor.nombre}{" "}
-            {Conductor && Conductor.apellido}
+            Conductor: {Conductor ? Conductor.nombre : ""}
+            {Conductor ? Conductor.apellido : ""}
           </h2>
         </div>
       </div>
