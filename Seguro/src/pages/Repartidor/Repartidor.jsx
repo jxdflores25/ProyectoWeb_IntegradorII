@@ -31,6 +31,9 @@ const Repartidor = () => {
     apellido: "",
   });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [MenuSide, setMenuSide] = useState(true);
+
+  
 
   // Utiliza el hook personalizado para detectar el ancho de la ventana
   const [width] = useWindowSize();
@@ -38,7 +41,10 @@ const Repartidor = () => {
   useEffect(() => {
     // Cierra el menú automáticamente cuando la pantalla es menor a 768px
     if (width < 768) {
+      setMenuSide(false);
       setIsMenuOpen(false);
+    }else{
+      setMenuSide(true);
     }
   }, [width]); // Dependencia en el ancho de la ventana
 
@@ -78,7 +84,7 @@ const Repartidor = () => {
         <div className="w-8"></div>
       </div>
       <div className="flex flex-row h-full relative">
-        <div className={`font-[Poppins] h-full ${isMenuOpen ? 'flex' : 'hidden'} lg:flex border-r-2 border-verde`}>
+        <div className={`font-[Poppins] h-full ${MenuSide ? 'flex' : "hidden"} border-r-2 border-verde`}>
           <div className="text-center bg-white w-[300px] p-2">
             <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-gradient-to-r hover:from-verde hover:to-celeste text-white">
               <IconSearch />
@@ -88,8 +94,8 @@ const Repartidor = () => {
                 className="text-[15px] ml-4 w-full bg-transparent focus:outline-none"
               />
             </div>
-            <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-gradient-to-r hover:from-verde hover:to-celeste text-white">
-              <NavLink to="">
+            <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-gradient-to-r hover:from-verde hover:to-celeste text-white" >
+              <NavLink to="" >
                 <span className="text-[15px] ml-4 text-gray-700">
                   Principal
                 </span>

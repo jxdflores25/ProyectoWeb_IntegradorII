@@ -21,8 +21,8 @@ export default function PrincipalMenu({ Data }) {
 
     const GetReceta = async () => {
       const Receta = await GetRecetaPaciente(localStorage.getItem("usuario"));
-      for (let index = 0; index < Receta.data.length; index++) {
-        await GetPedidos(Receta.data[index].id);
+      for (const element of Receta.data) {
+        await GetPedidos(element.id);
       }
       setPedidos(pedidos);
       console.log(pedidos);
@@ -77,13 +77,14 @@ export default function PrincipalMenu({ Data }) {
                 <p className="text-gray-700">
                   <span className="font-semibold">Status:</span> En Curso
                 </p>
-                <div
-                  className="mt-4 flex justify-center"
+                <div className="flex justify-center"> <button
+                  className="mt-4 "
                   onClick={() => {
                     Seguimiento(pedido.id);
                   }}>
                   <IconMoto />
-                </div>
+                </button></div>
+               
               </div>
             </div>
           </div>

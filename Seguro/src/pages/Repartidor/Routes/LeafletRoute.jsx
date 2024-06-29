@@ -15,13 +15,14 @@ const LeafletGeocoder = ({ Asegurado, Receta, Pedido, mostrarinfo }) => {
         iconSize: [50, 50],
       }),
     ];
-    console.log(Asegurado);
-    console.log(Pedido);
+    console.log(localStorage.getItem("lat"));
+    console.log(localStorage.getItem("log"));
     var waypoints = [
       { lat: localStorage.getItem("lat"), lng: localStorage.getItem("log") },
     ];
     var waypointContents = ["<h3>Repartidor</h3>"];
     for (let index = 0; index < Asegurado.length; index++) {
+      
       waypoints.push({
         lat: Asegurado[index].Latitud,
         lng: Asegurado[index].Longitud,

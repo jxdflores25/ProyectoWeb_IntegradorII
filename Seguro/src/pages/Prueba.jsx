@@ -1,140 +1,115 @@
-import { useRef, useState } from "react";
-import SignatureCanvas from "react-signature-canvas";
-import axios from "axios";
+import React from 'react';
+import jsPDF from 'jspdf';
 
 export default function Prueba() {
-  const sigCanvas = useRef();
-  const [imageURL, setImageURL] = useState(null);
-  const create = () => {
-    const URL = sigCanvas.current.getTrimmedCanvas().toDataURL("image/png");
-    console.log(URL);
-    setImageURL(URL);
-  };
+  const boleta = () => {
+    const doc = new jsPDF();
 
-  const download = async () => {
-    const formData = new FormData();
-    formData.append("file", imageURL);
-    formData.append("upload_preset", "IntegradorProyector");
+    // Encabezado
+    doc.rect(134, 9, 60, 35);
+    doc.setFontSize(15);
+    doc.text("BOLETA DE VENTA", 165, 25, { align: 'center' });
+    doc.text("ELECTRONICA", 165, 30, { align: 'center' });
+    doc.setFontSize(10);
+    //ANCHO//ALTURA14828
+    doc.text("RUC: 20606568128", 148, 15);
+    doc.text("T001-00000501", 152, 39);
 
-    try {
-      const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/dauazz3dm/image/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      setImageUrl(response.data.secure_url);
-      setUploading(false);
-      console.log(response.data);
-      alert("Imagen subida con éxito");
-    } catch (error) {
-      console.error("Error al subir la imagen:", error);
-      setUploading(false);
-      alert("Error al subir la imagen");
-    }
-  };
+    // Información del negocio
+    doc.rect(15, 7, 180, 40);
+    doc.setFontSize(10);
+    doc.text("HEALTH EXPRESS", 20, 25);
+    doc.text("Ctra. Panamericana S km 16, Villa EL Salvador 15842", 20, 30);
+    doc.text("LIMA - LIMA - PERU", 20, 35);
+    doc.text("RUC: 20606568128", 20, 40);
 
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [uploading, setUploading] = useState(false);
-  const [imageUrl, setImageUrl] = useState("");
+    // Información del cliente
+    //izq,arr,dere,aba
+    doc.rect(15, 48, 180, 25);
+    doc.text("Señor(es): Fatima Llauca", 20, 53);
+    doc.text("Ctra. Panamericana S km 16, Villa EL Salvador 15842", 20, 58);
+    doc.text("Fecha de Emisión: 24/06/2024", 20, 63);
+    doc.text("Tipo de Moneda: SOLES", 20, 68);
 
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
+    // Productos
+    let items = [
+      { quantity: "4.00", unit: "Unidad", description: "Aspirinas", unitPrice: "0.50", total: "2.00" },
+      { quantity: "1.00", unit: "Unidad", description: "Paracetamol", unitPrice: "1.00", total: "1.00" },
+      { quantity: "1.00", unit: "Unidad", description: "Cetirizina", unitPrice: "0.50", total: "0.50" },
+      { quantity: "4.00", unit: "Unidad", description: "Aspirina", unitPrice: "1.00", total: "4.00" },
+      { quantity: "1.00", unit: "Unidad", description: "Panadol", unitPrice: "2.00", total: "2.00" },
+      { quantity: "1.00", unit: "Unidad", description: "prueba", unitPrice: "2.00", total: "2.00" },
+    ];
 
-  const handleUpload = async () => {
-    if (!selectedFile) return;
+    items.push({ quantity: "4.00", unit: "Unidad", description: "Metromitrosol", unitPrice: "0.50", total: "2.00" })
 
-    setUploading(true);
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-    formData.append("upload_preset", "IntegradorProyector");
+    // Líneas de la tabla
+    const startY = 80;
+    const endY = startY + items.length * 10 + 5;
 
-    try {
-      const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/dauazz3dm/image/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      setImageUrl(response.data.secure_url);
-      setUploading(false);
-      console.log(response.data);
-      alert("Imagen subida con éxito");
-    } catch (error) {
-      console.error("Error al subir la imagen:", error);
-      setUploading(false);
-      alert("Error al subir la imagen");
-    }
-  };
+    doc.setFontSize(10);
+    doc.text("Cantidad", 18, startY);
+    doc.text("Unidad", 38, startY);
+    doc.text("Descripción", 60, startY);
+    doc.text("Valor Unitario", 138, startY);
+    doc.text("Importe", 190, startY, { align: 'right' });
 
-  const [selectedImage, setSelectedImage] = useState(null);
+    doc.setLineWidth(0.5);
+    doc.line(15, startY - 5, 195, startY - 5); // línea superior
+    doc.line(15, startY + 5, 195, startY + 5); // línea inferior de encabezados
+    doc.line(15, startY - 5, 15, endY); // línea izquierda
+    doc.line(35, startY - 5, 35, endY); // línea entre Cantidad y Unidad
+    doc.line(55, startY - 5, 55, endY); // línea entre Unidad y Descripción
+    doc.line(135, startY - 5, 135, endY); // línea entre Descripción y Valor Unitario
+    doc.line(170, startY - 5, 170, endY); // línea entre Valor Unitario y Importe
+    doc.line(195, startY - 5, 195, endY); // línea derecha
+    doc.line(15, endY, 195, endY); // línea inferior de la tabla
 
-  const handleImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setSelectedImage(URL.createObjectURL(e.target.files[0]));
-    }
+    let yPosition = startY + 10;
+    items.forEach(item => {
+      doc.text(item.quantity, 20, yPosition);
+      doc.text(item.unit, 38, yPosition);
+      doc.text(item.description, 60, yPosition);
+      doc.text(item.unitPrice, 138, yPosition);
+      doc.text(item.total, 180, yPosition, { align: 'right' });
+      yPosition += 10;
+    });
+
+    // Cuadro de detalles de la compra
+    doc.rect(15, startY - 5, 180, endY - (startY - 5));
+
+    // Totales
+    yPosition += 10;
+    doc.setFontSize(12);
+    doc.text("Op. Gravada:", 140, yPosition);
+    doc.text("S/ 9.50", 190, yPosition, { align: 'right' });
+
+    yPosition += 5;
+    doc.text("IGV (18%):", 140, yPosition);
+    doc.text("S/ 0.00", 190, yPosition, { align: 'right' });
+
+    yPosition += 5;
+    doc.text("Importe Total:", 140, yPosition);
+    doc.text("S/ 9.50", 190, yPosition, { align: 'right' });
+
+    // Cuadro de total
+    doc.rect(135, yPosition - 15, 60, 20);
+
+    // Pie de página
+    doc.setFontSize(8);
+    doc.text("Esta es una representación impresa de la Boleta de Venta Electrónica, generada en el Sistema de la SUNAT.", 20, yPosition + 20);
+    doc.text("El Emisor Electrónico puede verificarla utilizando su clave SOL, el Adquirente o Usuario puede consultar su validez", 20, yPosition + 25);
+    doc.text("en SUNAT Virtual: www.sunat.gob.pe, en Opciones sin Clave SOL / Consulta de Validez del CPE.", 20, yPosition + 30);
+
+
+
+    // Guardar el PDF
+    doc.save("Boleta.pdf");
   };
 
   return (
-    <div className=" border-2 ">
-      <SignatureCanvas
-        penColor="black"
-        canvasProps={{
-          width: 500,
-          height: 200,
-          className: "sigCanvas border-2",
-        }}
-        ref={sigCanvas}
-      />
-      <hr />
-      <button onClick={() => sigCanvas.current.clear()}>Clear</button>
-      <button className="create" onClick={create}>
-        Create
-      </button>
-      <br />
-      {imageURL && (
-        <div>
-          <img src={imageURL} alt="signature" className="signature" />
-          <button
-            onClick={download}
-            style={{ padding: "5px", marginTop: "5px" }}>
-            Download
-          </button>
-        </div>
-      )}
-      <div>
-        <input type="file" onChange={handleFileChange} />
-        <button onClick={handleUpload} disabled={uploading}>
-          {uploading ? "Subiendo..." : "Subir a Cloudinary"}
-        </button>
-        {imageUrl && (
-          <div>
-            <h2>Imagen Subida:</h2>
-            <img
-              src={imageUrl}
-              alt="Imagen subida"
-              style={{ width: "300px" }}
-            />
-          </div>
-        )}
-      </div>
-      <div>
-        <h1>Subir y mostrar una foto</h1>
-        <input type="file" onChange={handleImageChange} />
-        {selectedImage && (
-          <div>
-            <h2>Foto seleccionada:</h2>
-            <img src={selectedImage} alt="Selected" className=" w-1/2" />
-          </div>
-        )}
-      </div>
+    <div>
+      <button onClick={boleta}>Descargar PDF</button>
     </div>
   );
 }

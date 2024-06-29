@@ -2,6 +2,7 @@ import IconSalir from "../../assets/Icons/IconSalir";
 import IconClose from "../../assets/Icons/IconClose";
 import IconSearch from "../../assets/Icons/IconSearch";
 import "../../index.css";
+import { NavLink } from "react-router-dom";
 
 export default function SidebarAsegurado() {
   function close() {
@@ -37,10 +38,10 @@ export default function SidebarAsegurado() {
           />
         </div>
         <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-gradient-to-r hover:from-verde hover:to-celeste text-white">
-          <a to="InfoPerfil">
+          <NavLink to="InfoPerfil">
             <i className="bi bi-person-circle"></i>
             <span className="text-[15px] ml-4 text-gray-700">Mi perfil</span>
-          </a>
+          </NavLink>
         </div>
         <div className=" fixed bottom-0 left-0 p-2 w-[300px] text-center bg-white">
           <div

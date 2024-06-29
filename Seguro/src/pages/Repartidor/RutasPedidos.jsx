@@ -38,16 +38,18 @@ export default function RutasPedidos() {
 
   const sigCanvas = useRef();
 
+  const { fechaConsulta } = Fecha();
+
   useEffect(() => {
     if (localStorage.getItem("PedidoEntregado")) {
       toast.success("Se entrego correctamente el pedido");
       localStorage.removeItem("PedidoEntregado");
     }
-    const { fechaConsulta } = Fecha();
+    
     const pedidos = async () => {
       const pedidos = await GetPedidoPrioridad(
-        "2024-05-16",
-        //fechaConsulta,
+        //"2024-05-30",
+        fechaConsulta,
         localStorage.getItem("PrioridadPedidos"),
         localStorage.getItem("usuario"),
         "EnCurso"
@@ -73,8 +75,8 @@ export default function RutasPedidos() {
 
   const MostrarPedidos = async () => {
     const pedi = await GetPedidoConductor(
-      "2024-05-16",
-      //fechaConsulta,
+      //"2024-05-30",
+      fechaConsulta,
       localStorage.getItem("PrioridadPedidos"),
       localStorage.getItem("usuario")
     );
@@ -157,10 +159,15 @@ export default function RutasPedidos() {
   };
 
   const CrearFirma = () => {
-    const URL = sigCanvas.current.getTrimmedCanvas().toDataURL("image/png");
-    setFirmaDigital(URL);
-    setModalFirma(false);
-    setModalEntrega(true);
+    if (!sigCanvas.current.isEmpty()) {
+      const URL = sigCanvas.current.getTrimmedCanvas().toDataURL("image/png");
+      setFirmaDigital(URL);
+      setModalFirma(false);
+      setModalEntrega(true);
+    }else{
+      toast.warning("Porfavor ingrese una firma");
+    }
+    
   };
 
   const MostrarImagen = (e) => {
@@ -198,15 +205,15 @@ export default function RutasPedidos() {
 
     console.log(Pedidos[InfoPedido[6]]);
 
-    Pedidos[InfoPedido[6]].dni_img = "SubirDNI";
-    Pedidos[InfoPedido[6]].firma_digital = "SubirFirma";
+    Pedidos[InfoPedido[6]].dni_img = SubirDNI;
+    Pedidos[InfoPedido[6]].firma_digital = SubirFirma;
     Pedidos[InfoPedido[6]].estatus = "Finalizado";
 
     const resp = await PutPedido(InfoPedido[0], Pedidos[InfoPedido[6]]);
 
     if (resp !== null) {
       localStorage.setItem("PedidoEntregado", true);
-      localStorage.setItem("lat", Asegurado[InfoPedido[6].Latitud]);
+      localStorage.setItem("lat", Asegurado[InfoPedido[6]].Latitud);
       localStorage.setItem("log", Asegurado[InfoPedido[6]].Longitud);
       setModalEntrega(false);
       window.location.reload();
@@ -250,8 +257,8 @@ export default function RutasPedidos() {
                 <p>ID del Receta: {InfoPedido[3]}</p>
               </div>
               <div className="flex flex-row justify-center gap-5">
-                <p>ID del DNI: {InfoPedido[2]}</p>
-                <p>ID del Nombre: {InfoPedido[1]}</p>
+                <p>DNI: {InfoPedido[2]}</p>
+                <p>Nombre: {InfoPedido[1]}</p>
               </div>
               <div className="flex flex-row justify-center gap-2 my-5">
                 <button

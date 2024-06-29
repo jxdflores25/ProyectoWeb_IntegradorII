@@ -107,7 +107,7 @@ export default function Login() {
                 <input
                   type="submit"
                   value="Ingresar"
-                  className=" w-full py-3 rounded-xl bg-gradient-to-r from-celeste to-verde text-white text-lg font-bold shadow-md transition duration-200 ease-out transform hover:scale-105 active:scale-95 cursor-pointer register-btn "
+                  className=" active:scale-110 active:duration-75  ease-out  py-3 rounded-xl  bg-gradient-to-r from-celeste to-verde text-white text-lg fond bold transition-transform transform hover:scale-110 "
                 />
               </div>
             </form>
