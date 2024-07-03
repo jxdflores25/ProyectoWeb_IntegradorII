@@ -19,6 +19,8 @@ const Usuario = () => {
   useEffect(() => {
     const Datos = async (dni) => {
       const resp = await GetAsegurado(dni);
+      localStorage.setItem("lat", resp.data.Latitud);
+      localStorage.setItem("log", resp.data.Longitud);
       setAsegurado(resp.data);
     };
 

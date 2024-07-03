@@ -1,11 +1,6 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import {
-  GetAsegurado,
-  GetPedidoPrioridad,
-  GetRecetaSeguro,
-  PutPedido,
-} from "../../API/API_Seguro";
+import { GetPedidoPrioridad, PutPedido } from "../../API/API_Seguro";
 import IconMoto from "../../assets/Icons/IconMoto";
 import { Slide, ToastContainer, toast } from "react-toastify";
 import Fecha from "../../constants/FechaTime";
@@ -13,8 +8,6 @@ import Fecha from "../../constants/FechaTime";
 export default function PrincipalMenu({ Data }) {
   const [PedidoAlta, setPedidoAlta] = useState(null);
   const [PedidoBaja, setPedidoBaja] = useState(null);
-  const [Receta, setReceta] = useState(null);
-  const [Asegurado, setAsegurado] = useState(null);
   const { envios, fechaHoy } = Fecha();
 
   useEffect(() => {
@@ -45,26 +38,8 @@ export default function PrincipalMenu({ Data }) {
         localStorage.getItem("usuario"),
         "Pendiente"
       );
-      if (pedAltaPend.data.length > 0 ||pedAltaEnCur.data.length > 0 ) {
-        const receta = [];
-        const asegurado = [];
-        for (let index = 0; index < pedAltaPend.data.length; index++) {
-          var rec = await GetRecetaSeguro(pedAltaPend.data[index].id_receta);
-          var ase = await GetAsegurado(rec.data.dni_asegurado);
-          receta.push(rec.data);
-          asegurado.push(ase.data);
-        }
-        for (let index = 0; index < pedAltaEnCur.data.length; index++) {
-          var rec = await GetRecetaSeguro(pedAltaEnCur.data[index].id_receta);
-          var ase = await GetAsegurado(rec.data.dni_asegurado);
-          receta.push(rec.data);
-          asegurado.push(ase.data);
-        }
-
+      if (pedAltaPend.data.length > 0 || pedAltaEnCur.data.length > 0) {
         const Pedi = pedAltaPend.data.concat(pedAltaEnCur.data);
-
-        setReceta(receta);
-        setAsegurado(asegurado);
         setPedidoAlta(Pedi);
       }
       if (pedBaja.data.length > 0) {
@@ -81,9 +56,9 @@ export default function PrincipalMenu({ Data }) {
         return;
       }
       if (PedidoAlta.length > 0) {
-        for (let index = 0; index < PedidoAlta.length; index++) {
-          PedidoAlta[index].estatus = "EnCurso";
-          await PutPedido(PedidoAlta[index].id, PedidoAlta[index]);
+        for (const element of PedidoAlta) {
+          element.estatus = "EnCurso";
+          await PutPedido(element.id, element);
         }
 
         localStorage.setItem("PrioridadPedidos", "Alta");
@@ -96,9 +71,9 @@ export default function PrincipalMenu({ Data }) {
           return;
         }
         if (PedidoBaja.length > 0) {
-          for (let index = 0; index < PedidoBaja.length; index++) {
-            PedidoBaja[index].estatus = "EnCurso";
-            await PutPedido(PedidoBaja[index].id, PedidoBaja[index]);
+          for (const element of PedidoBaja) {
+            element.estatus = "EnCurso";
+            await PutPedido(element.id, element);
           }
 
           localStorage.setItem("PrioridadPedidos", "Baja");

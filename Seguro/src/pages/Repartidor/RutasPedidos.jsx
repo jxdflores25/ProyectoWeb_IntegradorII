@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import {
   GetAsegurado,
+  GetConductor,
   GetMedicinaIDReceta,
   GetMedicinaNombre,
   GetPedidoConductor,
   GetPedidoPrioridad,
   GetRecetaSeguro,
-  PostPedido,
+  PutConductor,
   PutPedido,
 } from "../../API/API_Seguro";
 import Fecha from "../../constants/FechaTime";
@@ -67,6 +68,13 @@ export default function RutasPedidos() {
       setReceta(receta);
       setAsegurado(asegurado);
     };
+
+    setInterval(async () => {
+      const Conductor = await GetConductor(localStorage.getItem("usuario"));
+      Conductor.data.Latitud = localStorage.getItem("lat");
+      Conductor.data.Longitud = localStorage.getItem("log");
+      await PutConductor(localStorage.getItem("usuario"), Conductor.data);
+    }, 5000);
 
     pedidos();
   }, []);
@@ -204,7 +212,7 @@ export default function RutasPedidos() {
 
     Pedidos[InfoPedido[6]].dni_img = SubirDNI;
     Pedidos[InfoPedido[6]].firma_digital = SubirFirma;
-    Pedidos[InfoPedido[6]].estatus = "Finalizado";
+    Pedidos[InfoPedido[6]].estatus = "Entregado";
 
     const resp = await PutPedido(InfoPedido[0], Pedidos[InfoPedido[6]]);
 
