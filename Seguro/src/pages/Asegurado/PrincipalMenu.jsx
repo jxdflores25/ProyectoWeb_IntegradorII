@@ -25,7 +25,6 @@ export default function PrincipalMenu({ Data }) {
         await GetPedidos(element.id);
       }
       setPedidos(pedidos);
-      console.log(pedidos);
     };
 
     const GetPedidos = async (Receta) => {
@@ -77,14 +76,16 @@ export default function PrincipalMenu({ Data }) {
                 <p className="text-gray-700">
                   <span className="font-semibold">Status:</span> En Curso
                 </p>
-                <div className="flex justify-center"> <button
-                  className="mt-4 "
-                  onClick={() => {
-                    Seguimiento(pedido.id);
-                  }}>
-                  <IconMoto />
-                </button></div>
-               
+                <div className="flex justify-center">
+                  {" "}
+                  <button
+                    className="mt-4 "
+                    onClick={() => {
+                      Seguimiento(pedido.id);
+                    }}>
+                    <IconMoto />
+                  </button>
+                </div>
               </div>
             </div>
           </div>

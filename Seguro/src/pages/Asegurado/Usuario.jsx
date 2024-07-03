@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { GetAsegurado } from "../../API/API_Seguro";
-import { NavLink, Route, Routes } from "react-router-dom";
+import { NavLink, Route, Routes, Navigate } from "react-router-dom";
 import InfoPerfil from "./InfoPerfil";
 import IconHamburger from "../../assets/Icons/IconHamburger";
 import SidebarAsegurado from "../../components/Asegurado/SideBarAsegurado";
 import IconSearch from "../../assets/Icons/IconSearch";
 import IconSalir from "../../assets/Icons/IconSalir";
 import PrincipalMenu from "./PrincipalMenu";
-import { Navigate } from "react-router-dom";
 import IconLogo from "../../assets/Icons/IconLogo";
 import { Seguimiento } from "./Seguimiento";
 
@@ -90,7 +89,7 @@ const Usuario = () => {
             </div>
           </div>
         </div>
-        <div className="w-full ">
+        <div className="w-full h-full">
           <Routes>
             <Route
               path="InfoPerfil"

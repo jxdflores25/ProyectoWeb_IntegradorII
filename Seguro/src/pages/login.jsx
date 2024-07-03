@@ -4,10 +4,12 @@ import {
   GetAsegurado,
   GetConductor,
 } from "../API/API_Seguro";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { ToastContainer, Slide, toast } from "react-toastify";
 
 export default function Login() {
   const [dni, setDni] = useState("");
+  const [token, setToken] = useState(null);
 
   if (localStorage.getItem("registrado")) {
     toast.success("Se registro correctamente");
@@ -36,27 +38,34 @@ export default function Login() {
       if (res.data.contraseña === contra) {
         localStorage.setItem("usuario", res.data.dni);
         localStorage.setItem("tipo", tipo);
-        console.log(tipo);
-        switch (tipo) {
-          case "Asegurado":
-            window.location.href = "/Asegurado";
-            break;
+        if (token) {
+          switch (tipo) {
+            case "Asegurado":
+              window.location.href = "/Asegurado";
+              break;
 
-          case "Conductor":
-            window.location.href = "/Repartidor";
-            break;
+            case "Conductor":
+              window.location.href = "/Repartidor";
+              break;
 
-          case "Administrador":
-            window.location.href = "/Administrador";
-            break;
+            case "Administrador":
+              window.location.href = "/Administrador";
+              break;
 
-          default:
-            break;
+            default:
+              break;
+          }
+        } else {
+          toast.warning("Porfavor complete el hCaptcha");
         }
       } else {
         toast.error("Contraseña incorrecta");
       }
     }
+  };
+
+  const handleVerificationSuccess = (token) => {
+    setToken(token);
   };
 
   const handleDniChange = (e) => {
@@ -103,6 +112,13 @@ export default function Login() {
                   required
                 />
               </div>
+              <div className="mt-2 flex justify-center">
+                <HCaptcha
+                  sitekey="2174a10a-f572-4c58-9332-f76230aed0e8"
+                  onVerify={handleVerificationSuccess}
+                />
+              </div>
+
               <div className="mt-8 flex flex-col gap-y-4">
                 <input
                   type="submit"
