@@ -4,15 +4,21 @@ import {
   GetConductor,
   GetMedicinaIDReceta,
   GetMedicinaSeguro,
+  PostGuia,
 } from "../API/API_Seguro";
 import Fecha from "./FechaTime";
 import Guia from "./guia";
 
-export default async function CrearGuia(RecetaID, ConductorDNI) {
+export default async function CrearGuia(RecetaID, ConductorDNI, PedidoID) {
   const { fechaHoy } = Fecha();
   const receta = await GetMedicinaIDReceta(RecetaID);
   const asegurado = await GetAsegurado(localStorage.getItem("usuario"));
   const conductor = await GetConductor(ConductorDNI);
+
+  const nuevaGuia = {
+    id_pedido: PedidoID,
+  };
+  const GuiaPedido = await PostGuia(nuevaGuia);
 
   for (const element of receta.data) {
     const med = await GetMedicinaSeguro(element.id_medicina);
@@ -42,6 +48,7 @@ export default async function CrearGuia(RecetaID, ConductorDNI) {
     direc[3] +
     ", " +
     direc[4];
+  receta.data.guiaid = GuiaPedido.data.id;
 
   const doc = Guia(receta.data, conductor.data);
   const pdfBlob = doc.output("blob");

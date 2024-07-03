@@ -14,7 +14,7 @@ const Guia = (pedido, conductor) => {
   doc.setFontSize(10);
   //ANCHO//ALTURA
   doc.text("RUC: 20606568128", 135, 15);
-  doc.text("T001-00000501", 135, 39);
+  doc.text("T001-00000" + pedido.guiaid, 135, 39);
 
   // Información del remitente
   doc.setFontSize(8);

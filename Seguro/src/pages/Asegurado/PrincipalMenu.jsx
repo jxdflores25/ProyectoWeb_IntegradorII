@@ -7,14 +7,11 @@ import {
 } from "../../API/API_Seguro";
 import IconMoto from "../../assets/Icons/IconMoto";
 import Fecha from "../../constants/FechaTime";
-import { useNavigate } from "react-router-dom";
 
 export default function PrincipalMenu({ Data }) {
   const [Pedidos, setPedidos] = useState();
 
   const { fechaHoy } = Fecha();
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const pedidos = [];

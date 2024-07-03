@@ -68,7 +68,11 @@ export function Seguimiento() {
       setLoadingConfirmar(true);
       const ped = await PutPedido(Pedido.id, Pedido);
       const boleta = await CrearBoleta(Pedido.id_receta);
-      const guia = await CrearGuia(Pedido.id_receta, Pedido.id_conductor);
+      const guia = await CrearGuia(
+        Pedido.id_receta,
+        Pedido.id_conductor,
+        Pedido.id
+      );
       const envio = await EnvioCorreo(boleta, guia);
       if (ped.status == 200) {
         setModalConfirmar(false);

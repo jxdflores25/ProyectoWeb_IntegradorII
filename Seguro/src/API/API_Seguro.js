@@ -27,6 +27,9 @@ const URLRecetaSeguro = "http://localhost:8000/Seguro/Receta/";
 const URLRecetaPaciente = "http://localhost:8000/Seguro/RecetaPaciente/";
 const URLRecetaIDHospital = "http://localhost:8000/Seguro/RecetaIDHospital/";
 
+const URLGuia = "http://localhost:8000/Seguro/Guia/";
+const URLGuiaPedido = "http://localhost:8000/Seguro/GuiaPedido/";
+
 export const GetAsegurado = async (DNI) => {
   try {
     return await axios.get(URLAsegurado + DNI);
@@ -343,6 +346,22 @@ export const PostPedido = async (data) => {
 export const PutPedido = async (id, data) => {
   try {
     return await axios.put(URLPedido + id + "/", data);
+  } catch (error) {
+    return null;
+  }
+};
+
+export const GetGuiaPedido = async (id) => {
+  try {
+    return await axios.get(URLGuiaPedido + id);
+  } catch (error) {
+    return null;
+  }
+};
+
+export const PostGuia = async (data) => {
+  try {
+    return await axios.post(URLGuia, data);
   } catch (error) {
     return null;
   }
