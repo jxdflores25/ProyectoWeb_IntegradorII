@@ -102,6 +102,11 @@ export function Seguimiento() {
     link.click();
   };
 
+  const onClose = () => {
+    localStorage.removeItem("PedidoAsegurado");
+    window.location.href = "/Asegurado";
+  };
+
   const LocationMarker = () => {
     const map = useMap();
     const [routingControl, setRoutingControl] = useState(null);
@@ -225,7 +230,7 @@ export function Seguimiento() {
               Recuerda: tu numero de DNI es la contraseña.
             </p>
             <button
-              //onClick={onClose}
+              onClick={onClose}
               className="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600 w-full">
               Regresar
             </button>
