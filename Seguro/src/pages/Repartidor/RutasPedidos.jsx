@@ -45,7 +45,7 @@ export default function RutasPedidos() {
       toast.success("Se entrego correctamente el pedido");
       localStorage.removeItem("PedidoEntregado");
     }
-    
+
     const pedidos = async () => {
       const pedidos = await GetPedidoPrioridad(
         //"2024-05-30",
@@ -57,9 +57,9 @@ export default function RutasPedidos() {
 
       const receta = [];
       const asegurado = [];
-      for (let index = 0; index < pedidos.data.length; index++) {
-        var rec = await GetRecetaSeguro(pedidos.data[index].id_receta);
-        var ase = await GetAsegurado(rec.data.dni_asegurado);
+      for (const element of pedidos.data) {
+        let rec = await GetRecetaSeguro(element.id_receta);
+        let ase = await GetAsegurado(rec.data.dni_asegurado);
         receta.push(rec.data);
         asegurado.push(ase.data);
       }
@@ -81,9 +81,9 @@ export default function RutasPedidos() {
       localStorage.getItem("usuario")
     );
 
-    for (let index = 0; index < pedi.data.length; index++) {
-      if (pedi.data[index].estatus === "EnCurso") {
-        pedi.data[index].estatus = "En Curso";
+    for (const element of pedi.data) {
+      if (element.estatus === "EnCurso") {
+        element.estatus = "En Curso";
       }
     }
 
@@ -99,7 +99,7 @@ export default function RutasPedidos() {
     }
 
     setModalInfo(true);
-    var Info = [];
+    let Info = [];
     Info.push(Pedidos[id - 1].id);
     Info.push(Asegurado[id - 1].nombre);
     Info.push(Asegurado[id - 1].dni);
@@ -115,15 +115,13 @@ export default function RutasPedidos() {
     const med = await GetMedicinaIDReceta(InfoPedido[3]);
     const medicina = await NombreMedicina(med.data);
 
-    var TotalPago = 0;
+    let TotalPago = 0;
 
-    for (let index = 0; index < medicina.length; index++) {
-      TotalPago =
-        TotalPago +
-        Number(medicina[index].precioMedicina) * medicina[index].cantidad;
+    for (const element of medicina) {
+      TotalPago = TotalPago + Number(element.precioMedicina) * element.cantidad;
     }
 
-    var Desc = 0;
+    let Desc = 0;
 
     switch (Asegurado[InfoPedido[6]].TipoSeguro) {
       case "Pacifico":
@@ -137,9 +135,9 @@ export default function RutasPedidos() {
         break;
     }
 
-    var CoPago = TotalPago * Desc;
+    let CoPago = TotalPago * Desc;
 
-    var Info = InfoPedido;
+    let Info = InfoPedido;
     Info.push(TotalPago.toFixed(2));
     Info.push(CoPago.toFixed(2));
 
@@ -150,10 +148,10 @@ export default function RutasPedidos() {
   };
 
   const NombreMedicina = async (data) => {
-    for (let index = 0; index < data.length; index++) {
-      const medicina = await GetMedicinaNombre(data[index].id_medicina);
-      data[index].precioMedicina = medicina.data.precio;
-      data[index].nombreMedicina = medicina.data.nombre;
+    for (const element of data) {
+      const medicina = await GetMedicinaNombre(element.id_medicina);
+      element.precioMedicina = medicina.data.precio;
+      element.nombreMedicina = medicina.data.nombre;
     }
     return data;
   };
@@ -164,10 +162,9 @@ export default function RutasPedidos() {
       setFirmaDigital(URL);
       setModalFirma(false);
       setModalEntrega(true);
-    }else{
+    } else {
       toast.warning("Porfavor ingrese una firma");
     }
-    
   };
 
   const MostrarImagen = (e) => {

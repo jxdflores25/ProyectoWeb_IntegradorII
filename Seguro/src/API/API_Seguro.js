@@ -178,12 +178,12 @@ export const GetMedicinaSeguro = async (id) => {
 };
 
 export const PostMedicinaSeguro = async (ID_Receta, Medicina) => {
-  for (let i = 0; i < Medicina.length; i++) {
+  for (const element of Medicina) {
     axios.post(URLMedicinaDetalleSeguro, {
       id_receta: ID_Receta,
-      id_medicina: Medicina[i].id_medicina,
-      cantidad: Medicina[i].cantidad,
-      descripcion: Medicina[i].description,
+      id_medicina: element.id_medicina,
+      cantidad: element.cantidad,
+      descripcion: element.description,
     });
   }
 };
