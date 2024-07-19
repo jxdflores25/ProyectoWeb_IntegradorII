@@ -149,12 +149,12 @@ const handlePasswordChange = (event) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center bg-white shadow-md rounded-lg p-8 w-full border border-gray-300">
     <h1 className="text-3xl font-bold mb-4">Información</h1>
     <div className="mb-4">
       <IconPerfil className="w-24 h-24" />
     </div>
-    <form className="bg-white shadow-md rounded-lg p-8 w-11/12 max-w-xl border border-gray-300">
+    <form >
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         <div>
           <label htmlFor="FirstName" className="block text-sm font-medium text-gray-700">Nombre</label>
@@ -222,10 +222,10 @@ const handlePasswordChange = (event) => {
           />
         </div>
       </div>
-      <div className="mt-6"
+      <div className="mt-6 z-10"
       data-tooltip-id="mapa">
         <label htmlFor="Mapa" className="block text-sm font-medium text-gray-700">Ubicación donde llegarán los medicamentos</label>
-        <div className="mt-2 rounded-lg overflow-hidden shadow-sm h-40">
+        <div className="mt-2 rounded-lg overflow-hidden shadow-sm h-40 z-10">
           <MapContainer
             center={{ lat: Data.Latitud, lng: Data.Longitud }}
             zoom={13}

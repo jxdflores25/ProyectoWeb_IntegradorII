@@ -60,7 +60,7 @@ const LeafletGeocoder = ({ Asegurado, Receta, Pedido, mostrarinfo }) => {
         routeWhileDragging: true,
         draggableWaypoints: false,
         fitSelectedRoutes: true,
-        showAlternatives: true,
+        showAlternatives: false,
         addWaypoints: false,
         language: "es",
         createMarker: function (i, waypoint, n) {
