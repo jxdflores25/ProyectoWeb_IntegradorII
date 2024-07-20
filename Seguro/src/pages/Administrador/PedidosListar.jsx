@@ -5,6 +5,7 @@ import {
   GetMedicinaIDReceta,
   GetMedicinaNombre,
   GetPedido,
+  GetPuntuacionPedido,
   GetRecetaSeguro,
 } from "../../API/API_Seguro";
 import IconDetail from "../../assets/Icons/IconDetail";
@@ -17,6 +18,7 @@ export default function PedidosListar() {
   const [Medicinas, setMedicinas] = useState([]);
   const [Paciente, setPaciente] = useState([]);
   const [Conductor, setConductor] = useState([]);
+  const [Puntuacion, setPuntuacion] = useState([]);
   const [filCond, setfilCond] = useState("");
   const [filAseg, setfilAseg] = useState("");
   const [filEsta, setfilEsta] = useState("");
@@ -48,6 +50,11 @@ export default function PedidosListar() {
     const med = await GetMedicinaIDReceta(pedido.receta);
     const pac = await GetAsegurado(pedido.asegurado);
     const medicina = await NombreMedicina(med.data);
+    const punt = await GetPuntuacionPedido(pedido.id);
+    if (punt != null) {
+      console.log(punt.data[0]);
+      setPuntuacion(punt.data[0]);
+    }
     setMedicinas(medicina);
     setPaciente(pac.data);
     setConductor(con.data);
@@ -190,13 +197,32 @@ export default function PedidosListar() {
               </h2>
             </div>
 
-            <div className="flex flex-row border-b-2 border-black my-3">
+            <div className="flex flex-row flex-wrap border-b-2 border-black my-3">
               <h3 className=" text-xl text-start w-1/2 ">
                 Conductor: {Conductor.dni}
               </h3>
               <h3 className=" text-xl text-start w-1/2 ">
                 Nombre: {Conductor.nombre} {Conductor.apellido}
               </h3>
+              {Puntuacion && (
+                <div className="flex space-x-1 align-middle">
+                  <h3 className=" text-xl text-start">Puntuacion:</h3>
+                  {[...Array(5)].map((star, index) => {
+                    index += 1;
+                    return (
+                      <span
+                        key={index}
+                        className={`text-xl ${
+                          index <= Puntuacion.puntuacion
+                            ? "text-yellow-400"
+                            : "text-gray-300"
+                        }`}>
+                        &#9733;
+                      </span>
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
             <div className="flex flex-row border-b-2 border-black my-3">

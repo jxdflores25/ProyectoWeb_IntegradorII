@@ -107,7 +107,7 @@ export function Seguimiento() {
   };
 
   const onClose = () => {
-    localStorage.removeItem("PedidoAsegurado");
+    localStorage.setItem("ConductorEstrellas", Pedido.id_conductor);
     window.location.href = "/Asegurado";
   };
 

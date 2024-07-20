@@ -4,17 +4,32 @@ import {
   GetConductor,
   GetPedidoReceta,
   GetRecetaPaciente,
+  PostPuntuacion,
 } from "../../API/API_Seguro";
 import IconMoto from "../../assets/Icons/IconMoto";
 import Fecha from "../../constants/FechaTime";
+import { Slide, toast, ToastContainer } from "react-toastify";
 
 export default function PrincipalMenu({ Data }) {
   const [Pedidos, setPedidos] = useState();
+  const [ModalEvaluacion, setModalEvaluacion] = useState(false);
+  const [Conductor, setConductor] = useState();
+
+  const [rating, setRating] = useState(0);
+  const [hover, setHover] = useState(0);
 
   const { fechaHoy } = Fecha();
 
   useEffect(() => {
     const pedidos = [];
+
+    const Califica = async () => {
+      const con = await GetConductor(
+        localStorage.getItem("ConductorEstrellas")
+      );
+      setConductor(con.data);
+      setModalEvaluacion(true);
+    };
 
     const GetReceta = async () => {
       const Receta = await GetRecetaPaciente(localStorage.getItem("usuario"));
@@ -34,8 +49,27 @@ export default function PrincipalMenu({ Data }) {
       }
     };
 
+    if (localStorage.getItem("ConductorEstrellas")) {
+      Califica();
+    }
+
     GetReceta();
   }, []);
+
+  const PuntuarConductor = async () => {
+    let data = {
+      id_pedido: localStorage.getItem("PedidoAsegurado"),
+      puntuacion: rating,
+      id_conductor: localStorage.getItem("ConductorEstrellas"),
+    };
+    let puntuar = await PostPuntuacion(data);
+    if (puntuar != null) {
+      toast.success("Se envio la calificacion");
+      localStorage.removeItem("PedidoAsegurado");
+      localStorage.removeItem("ConductorEstrellas");
+      setModalEvaluacion(false);
+    }
+  };
 
   const Seguimiento = (id) => {
     localStorage.setItem("PedidoAsegurado", id);
@@ -44,6 +78,43 @@ export default function PrincipalMenu({ Data }) {
 
   return (
     <div className="flex-1 p-4 flex flex-col justify-center items-center">
+      {ModalEvaluacion && (
+        <div className="fixed  inset-0 z-50 overflow-auto bg-gray-800 bg-opacity-75 flex justify-center items-center">
+          <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+            <h2 className="text-2xl font-bold mb-4">Califica a tu Conductor</h2>
+            <h2 className="text-xl font-bold mb-4 text-center">
+              {Conductor.nombre + " " + Conductor.apellido}
+            </h2>
+            <div className="flex items-center justify-center">
+              {[...Array(5)].map((star, index) => {
+                index += 1;
+                return (
+                  <button
+                    type="button"
+                    key={index}
+                    className={
+                      index <= (hover || rating)
+                        ? "text-yellow-400 text-4xl"
+                        : "text-gray-300 text-4xl"
+                    }
+                    onClick={() => setRating(index)}
+                    onMouseEnter={() => setHover(index)}
+                    onMouseLeave={() => setHover(rating)}>
+                    <span className="star">&#9733;</span>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="mt-4">
+              <button
+                className="w-full bg-indigo-500 text-white font-bold py-2 rounded-lg hover:bg-indigo-600"
+                onClick={() => PuntuarConductor()}>
+                Enviar Calificación
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <h1 className="text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide">
         Bienvenido Asegurado: &nbsp;
         <span className="bg-gradient-to-r from-verde to-celeste text-transparent bg-clip-text">
@@ -96,6 +167,19 @@ export default function PrincipalMenu({ Data }) {
           </div>
         </div>
       )}
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Slide}
+      />
     </div>
   );
 }

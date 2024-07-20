@@ -206,34 +206,34 @@ const Administrador = () => {
   };
 
   const soloNumerosRegex = /^9[0-9]*$/; // Expresión regular para aceptar solo números y que empiece con 9 sin espacios
-  const soloNumerosDNI = /^[0-9]*$/; // Expresión regular para aceptar solo números 
+  const soloNumerosDNI = /^[0-9]*$/; // Expresión regular para aceptar solo números
 
   const manejarCambioNombre = (e) => {
     const inputValue = e.target.value;
-    
+
     // Expresión regular para letras y espacios
     const soloTextoRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
-    
+
     // Contar los espacios en el input
     const espacios = (inputValue.match(/ /g) || []).length;
-    
+
     // Validar el input solo si tiene un solo espacio o menos
     if (soloTextoRegex.test(inputValue) && espacios <= 1) {
-        setNombre(inputValue);
+      setNombre(inputValue);
     }
   };
   const manejarCambioapellido = (e) => {
     const inputValue = e.target.value;
-    
+
     // Expresión regular para letras y espacios
     const soloTextoRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/;
-    
+
     // Contar los espacios en el input
     const espacios = (inputValue.match(/ /g) || []).length;
-    
+
     // Validar el input solo si tiene un solo espacio o menos
     if (soloTextoRegex.test(inputValue) && espacios <= 1) {
-        setApellido(inputValue);
+      setApellido(inputValue);
     }
   };
 

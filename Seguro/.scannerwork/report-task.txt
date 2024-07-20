@@ -1,0 +1,6 @@
+projectKey=IntegradorWeb
+serverUrl=http://localhost:9000
+serverVersion=10.6.0.92116
+dashboardUrl=http://localhost:9000/dashboard?id=IntegradorWeb
+ceTaskId=09ad1b55-8239-4eb9-a558-c5c7de474b2c
+ceTaskUrl=http://localhost:9000/api/ce/task?id=09ad1b55-8239-4eb9-a558-c5c7de474b2c

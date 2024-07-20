@@ -9,6 +9,7 @@ import IconSalir from "../../assets/Icons/IconSalir";
 import PrincipalMenu from "./PrincipalMenu";
 import IconLogo from "../../assets/Icons/IconLogo";
 import { Seguimiento } from "./Seguimiento";
+import HistorialPedidos from "./HistorialPedidos";
 
 const Usuario = () => {
   const [Asegurado, setAsegurado] = useState({
@@ -72,6 +73,22 @@ const Usuario = () => {
               />
             </div>
             <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-gradient-to-r hover:from-verde hover:to-celeste text-white">
+              <NavLink to="">
+                <i className="bi bi-house"></i>
+                <span className="text-[15px] ml-4 text-gray-700">
+                  Principal
+                </span>
+              </NavLink>
+            </div>
+            <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-gradient-to-r hover:from-verde hover:to-celeste text-white">
+              <NavLink to="Historial">
+                <i className="bi bi-list-columns"></i>
+                <span className="text-[15px] ml-4 text-gray-700">
+                  Historial
+                </span>
+              </NavLink>
+            </div>
+            <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-gradient-to-r hover:from-verde hover:to-celeste text-white">
               <NavLink to="InfoPerfil">
                 <i className="bi bi-person-circle"></i>
                 <span className="text-[15px] ml-4 text-gray-700">
@@ -99,6 +116,7 @@ const Usuario = () => {
             />
             <Route path="" element={<PrincipalMenu Data={Asegurado} />} />
             <Route path="Seguimiento" element={<Seguimiento />} />
+            <Route path="Historial/*" element={<HistorialPedidos />} />
           </Routes>
         </div>
       </div>
