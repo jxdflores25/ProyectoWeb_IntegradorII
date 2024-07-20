@@ -34,6 +34,11 @@ export function Seguimiento() {
   };
 
   useEffect(() => {
+
+    if (!localStorage.getItem("PedidoAsegurado")) {
+      window.location.href = "/Asegurado";
+    }
+
     const pedidos = async () => {
       intervalRef.current = setInterval(async () => {
         const Pedido = await GetOnePedido(

@@ -36,6 +36,7 @@ export default function PrincipalMenu({ Data }) {
       for (const element of Receta.data) {
         await GetPedidos(element.id);
       }
+      console.log(pedidos)
       setPedidos(pedidos);
     };
 
@@ -126,8 +127,8 @@ export default function PrincipalMenu({ Data }) {
         Pedidos en curso
       </h2>
 
-      {Pedidos ? (
-        Pedidos.map((pedido) => (
+      {Pedidos?.length > 0 ? (
+        Pedidos?.map((pedido) => (
           <div className=" w-3/4 my-5" key={pedido.id}>
             <div className="bg-gray-100 shadow-md rounded-lg overflow-hidden">
               <div className="p-4">
