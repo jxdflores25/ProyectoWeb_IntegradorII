@@ -29,7 +29,7 @@ export default function PrincipalMenu({ Data }) {
         fechaConsulta,
         "Alta",
         localStorage.getItem("usuario"),
-        "EnCurso"
+        "Proceso"
       );
       const pedBaja = await GetPedidoPrioridad(
         //"2024-05-30",
@@ -57,7 +57,7 @@ export default function PrincipalMenu({ Data }) {
       }
       if (PedidoAlta.length > 0) {
         for (const element of PedidoAlta) {
-          element.estatus = "EnCurso";
+          element.estatus = "Proceso";
           await PutPedido(element.id, element);
         }
 

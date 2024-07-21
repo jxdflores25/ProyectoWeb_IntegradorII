@@ -25,7 +25,6 @@ const useWindowSize = () => {
   return size;
 };
 
-
 const Usuario = () => {
   const [Asegurado, setAsegurado] = useState({
     nombre: "",
@@ -43,7 +42,7 @@ const Usuario = () => {
     if (width < 768) {
       setMenuSide(false);
       setIsMenuOpen(false);
-    }else{
+    } else {
       setMenuSide(true);
     }
   }, [width]); // Dependencia en el ancho de la ventana
@@ -70,7 +69,7 @@ const Usuario = () => {
 
   return (
     <div className="flex flex-col w-full h-full">
-     <div className="flex justify-between lg:justify-center items-center bg-white p-2 border-b-2 border-verde">
+      <div className="flex justify-between lg:justify-center items-center bg-white p-2 border-b-2 border-verde">
         <span
           className="text-verde text-4xl cursor-pointer block lg:hidden"
           onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -86,7 +85,10 @@ const Usuario = () => {
         <div className="w-8"></div>
       </div>
       <div className="flex flex-row h-full relative">
-        <div className={`font-[Poppins] h-full ${MenuSide ? 'flex' : "hidden"} border-r-2 border-verde`}>
+        <div
+          className={`font-[Poppins] h-full ${
+            MenuSide ? "flex" : "hidden"
+          } border-r-2 border-verde`}>
           <div className="text-center bg-white w-[300px] p-2">
             <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-gradient-to-r hover:from-verde hover:to-celeste text-white">
               <IconSearch />
@@ -96,13 +98,7 @@ const Usuario = () => {
                 className="text-[15px] ml-4 w-full bg-transparent focus:outline-none"
               />
             </div>
-            <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-gradient-to-r hover:from-verde hover:to-celeste text-white" >
-              <NavLink to="" >
-                <span className="text-[15px] ml-4 text-gray-700">
-                  Principal
-                </span>
-              </NavLink>
-            </div>
+
             <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-gradient-to-r hover:from-verde hover:to-celeste text-white">
               <NavLink to="">
                 <i className="bi bi-house"></i>
@@ -139,7 +135,7 @@ const Usuario = () => {
             </div>
           </div>
         </div>
-        <div className="w-full h-full">
+        <div className="w-full h-full overflow-y-auto">
           <Routes>
             <Route
               path="InfoPerfil"

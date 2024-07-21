@@ -18,7 +18,8 @@ export default function SidebarAsegurado() {
     window.location.href = "/";
   };
   return (
-    <div className={`fixed inset-0 z-20 ${isSidebarVisible ? 'block' : 'hidden'}`}>
+    <div
+      className={`fixed inset-0 z-20 ${isSidebarVisible ? "block" : "hidden"}`}>
       <div className="sidebar bg-celeste font-[Poppins] w-full lg:hidden">
         <div className="fixed top-0 bottom-0 left-0 p-2 w-[300px] text-center bg-white border-r-2 border-verde">
           <div className="text-gray-100 text-xl">
@@ -27,7 +28,9 @@ export default function SidebarAsegurado() {
               <h1 className="font-bold text-[px] ml-1 text-start text-celeste">
                 Helth<span className="text-verde">Express</span>
               </h1>
-              <span className="text-black cursor-pointer ml-auto" onClick={close}>
+              <span
+                className="text-black cursor-pointer ml-auto"
+                onClick={close}>
                 <IconClose />
               </span>
             </div>
@@ -42,25 +45,31 @@ export default function SidebarAsegurado() {
             />
           </div>
           <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-gradient-to-r hover:from-verde hover:to-celeste text-white">
-              <NavLink to="">
-                <span className="text-[15px] ml-4 text-gray-700">
-                  Principal
-                </span>
-              </NavLink>
-            </div>
+            <NavLink to="">
+              <i className="bi bi-house"></i>
+              <span className="text-[15px] ml-4 text-gray-700">Principal</span>
+            </NavLink>
+          </div>
           <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-gradient-to-r hover:from-verde hover:to-celeste text-white">
-          <NavLink to="InfoPerfil">
+            <NavLink to="Historial">
+              <i className="bi bi-list-columns"></i>
+              <span className="text-[15px] ml-4 text-gray-700">Historial</span>
+            </NavLink>
+          </div>
+          <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-gradient-to-r hover:from-verde hover:to-celeste text-white">
+            <NavLink to="InfoPerfil">
               <i className="bi bi-person-circle"></i>
               <span className="text-[15px] ml-4 text-gray-700">Mi perfil</span>
-              </NavLink>
+            </NavLink>
           </div>
           <div className="fixed bottom-0 left-0 p-2 w-[300px] text-center bg-white">
             <div
               className="p-2.5 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-gradient-to-r hover:from-verde hover:to-celeste text-white"
-              onClick={deleteStorage}
-            >
+              onClick={deleteStorage}>
               <IconSalir />
-              <span className="text-[15px] ml-4 text-gray-700">Cerrar Sesión</span>
+              <span className="text-[15px] ml-4 text-gray-700">
+                Cerrar Sesión
+              </span>
             </div>
           </div>
         </div>

@@ -53,7 +53,7 @@ export default function RutasPedidos() {
         fechaConsulta,
         localStorage.getItem("PrioridadPedidos"),
         localStorage.getItem("usuario"),
-        "EnCurso"
+        "Proceso"
       );
 
       const receta = [];
@@ -64,6 +64,24 @@ export default function RutasPedidos() {
         receta.push(rec.data);
         asegurado.push(ase.data);
       }
+
+      pedidos.data[0].estatus = "EnCurso";
+      await PutPedido(pedidos.data[0].id, pedidos.data[0]);
+
+      console.log(asegurado[0]);
+      let to = "51" + String(asegurado[0].telefono);
+      let text =
+        "Hola " +
+        asegurado[0].nombre +
+        " su pedido numero " +
+        pedidos.data[0].id +
+        " esta en camino. Ingrese a la pagina para mayor seguimiento.";
+
+      await axios.post("http://localhost:8000/Seguro/send-sms/", {
+        to,
+        text,
+      });
+
       setPedidos(pedidos.data);
       setReceta(receta);
       setAsegurado(asegurado);

@@ -9,9 +9,11 @@ import {
 import IconMoto from "../../assets/Icons/IconMoto";
 import Fecha from "../../constants/FechaTime";
 import { Slide, toast, ToastContainer } from "react-toastify";
+import IconTime from "../../assets/Icons/IconTime";
 
 export default function PrincipalMenu({ Data }) {
-  const [Pedidos, setPedidos] = useState();
+  const [PedidosCurso, setPedidosCurso] = useState();
+  const [PedidosProceso, setPedidosProceso] = useState();
   const [ModalEvaluacion, setModalEvaluacion] = useState(false);
   const [Conductor, setConductor] = useState();
 
@@ -21,7 +23,8 @@ export default function PrincipalMenu({ Data }) {
   const { fechaHoy } = Fecha();
 
   useEffect(() => {
-    const pedidos = [];
+    const pedidosCurso = [];
+    const pedidosProceso = [];
 
     const Califica = async () => {
       const con = await GetConductor(
@@ -36,17 +39,26 @@ export default function PrincipalMenu({ Data }) {
       for (const element of Receta.data) {
         await GetPedidos(element.id);
       }
-      console.log(pedidos)
-      setPedidos(pedidos);
+      setPedidosCurso(pedidosCurso);
+      setPedidosProceso(pedidosProceso);
     };
 
     const GetPedidos = async (Receta) => {
       const Pedido = await GetPedidoReceta("EnCurso", Receta);
+
       if (Pedido.data.length > 0) {
         const Conductor = await GetConductor(Pedido.data[0].id_conductor);
         Pedido.data[0].conductorNombre = Conductor.data.nombre;
         Pedido.data[0].conductorApellido = Conductor.data.apellido;
-        pedidos.push(Pedido.data[0]);
+        pedidosCurso.push(Pedido.data[0]);
+      } else {
+        const PedidoProc = await GetPedidoReceta("Proceso", Receta);
+        if (PedidoProc.data.length > 0) {
+          const Conductor = await GetConductor(PedidoProc.data[0].id_conductor);
+          PedidoProc.data[0].conductorNombre = Conductor.data.nombre;
+          PedidoProc.data[0].conductorApellido = Conductor.data.apellido;
+          pedidosProceso.push(PedidoProc.data[0]);
+        }
       }
     };
 
@@ -58,17 +70,21 @@ export default function PrincipalMenu({ Data }) {
   }, []);
 
   const PuntuarConductor = async () => {
-    let data = {
-      id_pedido: localStorage.getItem("PedidoAsegurado"),
-      puntuacion: rating,
-      id_conductor: localStorage.getItem("ConductorEstrellas"),
-    };
-    let puntuar = await PostPuntuacion(data);
-    if (puntuar != null) {
-      toast.success("Se envio la calificacion");
-      localStorage.removeItem("PedidoAsegurado");
-      localStorage.removeItem("ConductorEstrellas");
-      setModalEvaluacion(false);
+    if (rating == 0) {
+      toast.warning("Ingrese una calificacion al conductor");
+    } else {
+      let data = {
+        id_pedido: localStorage.getItem("PedidoAsegurado"),
+        puntuacion: rating,
+        id_conductor: localStorage.getItem("ConductorEstrellas"),
+      };
+      let puntuar = await PostPuntuacion(data);
+      if (puntuar != null) {
+        toast.success("Se envio la calificacion");
+        localStorage.removeItem("PedidoAsegurado");
+        localStorage.removeItem("ConductorEstrellas");
+        setModalEvaluacion(false);
+      }
     }
   };
 
@@ -127,8 +143,8 @@ export default function PrincipalMenu({ Data }) {
         Pedidos en curso
       </h2>
 
-      {Pedidos?.length > 0 ? (
-        Pedidos?.map((pedido) => (
+      {PedidosCurso?.length > 0 ? (
+        PedidosCurso?.map((pedido) => (
           <div className=" w-3/4 my-5" key={pedido.id}>
             <div className="bg-gray-100 shadow-md rounded-lg overflow-hidden">
               <div className="p-4">
@@ -163,10 +179,41 @@ export default function PrincipalMenu({ Data }) {
         <div className=" w-3/4 my-5">
           <div className="bg-gray-100 shadow-md rounded-lg overflow-hidden">
             <h2 className="text-lg text-center text-[#9ca3af] p-5">
-              Aquí se mostrarán sus pedidos que estan en curso
+              Aquí se mostrarán sus pedidos que estan en curso o en proceso
             </h2>
           </div>
         </div>
+      )}
+      {PedidosProceso?.length > 0 ? (
+        PedidosProceso?.map((pedido) => (
+          <div className=" w-3/4 my-5" key={pedido.id}>
+            <div className="bg-gray-100 shadow-md rounded-lg overflow-hidden">
+              <div className="p-4">
+                <h2 className="text-xl font-semibold mb-2">
+                  Pedido #{pedido.id}
+                </h2>
+                <p className="text-gray-700">
+                  <span className="font-semibold">Conductor:</span>{" "}
+                  {pedido.conductorNombre} {pedido.conductorApellido}
+                </p>
+                <p className="text-gray-700">
+                  <span className="font-semibold">Fecha: </span> {fechaHoy}
+                </p>
+                <p className="text-gray-700">
+                  <span className="font-semibold">Status:</span> En Proceso
+                </p>
+                <div className="flex justify-center">
+                  {" "}
+                  <button className="mt-4">
+                    <IconTime />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))
+      ) : (
+        <span></span>
       )}
       <ToastContainer
         position="top-center"
